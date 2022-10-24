@@ -4,7 +4,7 @@ import Navbar from "./NavBar"
 
 const Header = () => {
   return (
-    <div className="bg-zinc-200 w-full h-screen">
+    <div className="bg-yellow-400 w-full h-screen">
       <Navbar/>
       <div className="w-2/5 pl-40 relative top-20">
 

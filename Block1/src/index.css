@@ -33,6 +33,6 @@
     @apply text-white font-medium text-lg
   }
   .routerNavPhone {
-    @apply border-b-2 py-4 border-zinc-300 w-full
+    @apply border-b-2 py-4 border-zinc-300 w-full text-zinc-500 font-bold text-lg px-14
   }
 }
