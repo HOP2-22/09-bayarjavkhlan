@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  @screen sm {
+  }
+  @screen md {
+  }
+  @screen lg {
+  }
+  @screen xl {
+  }
+  @screen 2xl {
+  }
+
+  .button {
+    @apply px-4 py-3 bg-blue-500 rounded;
+  }
+  .star {
+    @apply w-6 fill-yellow-400;
+  }
+  .elFont {
+    @apply font-medium text-xl text-gray-700;
+  }
+  .infoText {
+    @apply py-7 text-2xl font-semibold;
+  }
+  .formInputText {
+    @apply w-full focus:outline-none border-b-2 text-lg;
+  }
+  .routerNav {
+    @apply text-white font-medium text-lg
+  }
+  .routerNavPhone {
+    @apply border-b-2 py-4 border-zinc-300 w-full
+  }
+}
