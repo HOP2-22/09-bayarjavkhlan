@@ -1,9 +1,11 @@
-import Web from "./Pages/RouterChallange/Web"
+import StopWatch from "./Components/NewLesson/useEffect/StopWatch"
 
-const App= () => {
-  return <div>
-    <Web/>
-  </div>;
-}
+const App = () => {
+  return (
+   <div>
+    <StopWatch />
+   </div>
+  );
+};
 
 export default App;

@@ -25,12 +25,13 @@ module.exports = {
       },
       fontFamily: {
         main: ["montserrat"],
+        RouterStyle:["Mulish"]
       },
       colors: {
         dark: "#181818",
         primary: "#d29e0e",
         secondary: "e5001c",
-        btn_blue: "rgb(93, 120, 152);",
+        btn_blue: "#0BBEF2",
       },
       rotate: {
         0: "0deg",
