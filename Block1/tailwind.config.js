@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       fontSize: {
@@ -25,7 +23,7 @@ module.exports = {
       },
       fontFamily: {
         main: ["montserrat"],
-        RouterStyle:["Mulish"]
+        mulish: ["Mulish"],
       },
       colors: {
         dark: "#181818",
@@ -53,4 +51,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};

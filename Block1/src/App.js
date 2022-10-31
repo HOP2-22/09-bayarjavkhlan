@@ -1,10 +1,10 @@
-import StopWatch from "./Components/NewLesson/useEffect/StopWatch"
+import Index from "./Pages/RouterChallange/index";
 
 const App = () => {
   return (
-   <div>
-    <StopWatch />
-   </div>
+    <div>
+      <Index />
+    </div>
   );
 };
 

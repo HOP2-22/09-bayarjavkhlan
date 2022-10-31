@@ -1,15 +1,13 @@
 import React from "react";
-import Navbar from "./NavBar";
 import BgImg from "../../IMG/infoWeb.jpg";
-import { Hero } from "./Hero";
+import Hero from "./Hero";
 import { useState } from "react";
 
-export const Header = () => {
+const Header = () => {
   const [headerValue, setValue] = useState("");
   const GetAccess = () => {
     console.log(headerValue);
   };
-
   return (
     <>
       <div
@@ -21,7 +19,7 @@ export const Header = () => {
             <div className="text-5xl text-white font-bold leading-[60px]">
               Instant collaborations for remote teams
             </div>
-            <div className="text-white w-2/3 text-xl pt-[22px] leading-[30px] font-RouterStyle">
+            <div className="text-white w-2/3 text-xl pt-[22px] leading-[30px] font-mulish">
               All in one for your remote team chats, collaboration and track
               projects
             </div>
@@ -36,7 +34,7 @@ export const Header = () => {
                 }}
               />
               <button
-                className="bg-sky-400 font-RouterStyle px-6 py-[15px] rounded-md text-white"
+                className="bg-sky-400 font-RouterStyle px-6 py-[15px] rounded-md text-white hover:text-sky-200 hover:bg-blue-500"
                 onClick={() => GetAccess()}
               >
                 Get early access
@@ -49,3 +47,5 @@ export const Header = () => {
     </>
   );
 };
+
+export default Header;

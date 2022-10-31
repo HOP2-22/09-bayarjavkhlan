@@ -30,9 +30,12 @@
     @apply w-full focus:outline-none border-b-2 text-lg;
   }
   .routerNav {
-    @apply text-white font-medium text-lg
+    @apply text-white font-medium text-lg;
   }
   .routerNavPhone {
-    @apply border-b-2 py-4 border-zinc-300 w-full text-zinc-500 font-bold text-lg px-14
+    @apply border-b-2 py-4 border-zinc-300 w-full text-zinc-500 font-bold text-lg px-14;
+  }
+  .footerText {
+    @apply font-semibold font-mulish capitalize text-gray-200 text-xl;
   }
 }
