@@ -33,18 +33,18 @@ const NavBar = () => {
       link: "/LogIn",
     },
   ];
-  console.log(offset);
+  console.log(window.innerHeight);
   return (
     <div
       className={`w-screen h-20 z-10 fixed drop-shadow-lg ${
-        offset === 0 ? "bg-transparent" : "bg-white"
+        offset <= window.innerHeight ? "bg-transparent" : "bg-white"
       }`}
     >
       <div className="px-2 flex justify-between items-center w-full h-full">
         <div className="flex items-center justify-between w-full lg:px-28 md:px-14 px-10">
           <h1
             className={`text-3xl font-bold mr-4 sm:text:text-4xl flex items-center ${
-              offset === 0 ? "text-white" : "text-gray-800"
+              offset <= window.innerHeight ? "text-white" : "text-gray-800"
             }`}
           >
             Team<div className=" w-3 h-3 bg-cyan-400 mt-2.5"></div>
@@ -55,7 +55,7 @@ const NavBar = () => {
                 <li
                   key={index}
                   className={`text-white cursor-pointer hover:text-gray-300 ${
-                    offset !== 0
+                    offset >= window.innerHeight
                       ? "text-gray-400 hover:text-gray-600"
                       : "text-white"
                   }`}
@@ -65,11 +65,14 @@ const NavBar = () => {
               );
             })}
             <li
-              className={`py-3 px-7 rounded-lg border-2 border-gray-300 text-white hover:text-gray-600 hover:bg-gray-100 cursor-pointer
+              className={`py-3 px-7 rounded-lg border-white bg-white text-gray-700 hover:text-gray-200 hover:border-gray- hover:bg-gray-700 cursor-pointer    
               `}
-              style={{ color: offset !== 0 ? "#52525b" : "" }}
+              style={{
+                backgroundColor: offset >= window.innerHeight ? "#1e293b" : "",
+                color: offset >= window.innerHeight ? "#fff" : "",
+              }}
             >
-              Get access
+              Ç◊ Get access
             </li>
           </ul>
         </div>

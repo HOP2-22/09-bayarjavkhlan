@@ -27,7 +27,9 @@ const Hero = () => {
             communication into one place.
           </div>
           <div className="flex">
-            <div className="text-cyan-500 text-lg">Learn more</div>
+            <div className="text-cyan-500 text-lg cursor-pointer hover:text-cyan-600">
+              Learn more
+            </div>
             <ArrowLongRightIcon className="w-4 stroke-cyan-500 pb-5" />
           </div>
         </div>
@@ -57,7 +59,9 @@ const Hero = () => {
             communication into one place.
           </div>
           <div className="flex">
-            <div className="text-cyan-500 text-lg">Learn more</div>
+            <div className="text-cyan-500 text-lg cursor-pointer hover:text-cyan-600">
+              Learn more
+            </div>
             <ArrowLongRightIcon className="w-4 stroke-cyan-500 pb-5" />
           </div>
         </div>
@@ -79,7 +83,9 @@ const Hero = () => {
             communication into one place.
           </div>
           <div className="flex">
-            <div className="text-cyan-500 text-lg">Learn more</div>
+            <div className="text-cyan-500 text-lg cursor-pointer hover:text-cyan-600">
+              Learn more
+            </div>
             <ArrowLongRightIcon className="w-4 stroke-cyan-500 pb-5" />
           </div>
         </div>
