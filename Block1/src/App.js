@@ -1,9 +1,9 @@
-import Index from "./Pages/RouterChallange/index";
+import ImageEditor from "./Components/ImageEditor/ImageEditor";
 
 const App = () => {
   return (
     <div>
-      <Index />
+      <ImageEditor />
     </div>
   );
 };

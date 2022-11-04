@@ -33,7 +33,7 @@ const NavBar = () => {
       link: "/LogIn",
     },
   ];
-  console.log(window.innerHeight);
+  console.log(offset);
   return (
     <div
       className={`w-screen h-20 z-10 fixed drop-shadow-lg ${
