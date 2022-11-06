@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import {AiFillAppstore} from "react-icons/ai"
 
 const ImageEditor = () => {
   return (
@@ -16,6 +17,10 @@ const ImageEditor = () => {
             <div className="">
               <div className="">Save Images</div>
               <div className="">Choose Images</div>
+              <AiFillAppstore size={40}/>ç
+              <Box>
+                
+              </Box>
             </div>
           </div>
         </div>

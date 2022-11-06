@@ -1,9 +1,9 @@
-import Header from "./Pages/RouterChallenge/header";
+import Text from "./Pages/Study/textField"
 
 const App = () => {
   return (
     <div>
-      <Header />
+      <Text />
     </div>
   );
 };
