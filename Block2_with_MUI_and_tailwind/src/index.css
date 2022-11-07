@@ -1,7 +1,15 @@
-@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.haha {
-  margin-top: 200px;
+@layer components {
+  @screen sm {
+  }
+  @screen md {
+  }
+  @screen lg {
+  }
+  @screen xl {
+  }
+  @screen 2xl {
+  }
 }
