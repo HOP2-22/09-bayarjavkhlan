@@ -1,13 +1,13 @@
 import React from "react";
-import CardData1 from "../../JS/cardData1";
-import Card1 from "./Card1";
+import CardData from "../../JS/cardData";
+import Card from "./Card";
 
-const CartData1 = () => {
+const CartData = () => {
   return (
     <div className="flex gap-64 overflow-scroll pl-40 pt-24 pb-40 bg-gray-200">
-      {CardData1.map((data, ind) => {
+      {CardData.map((data, ind) => {
         return (
-          <Card1
+          <Card
             starNumber={data.star}
             comment={data.comment}
             avatar={data.avatar}
@@ -20,4 +20,4 @@ const CartData1 = () => {
   );
 };
 
-export default CartData1;
+export default CartData;

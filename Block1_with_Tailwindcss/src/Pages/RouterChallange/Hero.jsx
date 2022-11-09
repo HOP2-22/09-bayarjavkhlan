@@ -10,7 +10,7 @@ import BgImg2 from "../../IMG/routerWomen2.png";
 import Calendar from "../../IMG/Calendar.png";
 import Event1 from "../../IMG/event2.png";
 import Event2 from "../../IMG/event3.png";
-import Card from "../../Components/Card/Card";
+import CardIndex from "../../Components/Card/CardIndex";
 
 const Hero = () => {
   return (
@@ -97,7 +97,7 @@ const Hero = () => {
       <div className="text-center bg-gray-200 text-5xl font-bold py-14">
         What people say about us
       </div>
-      <Card />
+      <CardIndex />
     </>
   );
 };

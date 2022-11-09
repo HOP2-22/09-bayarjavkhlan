@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./Navbar";
+import BlogPost from "./BlogPost";
 
 const Index = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navbar />} />
+        <Route path="/" element={<BlogPost />} />
       </Routes>
     </BrowserRouter>
   );

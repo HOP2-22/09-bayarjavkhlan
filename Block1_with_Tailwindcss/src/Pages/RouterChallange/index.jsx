@@ -5,7 +5,6 @@ import Products from "./Products";
 import Services from "./Services";
 import Contact from "./Contact";
 import LogIn from "./LogIn";
-import Hero from "./Hero.jsx";
 
 const Index = () => {
   return (

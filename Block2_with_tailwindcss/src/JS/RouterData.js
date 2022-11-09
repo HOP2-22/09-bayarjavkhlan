@@ -1,4 +1,4 @@
-const RouterCard = [
+const RouterData = [
   {
     title: "The Emotional Toll of Being in UX",
     comment:
@@ -107,4 +107,4 @@ const RouterCard = [
   },
 ];
 
-export default RouterCard;
+export default RouterData;
