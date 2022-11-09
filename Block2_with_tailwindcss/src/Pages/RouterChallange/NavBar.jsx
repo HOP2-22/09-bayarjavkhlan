@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ColorModeContext } from "./ThemeContext";
+import { Switch } from "@mui/material";
 
 const NavBar = () => {
+  const { theme, changeTheme } = useContext(ColorModeContext);
+
   const [offset, setOffset] = useState(0);
   useEffect(() => {
     const onScroll = () => setOffset(window.pageYOffset);
@@ -50,6 +53,12 @@ const NavBar = () => {
             Team<div className=" w-3 h-3 bg-cyan-400 mt-2.5"></div>
           </h1>
           <ul className="hidden md:flex gap-8 items-center">
+            <Switch
+              color="secondary"
+              onChange={(e) => {
+                changeTheme(e.target.checked);
+              }}
+            />
             {HeaderTitles.map((el, index) => {
               return (
                 <li

@@ -1,14 +1,9 @@
 import React from "react";
-// import Index from "./Pages/RouterChallange/Index";
-import AppContext from "./Study/useContext/AppContext";
+import Index from "./Pages/RouterChallange/Index";
+import ThemeContext from "./Study/useContext/ThemeContext";
 
 const App = () => {
-  return (
-    <div>
-      {/* <Index /> */}
-      <AppContext />
-    </div>
-  );
+  return <Index />;
 };
 
 export default App;
