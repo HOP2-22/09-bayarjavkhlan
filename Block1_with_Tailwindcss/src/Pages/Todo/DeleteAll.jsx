@@ -3,7 +3,7 @@ import React from "react";
 function DeleteAll({ setList }) {
   return (
     <header
-      className="text-red-100 text-2xl font-semibold mt-5 bg-rose-600 rounded w-40 text-center py-1 cursor-pointer"
+      className="bg-rose-600 w-40 py-1 text-red-100 text-2xl font-semibold text-center mt-5 rounded cursor-pointer"
       onClick={() => {
         setList([]);
       }}

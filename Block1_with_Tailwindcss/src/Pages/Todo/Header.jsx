@@ -2,7 +2,7 @@ import React from "react";
 
 function Header() {
   return (
-    <header className="text-blue-500 text-3xl font-semibold pb-6">
+    <header className="pb-6 text-blue-500 text-3xl font-semibold">
       Todo List
     </header>
   );

@@ -18,7 +18,7 @@ function GetInfo() {
       <div>
         <input
           type={"text"}
-          className="bg-rose-500 w-72 h-12 rounded-lg my-10 text-rose-100 text-lg pl-7"
+          className="bg-rose-500 w-72 h-12 pl-7 my-10 rounded-lg text-rose-100 text-lg"
           onChange={(el) => {
             Search(el.target.value);
           }}

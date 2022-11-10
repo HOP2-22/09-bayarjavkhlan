@@ -4,7 +4,7 @@ import Card from "./Card";
 
 const CartData = () => {
   return (
-    <div className="flex gap-64 overflow-scroll px-40 justify-center pt-24 pb-40 bg-gray-200">
+    <div className="bg-gray-200 pt-24 pb-40 px-40 flex justify-center gap-64 overflow-scroll">
       {CardData.map((data, ind) => {
         return (
           <Card

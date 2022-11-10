@@ -10,10 +10,10 @@ const Main = () => {
       return index !== filterIndex;
     });
     setList(newList);
-  }
+  };
   const deleteAll = () => {
     return setList([]);
-  }
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -37,7 +37,7 @@ const Main = () => {
               }
             }
           }}
-          className="w-80 rounded mr-8 h-14 text-xl pl-8 text-yellow-500 focus:outline-0 bg-gradient-to-r from-teal-300 to-teal-500"
+          className="bg-gradient-to-r from-teal-300 to-teal-500 w-80 h-14 mr-8 pl-8 rounded text-xl text-yellow-500 focus:outline-0"
         />
         <button
           className="button"
@@ -60,12 +60,19 @@ const Main = () => {
       </div>
       <div>
         {list.map((todo, index) => {
-          return <List index={index} deleteAll={deleteAll} deleteItem={() => deleteItem(index)} todo={todo} />;
+          return (
+            <List
+              index={index}
+              deleteAll={deleteAll}
+              deleteItem={() => deleteItem(index)}
+              todo={todo}
+            />
+          );
         })}
       </div>
-      {list.length > 0 && <DeleteAll setList={setList}/>}
+      {list.length > 0 && <DeleteAll setList={setList} />}
     </div>
   );
-}
+};
 
 export default Main;

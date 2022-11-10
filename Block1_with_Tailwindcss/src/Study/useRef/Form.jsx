@@ -27,7 +27,7 @@ const Form = () => {
         if (el.key === "Enter") SubmitEvent();
       }}
     >
-      <div className="flex w-104 gap-5 items-center">
+      <div className="w-104 flex items-center gap-5">
         <p className="text-lg font-md divide-y-2">Sign Up</p>
         <div className="h-0.5 flex-1 bg-gray-200"></div>
       </div>

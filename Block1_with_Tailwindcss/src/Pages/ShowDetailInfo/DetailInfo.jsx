@@ -4,12 +4,12 @@ const DetailInfo = ({ el }) => {
   console.log(el);
   return (
     <div className="pl-20 pt-10">
-      <p className="text-center font-bold text-4xl bg-clip-text text-transparent bg-gradient-to-r from-rose-600 via-pink-400 to-red-700">
+      <p className="text-4xl text-center font-bold bg-clip-text text-transparent bg-gradient-to-r from-rose-600 via-pink-400 to-red-700">
         {el.username}`s full address
       </p>
-      <div className="flex  gap-10 h-40">
+      <div className="h-40 flex gap-10">
         <img src={el.avatar} width={160} alt="" />
-        <div className="flex flex-col justify-evenly h-48">
+        <div className="h-48 flex flex-col justify-evenly">
           <div className="flex gap-10">
             <p className="elFont">First_name: {el.first_name}</p>
             <p className="elFont">Last_name: {el.last_name}</p>

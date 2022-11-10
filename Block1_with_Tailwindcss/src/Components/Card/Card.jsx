@@ -12,12 +12,12 @@ const Card = ({ starNumber, comment, avatar, name }) => {
   star.length = starNumber;
   return (
     <div className=" bg-gray-200">
-      <div className="shadow-xl shadow-gray-500 border-gray-600 p-7 w-96  ">
-        <div className="flex gap-2 pb-10">{star}</div>
-        <div className="pb-12 w-0.8">{comment}</div>
-        <div className="flex gap-6 items-center ">
+      <div className="w-96 p-7 shadow-xl shadow-gray-500">
+        <div className="pb-10 flex gap-2">{star}</div>
+        <div className="w-0.8 pb-12">{comment}</div>
+        <div className="flex items-center gap-6">
           <img src={avatar} className="w-16 rounded-full" alt="" />
-          <div className="text-black font-medium text-lg pr-6">{name}</div>
+          <div className="pr-6 text-black text-lg font-medium">{name}</div>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <>
       <div
-        className="bg-cover w-full h-[1080px] bg-center"
+        className="w-full h-[1080px] bg-cover bg-center"
         style={{ backgroundImage: `url(${BgImg})` }}
       >
         <div className="h-full flex items-center">
@@ -19,7 +19,7 @@ const Header = () => {
             <div className="text-5xl text-white font-bold leading-[60px]">
               Instant collaborations for remote teams
             </div>
-            <div className="text-white w-2/3 text-xl pt-[22px] leading-[30px] font-mulish">
+            <div className="w-2/3 pt-[22px] text-white text-xl leading-[30px] font-mulish">
               All in one for your remote team chats, collaboration and track
               projects
             </div>
@@ -27,14 +27,14 @@ const Header = () => {
               <input
                 type={"text"}
                 value={headerValue}
-                className="bg-white h-14 w-[316px] rounded pl-4 focus:outline-none text-gray-600 border border-black"
+                className="bg-white w-[316px] h-14  pl-4 text-gray-600 border border-black rounded focus:outline-none"
                 placeholder="Email"
                 onChange={(el) => {
                   setValue(el.target.value);
                 }}
               />
               <button
-                className="bg-sky-400 font-RouterStyle px-6 md:w-60 2xl:w-auto py-[15px] rounded-md text-white hover:text-sky-200 hover:bg-blue-500 "
+                className="bg-sky-400 py-[15px] px-6 text-white font-RouterStyle rounded-md hover:text-sky-200 hover:bg-blue-500 md:w-60 2xl:w-auto"
                 onClick={() => GetAccess()}
               >
                 Get early access

@@ -9,14 +9,14 @@ const BlogPost = () => {
   const { theme, changeTheme } = useContext(ColorModeContext);
 
   return (
-    <div className="flex flex-col items-center pt-32 px-[120px]  bg-[#F5F5F5]">
+    <div className="bg-[#F5F5F5] pt-32 px-[120px] flex flex-col items-center">
       <div className="flex flex-col self-start">
-        <div className="text-[48px] ont-mulish font-extrabold">Blog Post</div>
-        <div className="text-[18px] font-semibold text-[#6D7D8B] font-mulish pb-[70px]">
+        <div className="text-[48px] font-mulish font-extrabold">Blog Post</div>
+        <div className="pb-[70px] text-[#6D7D8B] text-[18px] font-semibold font-mulish">
           Our latest updates and blogs about managing your team
         </div>
       </div>
-      <div className="w-full gap-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-between pb-10">
+      <div className="w-full pb-10 grid grid-cols-1 justify-between gap-16 md:grid-cols-2 lg:grid-cols-3">
         {Data.map((data, ind) => {
           return (
             <div>
@@ -33,7 +33,7 @@ const BlogPost = () => {
           );
         })}
       </div>
-      <div className="mb-[140px] px-16 py-4 bg-[#dee2e7] text-[#8895a1] rounded-lg cursor-pointer active:bg-[#b3b8bd] flex">
+      <div className="bg-[#dee2e7] mb-[140px] px-16 py-4 rounded-lg text-[#8895a1] flex cursor-pointer active:bg-[#b3b8bd]">
         Next <ChevronRightIcon className="w-4" />
       </div>
     </div>

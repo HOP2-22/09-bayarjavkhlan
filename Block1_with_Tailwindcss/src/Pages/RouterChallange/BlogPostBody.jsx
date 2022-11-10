@@ -6,7 +6,7 @@ const Body = ({ title, comment, avatar, name, image, date, key }) => {
   const { theme, changeTheme } = useContext(ColorModeContext);
 
   return (
-    <div className="max-w-[340px] h-[440px] bg-white overflow-hidden rounded-2xl flex flex-col justify-between ">
+    <div className="max-w-[340px] h-[440px] bg-white rounded-2xl flex flex-col justify-between overflow-hidden">
       <div
         className="h-[147px] bg-cover"
         style={{
@@ -19,9 +19,9 @@ const Body = ({ title, comment, avatar, name, image, date, key }) => {
         <div>
           <img src={avatar} className="w-[45px] h-[45px] rounded-full" alt="" />
         </div>
-        <div className="flex items-center divide-x divide-gray-400 justify-center">
-          <div className="text-sm text-gray-400 pr-2">{name}</div>
-          <div className="text-sm text-gray-400 pl-2">{date}</div>
+        <div className="flex items-center justify-center divide-x divide-gray-400">
+          <div className="pr-2 text-sm text-gray-400">{name}</div>
+          <div className="pl-2 text-sm text-gray-400">{date}</div>
         </div>
       </div>
     </div>
