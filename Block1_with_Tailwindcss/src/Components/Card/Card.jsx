@@ -1,7 +1,7 @@
 import React from "react";
 import { StarIcon } from "@heroicons/react/24/solid";
 
-const Card1 = ({ starNumber, comment, avatar, name }) => {
+const Card = ({ starNumber, comment, avatar, name }) => {
   const star = [
     <StarIcon className="star" />,
     <StarIcon className="star" />,
@@ -24,4 +24,4 @@ const Card1 = ({ starNumber, comment, avatar, name }) => {
   );
 };
 
-export default Card1;
+export default Card;

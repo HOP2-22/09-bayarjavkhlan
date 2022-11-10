@@ -7,11 +7,11 @@ function Info() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/getinfo">
-          <Route index element={<GetInfo/>} />
+        <Route path="/">
+          <Route index element={<GetInfo />} />
           <Route path=":UserId" element={<UserId />} />
         </Route>
-        <Route path="/" element={<GetInfo/>}/>
+        <Route path="/" element={<GetInfo />} />
       </Routes>
     </BrowserRouter>
   );

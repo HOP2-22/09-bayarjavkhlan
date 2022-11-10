@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ColorModeContext } from "./ThemeContext";
 
 const NavBar = () => {
+  const { theme, changeTheme } = useContext(ColorModeContext);
+
   const [offset, setOffset] = useState(0);
   useEffect(() => {
     const onScroll = () => setOffset(window.pageYOffset);
@@ -33,7 +35,6 @@ const NavBar = () => {
       link: "/LogIn",
     },
   ];
-  console.log(offset);
   return (
     <div
       className={`w-screen h-20 z-10 fixed drop-shadow-lg ${
@@ -54,9 +55,9 @@ const NavBar = () => {
               return (
                 <li
                   key={index}
-                  className={`text-white cursor-pointer hover:text-gray-300 ${
+                  className={`text-white cursor-pointer hover:text-gray-300 underline decoration-1 underline-offset-2 decoration-gray-500 hover:animate-bounce hover:no-underline ${
                     offset >= window.innerHeight
-                      ? "text-gray-400 hover:text-gray-600"
+                      ? "text-[#6D7D8B] hover:text-[#5a636a] decoration-[#6D7D8B]"
                       : "text-white"
                   }`}
                 >
@@ -65,11 +66,12 @@ const NavBar = () => {
               );
             })}
             <li
-              className={`py-3 px-7 rounded-lg border-white bg-white text-gray-700 hover:text-gray-200 hover:border-gray- hover:bg-gray-700 cursor-pointer    
+              className={`py-3 px-7 rounded-lg border-2 border-[#89857e] text-[#9d9994] hover:text-gray-200 hover:border-gray-300 cursor-pointer    
               `}
               style={{
-                backgroundColor: offset >= window.innerHeight ? "#1e293b" : "",
-                color: offset >= window.innerHeight ? "#fff" : "",
+                backgroundColor: offset >= window.innerHeight ? "#ecf6ff" : "",
+                color: offset >= window.innerHeight ? "#4da1fd" : "",
+                borderColor: offset >= window.innerHeight ? "#5377f8" : "",
               }}
             >
               Get access

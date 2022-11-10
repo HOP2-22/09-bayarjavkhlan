@@ -1,8 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import users from "../../JS/users.json"
+import users from "../../JS/users.json";
 import UserCard from "./UserCard";
-
 
 function GetInfo() {
   const [output, setOutput] = useState(users);
@@ -29,7 +28,7 @@ function GetInfo() {
       {output.map((userData, index) => {
         return (
           <>
-            <UserCard userData={userData}/>
+            <UserCard userData={userData} />
           </>
         );
       })}

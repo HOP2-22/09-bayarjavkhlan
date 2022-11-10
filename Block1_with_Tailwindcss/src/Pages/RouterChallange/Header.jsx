@@ -34,7 +34,7 @@ const Header = () => {
                 }}
               />
               <button
-                className="bg-sky-400 font-RouterStyle px-6 py-[15px] rounded-md text-white hover:text-sky-200 hover:bg-blue-500"
+                className="bg-sky-400 font-RouterStyle px-6 md:w-60 2xl:w-auto py-[15px] rounded-md text-white hover:text-sky-200 hover:bg-blue-500 "
                 onClick={() => GetAccess()}
               >
                 Get early access

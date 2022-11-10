@@ -1,4 +1,4 @@
-const cardData1 = [
+const cardData = [
   {
     star: 1,
     comment:
@@ -33,4 +33,4 @@ const cardData1 = [
   },
 ];
 
-export default cardData1;
+export default cardData;

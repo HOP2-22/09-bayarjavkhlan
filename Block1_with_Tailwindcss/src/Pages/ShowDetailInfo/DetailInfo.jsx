@@ -4,7 +4,9 @@ const DetailInfo = ({ el }) => {
   console.log(el);
   return (
     <div className="pl-20 pt-10">
-      <p className="text-center font-bold text-4xl bg-clip-text text-transparent bg-gradient-to-r from-rose-600 via-pink-400 to-red-700">{el.username}`s full address</p>
+      <p className="text-center font-bold text-4xl bg-clip-text text-transparent bg-gradient-to-r from-rose-600 via-pink-400 to-red-700">
+        {el.username}`s full address
+      </p>
       <div className="flex  gap-10 h-40">
         <img src={el.avatar} width={160} alt="" />
         <div className="flex flex-col justify-evenly h-48">
@@ -25,7 +27,9 @@ const DetailInfo = ({ el }) => {
           <p className="elFont text-lg">Country: {el.address.country}</p>
           <p className="elFont text-lg">City: {el.address.city}</p>
           <p className="elFont text-lg">State: {el.address.state}</p>
-          <p className="elFont text-lg">Street Name: {el.address.street_name}</p>
+          <p className="elFont text-lg">
+            Street Name: {el.address.street_name}
+          </p>
         </div>
         <p className="infoText">Employment</p>
         <div className="grid grid-cols-2 gap-6 ">

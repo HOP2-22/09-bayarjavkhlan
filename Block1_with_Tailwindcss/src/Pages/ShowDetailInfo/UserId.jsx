@@ -9,7 +9,7 @@ const UserId = () => {
     <div className="">
       {users.map((el) => {
         return el.username.toLowerCase() === UserId ? (
-          <DetailInfo el={el}/>
+          <DetailInfo el={el} />
         ) : (
           <div></div>
         );
