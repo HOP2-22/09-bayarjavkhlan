@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./Header.jsx";
+import Header from "./HomeHeader.jsx";
 import Layout from "./Layout.jsx";
 import Products from "./Products";
 import Services from "./Services";
@@ -7,6 +7,7 @@ import Contact from "./Contact";
 import LogIn from "./LogIn";
 import BlogPost from "./BlogPost";
 import ThemeContext from "./ThemeContext";
+// import SecretsForManaging from "./SecretsForManaging";
 
 const Index = () => {
   console.log(Route);
@@ -21,6 +22,10 @@ const Index = () => {
             <Route path="/Contact" element={<Contact />} />
             <Route path="/LogIn" element={<LogIn />} />
             <Route path="/BlogPost" element={<BlogPost />} />
+            {/* <Route
+              path="/SecretsForManaging"
+              element={<SecretsForManaging />}
+            /> */}
           </Routes>
         </Layout>
       </BrowserRouter>

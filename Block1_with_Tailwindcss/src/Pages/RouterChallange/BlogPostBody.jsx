@@ -1,28 +1,34 @@
 import React from "react";
-import { ColorModeContext } from "./ThemeContext";
-import { useContext } from "react";
 
-const Body = ({ title, comment, avatar, name, image, date, key }) => {
-  const { theme, changeTheme } = useContext(ColorModeContext);
-
+const Body = ({
+  firstName,
+  lastName,
+  erPicture,
+  date,
+  type,
+  text,
+  likes,
+  petImage,
+  key,
+}) => {
   return (
-    <div className="max-w-[340px] h-[440px] bg-white rounded-2xl flex flex-col justify-between overflow-hidden">
+    <div className="max-w-[340px] h-[600px] bg-white rounded-2xl flex flex-col gap-4 overflow-hidden">
       <div
-        className="h-[147px] bg-cover"
+        className="h-[350px] w-full bg-cover"
         style={{
-          backgroundImage: `url(${image})`,
+          backgroundImage: `url(${petImage})`,
         }}
       ></div>
-      <div className="p-8 text-gray-800 text-2xl font-medium">{title}</div>
-      <div className="px-8">{comment}</div>
-      <div className="pl-8 p-4 flex gap-5">
-        <div>
-          <img src={avatar} className="w-[45px] h-[45px] rounded-full" alt="" />
-        </div>
-        <div className="flex items-center justify-center divide-x divide-gray-400">
-          <div className="pr-2 text-sm text-gray-400">{name}</div>
-          <div className="pl-2 text-sm text-gray-400">{date}</div>
-        </div>
+      <img src={erPicture} alt="" />
+      <div className="px-8 text-xl">{text}</div>
+      <div className="px-8">
+        <span className="pr-2 text-blue-700 text-lg">likes:</span>
+        <span className="text-sky-300">{likes}</span>
+      </div>
+      <div className="px-8 font-medium">pet:{type[2]}</div>
+      <div className="pl-8 flex flex-col gap-1 font-medium">
+        <div className="">LastName: {lastName}</div>
+        <div className="">firstName:{firstName}</div>
       </div>
     </div>
   );
