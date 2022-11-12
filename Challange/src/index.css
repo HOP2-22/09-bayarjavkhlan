@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  @screen sm {
+  }
+  @screen md {
+  }
+  @screen lg {
+  }
+  @screen xl {
+  }
+  @screen 2xl {
+  }
+
+  .button {
+    @apply px-4 py-3 bg-blue-500 rounded;
+  }
+  .cardStar {
+    @apply w-6 fill-yellow-400;
+  }
+  .detailInfoFont {
+    @apply font-medium text-xl text-gray-700;
+  }
+  .detailInfoText {
+    @apply py-7 text-2xl font-semibold;
+  }
+  .routerNav {
+    @apply text-white font-medium text-lg;
+  }
+  .routerFooterText {
+    @apply font-semibold font-mulish capitalize text-gray-200 text-xl;
+  }
+  .routerNavOffset {
+    @apply bg-[#ecf6ff] text-[#4da1fd] border-[#5377f8] hover:border-blue-500 hover:bg-[#4da1fd] hover:text-white;
+  }
+}
