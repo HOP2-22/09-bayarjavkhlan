@@ -25,9 +25,9 @@ const Main = () => {
             setInputValue(e.target.value);
           }}
           onKeyDown={(e) => {
-            if (e.key == "Enter" && inputValue !== "") {
-              let a = list.find((listItem) => listItem == inputValue);
-              if (a == undefined) {
+            if (e.key === "Enter" && inputValue !== "") {
+              let a = list.find((listItem) => listItem === inputValue);
+              if (a === undefined) {
                 setList([inputValue, ...list]);
               } else {
                 setList([
@@ -43,8 +43,8 @@ const Main = () => {
           className="button"
           onClick={() => {
             if (inputValue !== "") {
-              let a = list.find((listItem) => listItem == inputValue);
-              if (a == undefined) {
+              let a = list.find((listItem) => listItem === inputValue);
+              if (a === undefined) {
                 setList([inputValue, ...list]);
               } else {
                 setList([

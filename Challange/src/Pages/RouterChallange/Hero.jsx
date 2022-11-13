@@ -27,21 +27,21 @@ const Hero = () => {
             communication into one place.
           </div>
           <div className="flex">
-            <div className="text-cyan-500 text-lg cursor-pointer hover:text-cyan-600">
+            <div className="text-light-blue-500 text-lg cursor-pointer hover:text-cyan-600">
               Learn more
             </div>
-            <ArrowLongRightIcon className="w-4 pb-5 stroke-cyan-500" />
+            <ArrowLongRightIcon className="w-4 pb-5 stroke-light-blue-500" />
           </div>
         </div>
         <div className="relative">
           <img src={Meeting} alt="" className="" />
           <div className="absolute -top-3 left-96">
-            <div className="bg-yellow-500 w-16 h-16 rounded-lg flex justify-center items-center">
+            <div className="bg-yellow-700 w-16 h-16 rounded-lg flex justify-center items-center">
               <BellAlertIcon className="absolute z-10 w-8 fill-white" />
             </div>
           </div>
           <div className="absolute bottom-60">
-            <div className="bg-yellow-500 w-16 h-16 rounded-lg flex justify-center items-center">
+            <div className="bg-yellow-700 w-16 h-16 rounded-lg flex justify-center items-center">
               <CalendarDaysIcon className="absolute z-10 w-8 fill-white" />
             </div>
           </div>
@@ -59,10 +59,10 @@ const Hero = () => {
             communication into one place.
           </div>
           <div className="flex">
-            <div className="text-cyan-500 text-lg cursor-pointer hover:text-cyan-600">
+            <div className="text-light-blue-500 text-lg cursor-pointer hover:text-cyan-600">
               Learn more
             </div>
-            <ArrowLongRightIcon className="w-4 pb-5 stroke-cyan-500" />
+            <ArrowLongRightIcon className="w-4 pb-5 stroke-light-blue-500" />
           </div>
         </div>
         <div className="relative">
@@ -83,10 +83,10 @@ const Hero = () => {
             communication into one place.
           </div>
           <div className="flex">
-            <div className="text-cyan-500 text-lg cursor-pointer hover:text-cyan-600">
+            <div className="text-light-blue-500 text-lg cursor-pointer hover:text-cyan-600">
               Learn more
             </div>
-            <ArrowLongRightIcon className="pb-5 w-4 stroke-cyan-500" />
+            <ArrowLongRightIcon className="pb-5 w-4 stroke-light-blue-500" />
           </div>
         </div>
         <div className="relative pr-28">
