@@ -1,5 +1,5 @@
-import NavBar from "./NavBar";
-import Footer from "./Footer";
+import NavBar from "../../Components/Router/NavBar";
+import Footer from "../../Components/Router/Footer";
 
 const Layout = ({ children }) => {
   return (

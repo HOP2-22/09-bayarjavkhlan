@@ -1,13 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./HomeHeader.jsx";
-import Layout from "./Layout.jsx";
-import Products from "./Products";
+import Layout from "./Layout";
 import Services from "./Services";
 import Contact from "./Contact";
 import LogIn from "./LogIn";
-import BlogPostData from "./BlogPostData";
-import ThemeContext from "./ThemeContext";
-import PetId from "./PetId";
+import Blog from "./Blog";
+import ThemeContext from "../../Context/RouterContext/ThemeContext";
+import PostId from "./PostId";
 
 const Index = () => {
   console.log(Route);
@@ -17,12 +16,11 @@ const Index = () => {
         <Layout>
           <Routes>
             <Route path="/" element={<Header />} />
-            <Route path="/Products" element={<Products />} />
             <Route path="/Services" element={<Services />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/LogIn" element={<LogIn />} />
-            <Route path="/BlogPost" element={<BlogPostData />} />
-            <Route path=":PetId" element={<PetId />} />
+            <Route path="/Blog" element={<Blog />} />
+            <Route path="/Blog/:Id" element={<PostId />} />
           </Routes>
         </Layout>
       </BrowserRouter>

@@ -5,7 +5,7 @@ import Card from "./Card";
 const CartData = () => {
   return (
     <div className="bg-gray-200 pt-24 pb-40 px-40 flex justify-center gap-64 overflow-scroll">
-      {CardData.map((data, ind) => {
+      {CardData?.map((data, ind) => {
         return (
           <Card
             starNumber={data.star}
