@@ -33,6 +33,8 @@ module.exports = {
       fontFamily: {
         sans: ["Montserrat", "sans"],
         main: ["montserrat"],
+        mukta: ["Mukta"],
+        mulish: ["Mulish"],
       },
       colors: {
         red: {

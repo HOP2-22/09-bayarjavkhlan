@@ -6,11 +6,13 @@ import { FaSpinner } from "react-icons/fa";
 import Post from "./Post";
 
 const Blog = () => {
-  const { Loading, Data } = useContext(ColorModeContext);
+  const { Loading, Data, theme, changeTheme } = useContext(ColorModeContext);
 
   return (
     <>
-      <div className="bg-[#F5F5F5] pt-32 flex flex-col items-center justify-center">
+      <div
+        className={`${"bg-[#F5F5F5]"} pt-32 flex flex-col items-center justify-center`}
+      >
         <button
           type="button"
           disabled
@@ -21,7 +23,7 @@ const Blog = () => {
           <FaSpinner class="animate-spin h-5 w-5 mr-3" color="white" />
           <p className="font-semibold text-white"> Loading</p>
         </button>
-        <div className="flex flex-col pl-80">
+        <div className="w-full flex flex-col pl-80 justify-self-start">
           <div className="text-[48px] font-mulish font-extrabold">
             Blog Post
           </div>
@@ -30,7 +32,7 @@ const Blog = () => {
           </div>
         </div>
         <div
-          className={`pb-10 grid-cols-1 gap-8 items-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${
+          className={`pb-10 grid-cols-1 gap-[105px] items-center lg:grid-cols-2 xl:grid-cols-3 ${
             Loading ? "hidden" : "grid"
           }`}
         >

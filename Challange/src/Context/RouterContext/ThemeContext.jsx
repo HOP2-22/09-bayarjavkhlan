@@ -9,7 +9,7 @@ const instance = axios.create({
 
 export const ColorModeContext = createContext();
 const ThemeContext = ({ children }) => {
-  const [theme, setTheme] = useState(true);
+  const [theme, setTheme] = useState(false);
 
   const ColorModeChange = () => {
     setTheme(!theme);
