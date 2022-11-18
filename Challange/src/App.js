@@ -1,4 +1,4 @@
-import Index from "./Pages/RouterChallange/Index";
+import Index from "./Pages/Giphy/GiphyIndex";
 
 const App = () => {
   return (

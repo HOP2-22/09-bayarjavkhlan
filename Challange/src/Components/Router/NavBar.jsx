@@ -41,9 +41,13 @@ const NavBar = () => {
     <div
       className={`fixed z-10 w-screen h-20 drop-shadow-lg ${
         window.location.pathname !== "/"
-          ? "bg-white"
+          ? theme
+            ? "bg-light-blue-500"
+            : "bg-white"
           : offset <= window.innerHeight
           ? "bg-transparent"
+          : theme
+          ? "bg-light-blue-500"
           : "bg-white"
       }`}
     >

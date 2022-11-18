@@ -11,8 +11,8 @@ import PostId from "./PostId";
 const Index = () => {
   console.log(Route);
   return (
-    <ThemeContext>
-      <BrowserRouter>
+    <BrowserRouter>
+      <ThemeContext>
         <Layout>
           <Routes>
             <Route path="/" element={<Header />} />
@@ -23,8 +23,8 @@ const Index = () => {
             <Route path="/Blog/:Id" element={<PostId />} />
           </Routes>
         </Layout>
-      </BrowserRouter>
-    </ThemeContext>
+      </ThemeContext>
+    </BrowserRouter>
   );
 };
 

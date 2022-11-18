@@ -33,18 +33,16 @@ const ThemeContext = ({ children }) => {
   }, []);
 
   return (
-    <div>
-      <ColorModeContext.Provider
-        value={{
-          theme: theme,
-          changeTheme: ColorModeChange,
-          Data: Data,
-          Loading: Loading,
-        }}
-      >
-        {children}
-      </ColorModeContext.Provider>
-    </div>
+    <ColorModeContext.Provider
+      value={{
+        theme: theme,
+        changeTheme: ColorModeChange,
+        Data: Data,
+        Loading: Loading,
+      }}
+    >
+      {children}
+    </ColorModeContext.Provider>
   );
 };
 

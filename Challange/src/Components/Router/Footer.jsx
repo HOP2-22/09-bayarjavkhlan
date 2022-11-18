@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ColorModeContext } from "../../Context/RouterContext/ThemeContext";
 
 const Footer = () => {
+  const { theme } = useContext(ColorModeContext);
   return (
-    <div className="bg-[rgba(37,43,59,255)] h-[336px] flex flex-col items-center">
+    <div
+      className={`${
+        theme ? "bg-light-blue-700" : "bg-[rgba(37,43,59,255)]"
+      } h-[336px] flex flex-col items-center`}
+    >
       <div className="flex gap-28">
         <div className="text-white text-5xl flex items-center">
           Team <div className="bg-cyan-400 w-2 h-2 mt-2"></div>

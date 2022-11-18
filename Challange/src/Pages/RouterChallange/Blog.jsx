@@ -11,7 +11,9 @@ const Blog = () => {
   return (
     <>
       <div
-        className={`${"bg-[#F5F5F5]"} pt-32 flex flex-col items-center justify-center`}
+        className={`${
+          theme ? "bg-blue-900" : "bg-[#F5F5F5]"
+        } pt-32 flex flex-col items-center justify-center`}
       >
         <button
           type="button"
@@ -53,7 +55,11 @@ const Blog = () => {
             );
           })}
         </div>
-        <div className="bg-[#dee2e7] mb-[140px] px-16 py-4 rounded-lg text-[#8895a1] flex cursor-pointer active:bg-[#b3b8bd]">
+        <div
+          className={`${
+            theme ? "bg-white " : "bg-[#dee2e7]"
+          } mb-[140px] px-16 py-4 rounded-lg flex cursor-pointer active:bg-[#b3b8bd]`}
+        >
           Next <ChevronRightIcon className="w-4" />
         </div>
       </div>

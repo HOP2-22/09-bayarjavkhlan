@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ColorModeContext } from "../../Context/RouterContext/ThemeContext";
 import {
   ArrowLongRightIcon,
   CalendarDaysIcon,
@@ -13,14 +14,28 @@ import Event2 from "../../IMG/event3.png";
 import CardIndex from "../../Components/Card/CardIndex";
 
 const Hero = () => {
+  const { theme } = useContext(ColorModeContext);
+
   return (
     <>
-      <div className="bg-gray-200 py-[170px] flex justify-between items-center">
+      <div
+        className={`${
+          theme ? "bg-blue-900" : "bg-gray-200"
+        } py-[170px] flex justify-between items-center`}
+      >
         <div className="w-[550px] pl-40">
-          <div className=" font-bold text-5xl pb-[40px]">
+          <div
+            className={`${
+              theme ? "text-gray-100" : "text-black"
+            } pb-[40px] font-bold text-5xl`}
+          >
             Your Hub for teamwork
           </div>
-          <div className="text-xl pb-[50px]">
+          <div
+            className={`${
+              theme ? "text-gray-100" : "text-black"
+            } pb-[50px] text-xl`}
+          >
             Give everyone you work with—inside and outside your company—a more
             productive way to stay in sync. Respond faster with emoji, keep
             conversations focused in channels, and simplify all your
@@ -47,12 +62,24 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="bg-gray-200 py-[170px] flex flex-row-reverse gap-[200px] justify-end items-center">
+      <div
+        className={`${
+          theme ? "bg-blue-900" : "bg-gray-200"
+        } py-[170px] flex flex-row-reverse gap-[200px] justify-end items-center`}
+      >
         <div className="w-[550px]">
-          <div className="pb-[40px] font-bold text-5xl">
+          <div
+            className={`${
+              theme ? "text-gray-100" : "text-black"
+            } pb-[40px] font-bold text-5xl`}
+          >
             Simple task management
           </div>
-          <div className="pb-[50px] text-xl">
+          <div
+            className={`${
+              theme ? "text-gray-100" : "text-black"
+            } pb-[50px] text-xl`}
+          >
             Give everyone you work with—inside and outside your company—a more
             productive way to stay in sync. Respond faster with emoji, keep
             conversations focused in channels, and simplify all your
@@ -71,12 +98,24 @@ const Hero = () => {
           <img src={Event2} alt="" className="absolute right-0 top-48" />
         </div>
       </div>
-      <div className="bg-gray-200 py-[170px] flex justify-between items-center">
+      <div
+        className={`${
+          theme ? "bg-blue-900" : "bg-gray-200"
+        } py-[170px] flex justify-between items-center`}
+      >
         <div className="pl-40 w-[550px]">
-          <div className="pb-[40px] text-5xl font-bold">
+          <div
+            className={`${
+              theme ? "text-gray-100" : "text-black"
+            } pb-[40px] font-bold text-5xl`}
+          >
             Scheduling that actually works
           </div>
-          <div className="pb-[50px] text-xl">
+          <div
+            className={`${
+              theme ? "text-gray-100" : "text-black"
+            } pb-[50px] text-xl`}
+          >
             Give everyone you work with—inside and outside your company—a more
             productive way to stay in sync. Respond faster with emoji, keep
             conversations focused in channels, and simplify all your
@@ -94,7 +133,11 @@ const Hero = () => {
           <img src={Calendar} alt="" className="absolute top-20 left-10" />
         </div>
       </div>
-      <div className="bg-gray-200 py-14 text-center text-5xl font-bold">
+      <div
+        className={`${
+          theme ? "text-gray-100 bg-blue-900" : "text-black bg-gray-200"
+        }  py-14 text-center text-5xl font-bold`}
+      >
         What people say about us
       </div>
       <CardIndex />

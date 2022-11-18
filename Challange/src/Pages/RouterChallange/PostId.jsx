@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
 import { TrashIcon } from "@heroicons/react/24/solid";
-import NoWorkResult from "postcss/lib/no-work-result";
+import { ColorModeContext } from "../../Context/RouterContext/ThemeContext";
 
 const Profile = {
   name: "Batgerel Bayrjavkhlan",
@@ -48,13 +48,28 @@ const PostId = () => {
     setCommentValue("");
   };
   const date = data?.publishDate.slice(0, 10);
+
+  const { theme } = useContext(ColorModeContext);
+
   return (
-    <div className="pt-68 flex flex-col items-center">
+    <div
+      className={`${
+        theme ? "bg-blue-900" : "bg-white"
+      }  pt-68 flex flex-col items-center`}
+    >
       <div className="flex flex-col gap-[23px] w-[700px]">
-        <h1 className="text-[48px] font-extrabold leading-[80px] font-mukta">
+        <h1
+          className={`${
+            theme ? "text-white" : "text-black"
+          } text-[48px] font-extrabold leading-[80px] font-mukta`}
+        >
           {data?.text}
         </h1>
-        <div className="flex items-center gap-[15px] text-[#6D7D8B]">
+        <div
+          className={`${
+            theme ? "text-gray-300" : "text-[#6D7D8B]"
+          } flex items-center gap-[15px]`}
+        >
           <img
             src={data?.owner.picture}
             className="font-semibold font-mulish w-14 h-14 rounded-full"
@@ -70,7 +85,11 @@ const PostId = () => {
         </div>
       </div>
       <img src={data?.image} alt="" className="w-[900px] py-[61px]" />
-      <div className="text-justify w-[700px] text-[#25313C] text-lg font-mulish font-medium pb-[56px]">
+      <div
+        className={`${
+          theme ? "text-gray-300" : "text-[#25313C]"
+        } text-justify w-[700px] text-lg font-mulish font-medium pb-[56px]`}
+      >
         If you’re thinking of starting a blog of your own, but just don’t have a
         clue on what to blog about, then fear not! <br />
         <br /> In this article, I have included a whole load of blog examples
@@ -110,12 +129,28 @@ const PostId = () => {
           className="w-14 h-14 rounded-full"
         />
         <div className=" flex flex-col pb-20">
-          <p className="font-[mulish] text-[#1E2742]">Written By</p>
-          <div className="flex font-light text-2xl text-[#25313C]">
+          <p
+            className={`${
+              theme ? "text-gray-400" : "text-[#1E2742]"
+            } font-[mulish] `}
+          >
+            Written By
+          </p>
+          <div
+            className={`${
+              theme ? "text-gray-200" : "text-[#25313C]"
+            } flex font-light text-2xl `}
+          >
             <p className="pr-3">{data?.owner.firstName}</p>
             <p>{data?.owner.lastName}</p>
           </div>
-          <p className="text-[#989898] font-[mulish]">{data?.owner.title}</p>
+          <p
+            className={`${
+              theme ? "text-gray-600" : "text-[#989898]"
+            } font-[mulish]`}
+          >
+            {data?.owner.title}
+          </p>
         </div>
       </div>
       <div className="h-[2px] w-[700px] bg-gray-300 rounded-xl"></div>
@@ -146,12 +181,22 @@ const PostId = () => {
                   </div>
                   <div className="pl-[10px]">{Profile?.date}</div>
                 </div>
-                <div className="text-mukta">{el}</div>
+                <div
+                  className={`${
+                    theme ? "text-gray-100" : "text-black"
+                  } text-mukta`}
+                >
+                  {el}
+                </div>
               </div>
             </div>
             <div className="">
               <TrashIcon
-                className="w-6 h-6 stroke-black fill-white stroke-2 cursor-pointer"
+                className={`${
+                  theme
+                    ? "stroke-white fill-light-blue-400"
+                    : "stroke-black fill-white"
+                } w-6 h-6 stroke-2 cursor-pointer`}
                 onClick={() => deleteItem(index)}
               />
             </div>
@@ -159,7 +204,9 @@ const PostId = () => {
         ))}
       </div>
       <div className="w-[700px] flex flex-col gap-3 pt-[51px]">
-        <p className="text-3xl text-[#6D7D8B]">Join the conversation</p>
+        <p className={`${theme ? "text-gray-100" : "text-[#6D7D8B]"} text-3xl`}>
+          Join the conversation
+        </p>
         <div className="w-[700px] flex gap-[15px] pb-40">
           <img
             src={Profile?.profilePic}
@@ -168,7 +215,9 @@ const PostId = () => {
           />
           <textarea
             type="text"
-            className="w-full h-48 font-mulish text-md text-gray-600 p-4 border-2 border-[#BBC8D4] rounded-2xl focus:outline-none"
+            className={`${
+              theme ? "text-gray-800" : "text-gray-600"
+            } w-full h-48 font-mulish text-md  p-4 border-2 border-[#BBC8D4] rounded-2xl focus:outline-none`}
             placeholder="Comment"
             value={commentValue}
             onChange={(e) => setCommentValue(e.target.value)}

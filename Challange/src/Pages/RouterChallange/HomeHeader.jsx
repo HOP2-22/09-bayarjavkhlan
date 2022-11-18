@@ -1,13 +1,14 @@
 import React from "react";
 import BgImg from "../../IMG/infoWeb.jpg";
 import Hero from "./Hero";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 const Header = () => {
   const [headerValue, setValue] = useState("");
   const GetAccess = () => {
     console.log(headerValue);
   };
+
   return (
     <>
       <div
