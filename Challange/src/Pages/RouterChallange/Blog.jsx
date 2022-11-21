@@ -22,10 +22,10 @@ const Blog = () => {
             Loading ? "flex" : "hidden"
           }  bg-indigo-500 p-2 rounded-lg`}
         >
-          <FaSpinner class="animate-spin h-5 w-5 mr-3" color="white" />
+          <FaSpinner class="h-5 w-5 mr-3 animate-spin" color="white" />
           <p className="font-semibold text-white"> Loading</p>
         </button>
-        <div className="w-full flex flex-col pl-80 justify-self-start">
+        <div className="w-full pl-80 flex flex-col justify-self-start">
           <div className="text-[48px] font-mulish font-extrabold">
             Blog Post
           </div>

@@ -28,6 +28,8 @@ export function Provider({ children }) {
     getData();
   }, [inputvalue]);
   return (
-    <Context.Provider value={{ data, setValue }}>{children}</Context.Provider>
+    <Context.Provider value={{ data, setValue, inputvalue }}>
+      {children}
+    </Context.Provider>
   );
 }
