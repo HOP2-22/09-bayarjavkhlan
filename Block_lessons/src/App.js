@@ -1,9 +1,9 @@
-import Index from "./Pages/RouterChallange/Index";
+import StopWatch from "./Components/useEffect/Stopwatch";
 
 const App = () => {
   return (
     <div>
-      <Index />
+      <StopWatch />
     </div>
   );
 };

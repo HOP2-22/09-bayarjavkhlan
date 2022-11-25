@@ -1,10 +1,10 @@
 import React from "react";
-import Index from "./Pages/Giphy/GiphyIndex";
+import GameIndex from "./Components/Game/GameIndex";
 
 const App = () => {
   return (
     <div>
-      <Index />
+      <GameIndex />
     </div>
   );
 };

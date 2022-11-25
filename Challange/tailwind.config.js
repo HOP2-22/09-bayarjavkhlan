@@ -338,6 +338,7 @@ module.exports = {
         150: "150deg",
       },
       transitionDuration: {
+        50: "50ms",
         400: "400ms",
         600: "600ms",
         800: "800ms",
