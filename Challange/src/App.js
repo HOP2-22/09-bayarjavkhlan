@@ -1,10 +1,10 @@
 import React from "react";
-import GameIndex from "./Components/Game/GameIndex";
+import MemoryCardGame from "./Components/MemoryCardGame/MemoryCardGame";
 
 const App = () => {
   return (
     <div>
-      <GameIndex />
+      <MemoryCardGame />
     </div>
   );
 };
