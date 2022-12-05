@@ -1,39 +1,85 @@
-import React, { useState, useEffect } from "react";
-import { isCompositeComponent } from "react-dom/test-utils";
+import React, { useState } from "react";
 import Image from "./image";
-
+import "./Memory.css";
 const MemoryCardGame = () => {
-  const [click, setClick] = useState(false);
+  const [first, setFirst] = useState(null);
+  const [firstIndex, setFirstIndex] = useState(null);
+
   const [image, setImage] = useState(
     Image.sort(() => {
       return Math.random() - 0.5;
     })
   );
 
+  const flip = (index) => {
+    const newArr = image;
+    newArr[index].pick = !newArr[index].pick;
+    setImage([...newArr]);
+  };
+
+  // const flipBackTrue = (first, second) => {};
+  const flipBackFalse = () => {
+    setImage(
+      image.map((el) => {
+        el.pick = false;
+        return el;
+      })
+    );
+  };
+  const checkId = (id, index) => {
+    if (first == null) {
+      setFirst(id);
+      setFirstIndex(index);
+      return;
+    }
+    if (firstIndex !== index) {
+      if (first === id) {
+        console.log("same");
+        console.log(firstIndex, first);
+      } else {
+        console.log(firstIndex, first);
+        console.log("notSame");
+        setTimeout(() => {
+          flipBackFalse(id);
+          flipBackFalse(first);
+        }, 500);
+      }
+    } else if (firstIndex !== null) {
+      console.log(firstIndex, first);
+      setFirst(null);
+      setFirstIndex(null);
+      return;
+    }
+  };
+
   return (
     <div className="h-screen flex justify-center items-center">
       <div className="grid grid-cols-4 gap-6 items-center justify-center p-10 bg-purple-700">
-        {image.map((el, id) => {
+        {image.map((el, index) => {
           return (
             <div
-              className="relative w-[200px] h-[200px] rounded-2xl overflow-hidden transform transition-transform duration-500"
-              style={{
-                transform: `rotateY(${el.pick ? 180 : 0}deg)`,
+              className="flip-card rounded-xl overflow-hidden"
+              key={index}
+              onClick={() => {
+                flip(index);
+                checkId(el.id, index);
               }}
-              key={id}
             >
-              <img
-                src={el.src}
-                alt=""
-                className="absolute z-10 w-[200px] h-[200px]"
-                onClick={() => {
-                  const newArr = image;
-                  newArr[id].pick = !newArr[id].pick;
-                  setImage([...newArr]);
-                  console.log(image);
+              <div
+                className="flip-card-inner"
+                style={{
+                  transform: `rotateY(${!el.pick ? "180deg" : "0deg"})`,
                 }}
-              />
-              <div className="absolute w-full h-full bg-blue-gray-50"></div>
+              >
+                <div className="flip-card-front">
+                  <img
+                    src={el.src}
+                    alt="Avatar"
+                    style={{ width: "250px", height: "250px" }}
+                  />
+                </div>
+                <div className="flip-card-back bg-light-blue-400"></div>
+              </div>
             </div>
           );
         })}
