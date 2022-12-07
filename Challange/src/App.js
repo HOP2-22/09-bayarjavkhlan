@@ -1,10 +1,10 @@
 import React from "react";
-import MemoryCardGame from "./Components/MemoryCardGame/MemoryCardGame";
+import Index from "./Components/MemoryMath/Index";
 
 const App = () => {
   return (
     <div>
-      <MemoryCardGame />
+      <Index />
     </div>
   );
 };
