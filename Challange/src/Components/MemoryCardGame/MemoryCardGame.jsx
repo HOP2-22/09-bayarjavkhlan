@@ -75,7 +75,7 @@ const MemoryCardGame = () => {
             <div
               className={`${
                 el.same === true ? "opacity-0" : "opacity-100"
-              } flip-card rounded-xl overflow-hidden`}
+              } flip-card `}
               key={index}
               onClick={() => {
                 flip(index);
@@ -88,14 +88,15 @@ const MemoryCardGame = () => {
                   transform: `rotateY(${!el.pick ? "180deg" : "0deg"})`,
                 }}
               >
-                <div className="flip-card-front">
+                <div className="flip-card-front rounded-xl">
                   <img
                     src={el.src}
                     alt="Avatar"
+                    className="rounded-xl"
                     style={{ width: "250px", height: "250px" }}
                   />
                 </div>
-                <div className="flip-card-back bg-purple-accent-400">
+                <div className="flip-card-back bg-purple-accent-400 rounded-xl">
                   {el.id}
                 </div>
               </div>
