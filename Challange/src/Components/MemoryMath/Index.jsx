@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react";
 const Index = () => {
   const [item, setItem] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   const [num, setNum] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const [result, setResult] = useState();
+  const [numVisible, setNumVisible] = useState(false);
+  const [visibleFinish, setVisibleFinish] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [comment, setComment] = useState(false);
   const start = () => {
-    setVisible(true);
+    setNumVisible(true);
     setTimeout(() => {
-      setVisible(false);
+      setNumVisible(false);
+      setVisibleFinish(true);
     }, 3000);
   };
   const generate = () => {
@@ -20,21 +22,15 @@ const Index = () => {
     generate();
   }, []);
 
-  const check = (index) => {
-    setNum((prev) => prev.concat(index));
+  const putNum = (index) => {
+    setNum((prev) => [...prev, index]);
+  };
+
+  const check = () => {
     console.log(num);
-    if (num.length === 9) {
-      for (let i = 0; i < num; i++) {
-        if (num[i] !== i + 1) {
-          i = 10;
-          setResult("Taarsangui");
-        } else {
-          setResult("Taarlaa");
-        }
-      }
-      console.log(result);
-      result !== "Taarsangui" && setShowResult(true);
-    }
+    num === [1, 2, 3, 4, 5, 6, 7, 8, 9] ? setComment(false) : setComment(true);
+    setShowResult(true);
+    console.log(comment);
   };
 
   return (
@@ -47,30 +43,47 @@ const Index = () => {
                 className="bg-lime-500 border-teal-500 w-40 h-40 flex items-center justify-center text-white text-2xl"
                 key={index}
                 onClick={() => {
-                  check(el);
+                  putNum(el);
                 }}
               >
-                {visible && el}
+                {numVisible && el}
                 {el}
               </div>
             );
           })}
         </div>
-        <button
-          className="px-14 py-6 rounded-3xl bg-deep-orange-accent-400"
-          onClick={() => {
-            start();
-          }}
-        >
-          Start
-        </button>
+        <div className="flex gap-12">
+          <button
+            className="px-12 py-5 rounded-3xl bg-deep-orange-accent-400 text-white text-lg"
+            onClick={() => {
+              start();
+            }}
+          >
+            Start
+          </button>
+          <button
+            className={`${
+              visibleFinish ? "block" : "hidden"
+            } px-12 py-5 rounded-3xl bg-green-600 text-white text-lg`}
+            onClick={() => {
+              check();
+              console.log(num);
+            }}
+          >
+            Check Result
+          </button>
+        </div>
       </div>
       <div
         className={`${
           showResult ? "flex" : "hidden"
         } absolute z-30 w-full h-screen bg-black/40 top-0 justify-center items-center`}
       >
-        <div className="w-[300px] h-[400px] bg-white p-10 flex flex-col justify-between items-center"></div>
+        <div className="w-[300px] h-[400px] bg-white p-10 flex flex-col justify-between items-center">
+          <p>
+            {comment ? "Congratulation" : "unlucky eventhough next success"}
+          </p>
+        </div>
       </div>
     </>
   );
