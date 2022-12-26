@@ -5,6 +5,8 @@ const connectDB = require("./config/blogDB");
 
 const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/postRoute");
+const commentRoute = require("./routes/commentRoute");
+const tagRoute = require("./routes/tagRoute");
 
 connectDB();
 
@@ -16,6 +18,8 @@ app.use(express.json());
 
 app.use("user", userRoute);
 app.use(postRoute);
+app.use(commentRoute);
+app.use(tagRoute);
 
 app.listen(process.env.PORT, () => {
   console.log(`${process.env.PORT}-дээр ажиллаж эхэллээ`.yellow);

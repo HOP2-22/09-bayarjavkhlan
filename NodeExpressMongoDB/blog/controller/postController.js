@@ -110,7 +110,10 @@ exports.updatePost = async (req, res, next) => {
   try {
     const updatedPosted = await postModel.findByIdAndUpdate(
       req.params.id,
-      req.body
+      req.body,
+      {
+        runValidators: true,
+      }
     );
 
     if (!updatedPosted) {
@@ -140,7 +143,7 @@ exports.deletePost = async (req, res, next) => {
     if (!deletedPost) {
       return res.status(404).json({
         isDone: false,
-        message: `iim ${req.params.id}-tai data alga`,
+        message: `iim ${req.params.id}-tai post alga`,
       });
     }
 
