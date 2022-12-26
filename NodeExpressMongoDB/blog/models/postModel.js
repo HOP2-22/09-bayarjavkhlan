@@ -24,6 +24,12 @@ const postsModel = mongoose.Schema({
   //   ref: "users",
   //   type: mongoose.Schema.ObjectId,
   // },
+  ownerId: {
+    type: String,
+    maxLength: [25, "MongoDB giin Id bish bn"],
+    minLength: [23, "MongoDB giin Id bish bn"],
+    required: [true, "Useriin Id zaaval oruulj ogno vv"],
+  },
 });
 
 const posts = mongoose.model("posts", postsModel);

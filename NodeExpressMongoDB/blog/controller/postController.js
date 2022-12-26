@@ -17,44 +17,48 @@ exports.getPosts = async (req, res, next) => {
   }
 };
 
-// exports.getPostsByUser = async (req, res, next) => {
-//   try {
-//     const postsById = await postModel.findById(req.params.id);
+exports.getPostsByUser = async (req, res, next) => {
+  try {
+    const postsById = await postModel.find();
 
-//     if (!postsById) {
-//       return res.status(404).json({
-//         isDone: false,
-//         message: `iim ${req.params.id}-tai user alga`,
-//       });
-//     }
+    const filteredPosts = postsById.filter(
+      (el) => el.ownerId === req.params.id
+    );
 
-//     res.status(200).json({
-//       isDone: true,
-//       data: postsById,
-//       message: "amjilttai user iin bvh postiig avlaa",
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       isDone: false,
-//       error: err,
-//     });
-//   }
-// };
+    res.status(200).json({
+      isDone: true,
+      data: filteredPosts,
+      message: "amjilttai user iin bvh postiig avlaa",
+    });
+  } catch (err) {
+    res.status(404).json({
+      isDone: false,
+      error: err,
+    });
+  }
+};
 
 // exports.getPostsByTag = async (req, res, next) => {
 //   try {
-//     const postsByTag = await postModel.findById(req.params.id);
+//     const postsByTag = await postModel.find();
 
-//     if (!postsByTag) {
-//       return res.status(404).json({
-//         isDone: false,
-//         message: `iim ${req.params.id}-tai tag alga`,
-//       });
-//     }
+//     const filteredTag = postsByTag.filter((el) => {
+//       if (el.tags.length > 0) {
+//         const mapedTag = el.tags.map((tag, index) => {
+//           if (tag === req.params.id) {
+//             return el;
+//           } else {
+//             return "tag buruu bn";
+//           }
+//         });
+//         console.log(mapedTag);
+//         return mapedTag;
+//       }
+//     });
 
 //     res.status(200).json({
 //       isDone: true,
-//       data: postsByTag,
+//       data: filteredTag,
 //       message: "amjilttai tag iin bvh postiig avlaa",
 //     });
 //   } catch (err) {

@@ -10,10 +10,15 @@ const commentsModel = mongoose.Schema({
   //   ref: "users",
   //   type: mongoose.Schema.ObjectId,
   // },
+  ownerId: {
+    type: String,
+    required: [true, "Owneriin id giin oruulj ogno vv"],
+  },
   //   Post: {
   //     ref: "posts",
   //     type: mongoose.Schema.ObjectId,
   //   },
+  postId: { type: String, required: [true, "Postiin id giin oruulj ogno vv"] },
   publishDate: { type: Date, default: Date.now },
 });
 
