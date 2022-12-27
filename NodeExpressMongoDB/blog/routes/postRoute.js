@@ -3,7 +3,7 @@ const express = require("express");
 const {
   getPosts,
   getPostsByUser,
-  // getPostsByTag,
+  getPostsByTag,
   getPostById,
   createPost,
   updatePost,
@@ -17,7 +17,7 @@ postRouter.route("/post/create").post(createPost);
 
 postRouter.route("/user/:id/post").get(getPostsByUser);
 
-// postRouter.route("/tag/:id/post").get(getPostsByTag);
+postRouter.route("/tag/:id/post").get(getPostsByTag);
 
 postRouter
   .route("/post/:id/")

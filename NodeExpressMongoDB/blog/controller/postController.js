@@ -25,6 +25,13 @@ exports.getPostsByUser = async (req, res, next) => {
       (el) => el.ownerId === req.params.id
     );
 
+    if (checkTag.length === 0) {
+      res.status(404).json({
+        isDone: false,
+        message: "ene user post hiigeegui bn",
+      });
+    }
+
     res.status(200).json({
       isDone: true,
       data: filteredPosts,
@@ -38,36 +45,35 @@ exports.getPostsByUser = async (req, res, next) => {
   }
 };
 
-// exports.getPostsByTag = async (req, res, next) => {
-//   try {
-//     const postsByTag = await postModel.find();
+exports.getPostsByTag = async (req, res, next) => {
+  try {
+    const postsByTag = await postModel.find();
 
-//     const filteredTag = postsByTag.filter((el) => {
-//       if (el.tags.length > 0) {
-//         const mapedTag = el.tags.map((tag, index) => {
-//           if (tag === req.params.id) {
-//             return el;
-//           } else {
-//             return "tag buruu bn";
-//           }
-//         });
-//         console.log(mapedTag);
-//         return mapedTag;
-//       }
-//     });
+    const checkTag = postsByTag.filter((el) => {
+      if (el.tags.includes(req.params.id)) {
+        return el;
+      }
+    });
 
-//     res.status(200).json({
-//       isDone: true,
-//       data: filteredTag,
-//       message: "amjilttai tag iin bvh postiig avlaa",
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       isDone: false,
-//       error: err,
-//     });
-//   }
-// };
+    if (checkTag.length === 0) {
+      res.status(404).json({
+        isDone: false,
+        message: "iim tagtai post alga bn",
+      });
+    }
+
+    res.status(200).json({
+      isDone: true,
+      data: checkTag,
+      message: "amjilttai tag iin bvh postiig avlaa",
+    });
+  } catch (err) {
+    res.status(404).json({
+      isDone: false,
+      error: err,
+    });
+  }
+};
 
 exports.getPostById = async (req, res, next) => {
   try {
