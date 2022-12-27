@@ -17,53 +17,47 @@ exports.getComments = async (req, res, next) => {
   }
 };
 
-// exports.getCommentByPost = async (req, res, next) => {
-//   try {
-//     const commentByPost = await commentModel.findById(req.params.id);
+exports.getCommentByPost = async (req, res, next) => {
+  try {
+    const commentByPost = await commentModel.find();
 
-//     if (!commentByPost) {
-//       return res.status(404).json({
-//         isDone: false,
-//         message: `iim ${req.params.id}-tai post alga`,
-//       });
-//     }
+    const filteredComment = commentByPost.filter(
+      (el) => el.postId === req.params.id
+    );
 
-//     res.status(200).json({
-//       isDone: true,
-//       data: commentByPost,
-//       message: "amjilttai postiin commentvvdiin medeeleliig avlaa",
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       isDone: false,
-//       error: err,
-//     });
-//   }
-// };
+    res.status(200).json({
+      isDone: true,
+      data: filteredComment,
+      message: "amjilttai postiin commentvvdiin medeeleliig avlaa",
+    });
+  } catch (err) {
+    res.status(404).json({
+      isDone: false,
+      error: err,
+    });
+  }
+};
 
-// exports.getCommentByUser = async (req, res, next) => {
-//   try {
-//     const commentByUser = await commentModel.findById(req.params.id);
+exports.getCommentByUser = async (req, res, next) => {
+  try {
+    const commentByUser = await commentModel.find();
 
-//     if (!commentByUser) {
-//       return res.status(404).json({
-//         isDone: false,
-//         message: `iim ${req.params.id}-tai user alga`,
-//       });
-//     }
+    const filteredComment = commentByUser.filter(
+      (el) => el.ownerId === req.params.id
+    );
 
-//     res.status(200).json({
-//       isDone: true,
-//       data: commentByUser,
-//       message: "amjilttai useriin commentvvdiin medeeleliig avlaa",
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       isDone: false,
-//       error: err,
-//     });
-//   }
-// };
+    res.status(200).json({
+      isDone: true,
+      data: filteredComment,
+      message: "amjilttai useriin commentvvdiin medeeleliig avlaa",
+    });
+  } catch (err) {
+    res.status(404).json({
+      isDone: false,
+      error: err,
+    });
+  }
+};
 
 exports.createComment = async (req, res) => {
   try {

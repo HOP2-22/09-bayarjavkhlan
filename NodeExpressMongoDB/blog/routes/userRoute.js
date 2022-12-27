@@ -10,8 +10,8 @@ const {
 
 const usersRouter = express.Router();
 
-usersRouter.route("/user/").get(getUsers).post(createUser);
+usersRouter.route("/").get(getUsers).post(createUser);
 
-usersRouter.route("/user/:id").get(getUser).put(updateUser).delete(deleteUser);
+usersRouter.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
 
 module.exports = usersRouter;

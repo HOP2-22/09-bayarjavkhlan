@@ -16,7 +16,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(userRoute);
+app.use("/user", userRoute);
 app.use(postRoute);
 app.use(commentRoute);
 app.use(tagRoute);
