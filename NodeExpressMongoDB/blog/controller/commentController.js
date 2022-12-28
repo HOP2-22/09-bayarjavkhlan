@@ -1,131 +1,109 @@
 const commentModel = require("../models/commentModel");
+const postModel = require("../models/postModel");
+const userModel = require("../models/userModel");
+const MyError = require("../utils/myError");
+const asyncHandler = require("../middleWare/asyncHandler");
 
-exports.getComments = async (req, res, next) => {
-  try {
-    const comments = await commentModel.find();
+exports.getComments = asyncHandler(async (req, res, next) => {
+  const comments = await commentModel.find();
 
-    res.status(200).json({
-      isDone: true,
-      data: comments,
-      message: "amjilttai bvh commentvvdiiig iin medeeleliig avlaa",
-    });
-  } catch (err) {
-    res.status(404).json({
-      isDone: false,
-      error: err,
-    });
+  res.status(200).json({
+    isDone: true,
+    data: comments,
+    message: "amjilttai bvh commentvvdiiig iin medeeleliig avlaa",
+  });
+});
+
+exports.getCommentByPost = asyncHandler(async (req, res, next) => {
+  const checkPost = await postModel.findById(req.params.id);
+
+  if (!checkPost) {
+    throw new MyError("iim idtai post alga bn", 404);
   }
-};
 
-exports.getCommentByPost = async (req, res, next) => {
-  try {
-    const commentByPost = await commentModel.find();
+  const commentByPost = await commentModel.find();
 
-    const filteredComment = commentByPost.filter(
-      (el) => el.postId === req.params.id
-    );
+  const filteredComment = commentByPost.filter(
+    (el) => el.postId === req.params.id
+  );
 
-    res.status(200).json({
-      isDone: true,
-      data: filteredComment,
-      message: "amjilttai postiin commentvvdiin medeeleliig avlaa",
-    });
-  } catch (err) {
-    res.status(404).json({
-      isDone: false,
-      error: err,
-    });
+  if (filteredComment.length === 0) {
+    throw new MyError("ene post nd comment bichegdeegui bn");
   }
-};
 
-exports.getCommentByUser = async (req, res, next) => {
-  try {
-    const commentByUser = await commentModel.find();
+  res.status(200).json({
+    isDone: true,
+    data: filteredComment,
+    message: "amjilttai postiin commentvvdiin medeeleliig avlaa",
+  });
+});
 
-    const filteredComment = commentByUser.filter(
-      (el) => el.ownerId === req.params.id
-    );
+exports.getCommentByUser = asyncHandler(async (req, res, next) => {
+  const checkUser = await userModel.findById(req.params.id);
 
-    res.status(200).json({
-      isDone: true,
-      data: filteredComment,
-      message: "amjilttai useriin commentvvdiin medeeleliig avlaa",
-    });
-  } catch (err) {
-    res.status(404).json({
-      isDone: false,
-      error: err,
-    });
+  if (!checkUser) {
+    throw new MyError("iim idtai user alga bn", 404);
   }
-};
 
-exports.createComment = async (req, res) => {
-  try {
-    const createdPost = await commentModel.create(req.body);
+  const commentByUser = await commentModel.find();
 
-    res.status(200).json({
-      isDone: true,
-      data: createdPost,
-      message: "amjilttai comment vvsgellee",
-    });
-  } catch (err) {
-    res.status(404).json({
-      isDone: false,
-      error: err,
-    });
-  }
-};
+  const filteredComment = commentByUser.filter(
+    (el) => el.ownerId === req.params.id
+  );
 
-exports.updateComment = async (req, res, next) => {
-  try {
-    const updatedComment = await commentModel.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        runValidators: true,
-      }
-    );
+  res.status(200).json({
+    isDone: true,
+    data: filteredComment,
+    message: "amjilttai useriin commentvvdiin medeeleliig avlaa",
+  });
+});
 
-    if (!updatedComment) {
-      return res.status(404).json({
-        isDone: false,
-        message: `iim ${req.params.id}-tai comment alga`,
-      });
+exports.createComment = asyncHandler(async (req, res, next) => {
+  const createdPost = await commentModel.create(req.body);
+
+  res.status(200).json({
+    isDone: true,
+    data: createdPost,
+    message: "amjilttai comment vvsgellee",
+  });
+});
+
+exports.updateComment = asyncHandler(async (req, res, next) => {
+  const updatedComment = await commentModel.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      runValidators: true,
     }
+  );
 
-    res.status(200).json({
-      isDone: true,
-      data: updatedComment,
-      message: "amjilttai commentiin medeeliig oorchilloo",
-    });
-  } catch (err) {
-    res.status(404).json({
+  if (!updatedComment) {
+    return res.status(404).json({
       isDone: false,
-      error: err,
+      message: `iim ${req.params.id}-tai comment alga`,
     });
   }
-};
 
-exports.deleteComment = async (req, res, next) => {
-  try {
-    const deletedComment = await commentModel.findByIdAndDelete(req.params.id);
+  res.status(200).json({
+    isDone: true,
+    data: updatedComment,
+    message: "amjilttai commentiin medeeliig oorchilloo",
+  });
+});
 
-    if (!deletedComment) {
-      return res.status(404).json({
-        isDone: false,
-        message: `iim ${req.params.id}-tai comment alga`,
-      });
-    }
+exports.deleteComment = asyncHandler(async (req, res, next) => {
+  const deletedComment = await commentModel.findByIdAndDelete(req.params.id);
 
-    res.status(200).json({
-      isDone: true,
-      data: deletedComment,
-      message: "amjilttai comment ustaglaa",
-    });
-  } catch (err) {
-    res.status(404).json({
+  if (!deletedComment) {
+    return res.status(404).json({
       isDone: false,
-      error: err,
+      message: `iim ${req.params.id}-tai comment alga`,
     });
   }
-};
+
+  res.status(200).json({
+    isDone: true,
+    data: deletedComment,
+    message: "amjilttai comment ustaglaa",
+  });
+});

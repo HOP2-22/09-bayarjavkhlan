@@ -17,7 +17,7 @@ const usersModel = mongoose.Schema({
   gender: { type: String },
   email: { type: String, default: "user@email.com" },
   dateOfBirth: { type: Date },
-  dateOfBirth: { type: Date, default: Date.now },
+  registerBirth: { type: Date, default: Date.now },
   phone: { type: Number, default: 99999999 },
   picture: { type: String, default: "no-photo.jpg" },
   location: {

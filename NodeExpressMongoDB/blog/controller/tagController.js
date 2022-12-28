@@ -1,18 +1,20 @@
-const tagModel = require("../models/tagModel");
+const postModel = require("../models/postModel");
+const asyncHandler = require("../middleWare/asyncHandler");
 
-exports.getTags = async (req, res, next) => {
-  try {
-    const tags = await tagModel.find();
+exports.getTags = asyncHandler(async (req, res, next) => {
+  const mapedTag = [];
 
-    res.status(200).json({
-      isDone: true,
-      data: tags,
-      message: "amjilttai bvh tag vvdiin medeeleliig avlaa",
-    });
-  } catch (err) {
-    res.status(404).json({
-      isDone: false,
-      error: err,
-    });
-  }
-};
+  const tags = await postModel.find({});
+
+  tags.map((el) => {
+    if (el.tags.length !== 0) {
+      return mapedTag.push(el.tags);
+    }
+  });
+
+  res.status(200).json({
+    isDone: true,
+    data: mapedTag,
+    message: "amjilttai bvh tag vvdiin medeeleliig avlaa",
+  });
+});

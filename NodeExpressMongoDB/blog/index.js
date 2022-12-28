@@ -7,6 +7,7 @@ const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/postRoute");
 const commentRoute = require("./routes/commentRoute");
 const tagRoute = require("./routes/tagRoute");
+const errorHandler = require("./middleWare/error");
 
 connectDB();
 
@@ -20,6 +21,7 @@ app.use("/user", userRoute);
 app.use(postRoute);
 app.use(commentRoute);
 app.use(tagRoute);
+app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {
   console.log(`${process.env.PORT}-дээр ажиллаж эхэллээ`.yellow);

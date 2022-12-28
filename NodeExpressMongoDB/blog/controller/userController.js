@@ -1,110 +1,76 @@
 const usersModel = require("../models/userModel");
+const asyncHandler = require("../middleware/asyncHandler");
 
-exports.getUsers = async (req, res, next) => {
-  try {
-    const users = await usersModel.find();
+exports.getUsers = asyncHandler(async (req, res, next) => {
+  const users = await usersModel.find();
 
-    res.status(200).json({
-      isDone: true,
-      data: users,
-      message: "amjilttai bvh user iin medeeleliig avlaa",
-    });
-  } catch (err) {
-    res.status(404).json({
+  res.status(200).json({
+    isDone: true,
+    data: users,
+    message: "amjilttai bvh user iin medeeleliig avlaa",
+  });
+});
+
+exports.getUser = asyncHandler(async (req, res, next) => {
+  const users = await usersModel.findById(req.params.id);
+
+  if (!users) {
+    return res.status(404).json({
       isDone: false,
-      error: err,
+      message: `iim ${req.params.id}-tai user alga`,
     });
   }
-};
 
-exports.getUser = async (req, res, next) => {
-  try {
-    const users = await usersModel.findById(req.params.id);
+  res.status(200).json({
+    isDone: true,
+    data: users,
+    message: "amjilttai bvh user iin medeeleliig avlaa",
+  });
+});
 
-    if (!users) {
-      return res.status(404).json({
-        isDone: false,
-        message: `iim ${req.params.id}-tai user alga`,
-      });
-    }
+exports.createUser = asyncHandler(async (req, res, next) => {
+  const users = await usersModel.create(req.body);
 
-    res.status(200).json({
-      isDone: true,
-      data: users,
-      message: "amjilttai bvh user iin medeeleliig avlaa",
-    });
-  } catch (err) {
-    res.status(404).json({
+  res.status(200).json({
+    isDone: true,
+    data: users,
+    message: "amjilttai user vvsgellee",
+  });
+});
+
+exports.updateUser = asyncHandler(async (req, res, next) => {
+  const users = await usersModel.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!users) {
+    return res.status(404).json({
       isDone: false,
-      error: err,
+      message: `iim ${req.params.id}-tai user alga`,
     });
   }
-};
 
-exports.createUser = async (req, res, next) => {
-  try {
-    const users = await usersModel.create(req.body);
+  res.status(200).json({
+    isDone: true,
+    data: users,
+    message: "amjilttai useriin medeeliig oorchilloo",
+  });
+});
 
-    res.status(200).json({
-      isDone: true,
-      data: users,
-      message: "amjilttai user vvsgellee",
-    });
-  } catch (err) {
-    res.status(404).json({
+exports.deleteUser = asyncHandler(async (req, res, next) => {
+  const users = await usersModel.findByIdAndDelete(req.params.id);
+
+  if (!users) {
+    return res.status(404).json({
       isDone: false,
-      error: err,
+      message: `iim ${req.params.id}-tai user alga`,
     });
   }
-};
 
-exports.updateUser = async (req, res, next) => {
-  try {
-    const users = await usersModel.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-
-    if (!users) {
-      return res.status(404).json({
-        isDone: false,
-        message: `iim ${req.params.id}-tai user alga`,
-      });
-    }
-
-    res.status(200).json({
-      isDone: true,
-      data: users,
-      message: "amjilttai useriin medeeliig oorchilloo",
-    });
-  } catch (err) {
-    res.status(404).json({
-      isDone: false,
-      error: err,
-    });
-  }
-};
-
-exports.deleteUser = async (req, res, next) => {
-  try {
-    const users = await usersModel.findByIdAndDelete(req.params.id);
-
-    if (!users) {
-      return res.status(404).json({
-        isDone: false,
-        message: `iim ${req.params.id}-tai user alga`,
-      });
-    }
-
-    res.status(200).json({
-      isDone: true,
-      data: users,
-      message: "amjilttai user ustaglaa",
-    });
-  } catch (err) {
-    res.status(404).json({
-      isDone: false,
-      error: err,
-    });
-  }
-};
+  res.status(200).json({
+    isDone: true,
+    data: users,
+    message: "amjilttai user ustaglaa",
+  });
+});
