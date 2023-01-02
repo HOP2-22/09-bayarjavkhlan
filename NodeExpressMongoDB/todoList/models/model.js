@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const todoModel = mongoose.Schema({
+const model = mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -16,6 +16,6 @@ const todoModel = mongoose.Schema({
   },
 });
 
-const todo = mongoose.model("todoList", todoModel);
+const todoModel = mongoose.model("todoList", model);
 
-module.exports = todo;
+module.exports = todoModel;

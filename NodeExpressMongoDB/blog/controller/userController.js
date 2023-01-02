@@ -15,10 +15,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
   const users = await usersModel.findById(req.params.id);
 
   if (!users) {
-    return res.status(404).json({
-      isDone: false,
-      message: `iim ${req.params.id}-tai user alga`,
-    });
+    throw new MyError(`iim ${req.params.id}-tai user alga`, 404);
   }
 
   res.status(200).json({
@@ -45,10 +42,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   });
 
   if (!users) {
-    return res.status(404).json({
-      isDone: false,
-      message: `iim ${req.params.id}-tai user alga`,
-    });
+    throw new MyError(`iim ${req.params.id}-tai user alga`, 404);
   }
 
   res.status(200).json({
@@ -62,10 +56,7 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
   const users = await usersModel.findByIdAndDelete(req.params.id);
 
   if (!users) {
-    return res.status(404).json({
-      isDone: false,
-      message: `iim ${req.params.id}-tai user alga`,
-    });
+    throw new MyError(`iim ${req.params.id}-tai user alga`, 404);
   }
 
   res.status(200).json({

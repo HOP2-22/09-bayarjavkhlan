@@ -1,9 +1,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
-const connectDB = require("./config/todoDB");
+const connectDB = require("./config/DB");
 
-const todoRoute = require("./routes/todoRoute");
+const todoRoute = require("./routes/route");
 
 connectDB();
 
