@@ -16,6 +16,6 @@ const model = mongoose.Schema({
   },
 });
 
-const todoModel = mongoose.model("todoList", model);
+const todoModel = mongoose.model("lists", model);
 
 module.exports = todoModel;

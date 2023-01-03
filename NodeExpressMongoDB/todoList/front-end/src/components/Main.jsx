@@ -18,7 +18,6 @@ const Main = () => {
     const getAllPosts = async () => {
       try {
         const posts = await axios.get("http://localhost:8000/post");
-        console.log(posts.data);
         setData(posts.data);
       } catch (err) {
         console.log(err);

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-import {} from "@heroicons/react/24/solid";
 
 const List = ({ index, todo, deleteItem }) => {
   const [checked, setChecked] = useState(false);
