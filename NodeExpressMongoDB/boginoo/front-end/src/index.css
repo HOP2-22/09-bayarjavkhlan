@@ -2,15 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+.logWidth {
+  @apply w-[530px];
+}
+
 @layer components {
   @screen sm {
+    .logInLogo {
+      @apply pb-[20px] w-[140px];
+    }
+    .logInEmail {
+      @apply pt-6 pb-5;
+    }
   }
   @screen md {
+    .logInLogo {
+      @apply w-[150px];
+    }
+    .logInEmail {
+      @apply pt-7 pb-6;
+    }
   }
   @screen lg {
+    .logInLogo {
+      @apply w-[190px];
+    }
+    .logInEmail {
+      @apply pt-8 pb-7;
+    }
   }
   @screen xl {
+    .logInLogo {
+      @apply pb-[45px] w-[210px];
+    }
+    .logInEmail {
+      @apply pt-9 pb-8;
+    }
   }
   @screen 2xl {
+    .logInLogo {
+      @apply pb-[63px];
+    }
+    .logInEmail {
+      @apply pt-9 pb-8;
+    }
   }
 }

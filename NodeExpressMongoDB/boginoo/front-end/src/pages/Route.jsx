@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Context from "../context/Context";
 import Layout from "../components/Layout";
 import LogIn from "./LogIn";
-import Loged from "./Loged";
 import Home from "./Home";
+import Entered from "./Entered";
 import SignUp from "./SignUp";
 import ForgetPass from "./ForgetPass";
 
@@ -13,11 +13,11 @@ const Index = () => {
       <Context>
         <Layout>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/LogIn" element={<LogIn />} />
-            <Route path="/Loged" element={<Loged />} />
-            <Route path="/SignUp" element={<SignUp />} />
-            <Route path="/ForgetPassword" element={<ForgetPass />} />
+            <Route path="/" element={<Entered />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgetpassword" element={<ForgetPass />} />
           </Routes>
         </Layout>
       </Context>

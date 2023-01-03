@@ -3,9 +3,23 @@ import React from "react";
 import { useState, createContext, useEffect } from "react";
 
 export const Context = createContext();
+
 const ThemeContext = ({ children }) => {
   // const [allHistory, SetAllHistory] = useState([]);
   const [loading, SetLoading] = useState(false);
+  const [cut, setCut] = useState(false);
+
+  const [stringId, setStringId] = useState("");
+  const [characters, setCharacters] = useState(
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+  );
+
+  const makeId = () => {
+    setStringId("");
+    for (let i = 0; i < 6; i++) {
+      setStringId(stringId + characters.charAt(Math.floor(Math.random() * 62)));
+    }
+  };
 
   useEffect(() => {
     const getAllHistory = async () => {
@@ -26,6 +40,10 @@ const ThemeContext = ({ children }) => {
       value={{
         // allHistory: allHistory,
         Loading: loading,
+        makeId: makeId,
+        stringId: stringId,
+        cut: cut,
+        setCut: setCut,
       }}
     >
       {children}

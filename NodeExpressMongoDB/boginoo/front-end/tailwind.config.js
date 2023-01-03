@@ -37,6 +37,7 @@ module.exports = {
         ubuntu: ["Ubuntu"],
       },
       colors: {
+        main: "#02B589",
         red: {
           50: "#ffebee",
           100: "#ffcdd2",
