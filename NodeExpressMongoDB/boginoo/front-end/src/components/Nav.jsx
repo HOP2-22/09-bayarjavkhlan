@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
-  const [LogIn, setLogIn] = useState(false);
   const navigate = useNavigate();
   const pathname = window.location.pathname;
 

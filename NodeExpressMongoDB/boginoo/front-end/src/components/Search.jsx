@@ -27,10 +27,12 @@ const Search = ({ setLink }) => {
         <div
           className="bg-main text-white rounded-full py-1 px-6 cursor-pointer"
           onClick={() => {
-            setLink(searchValue);
-            makeId();
-            setCut(true);
-            cleanInput();
+            if (searchValue.includes(".com")) {
+              setLink(searchValue);
+              makeId();
+              setCut(true);
+              cleanInput();
+            }
           }}
         >
           Богиносгох

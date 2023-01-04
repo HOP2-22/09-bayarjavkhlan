@@ -6,6 +6,7 @@ import Home from "./Home";
 import Entered from "./Entered";
 import SignUp from "./SignUp";
 import ForgetPass from "./ForgetPass";
+import ChangePassword from "./ChangePassword";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/forgetpassword" element={<ForgetPass />} />
+            <Route path="/changePassword" element={<ChangePassword />} />
           </Routes>
         </Layout>
       </Context>

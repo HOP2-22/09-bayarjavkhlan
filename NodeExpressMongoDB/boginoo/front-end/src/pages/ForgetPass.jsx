@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../context/Context";
 import Logo from "../img/boginoo1.png";
-import { EyeIcon } from "@heroicons/react/24/solid";
-import { EyeSlashIcon } from "@heroicons/react/24/solid";
 
 const ForgetPass = () => {
-  const [emailValue, setEmailValue] = useState("");
-  const [error, setError] = useState(true);
+  const { error, emailValue, setEmailValue, updateUserPassword } =
+    useContext(Context);
 
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate("/login");
+    navigate("/changePassword");
   }
 
   return (
@@ -20,10 +19,7 @@ const ForgetPass = () => {
       <div className="font-extrabold text-main text-[20px]">
         Нууц үг сэргээх
       </div>
-      <p className="text-center pt-4 lg:pt-6">
-        Бид таны цахим хаяг руу нууц үг <br />
-        сэргээх хаяг явуулах болно.
-      </p>
+
       <p className={`${error ? "hidden" : "text-red-accent-400"}`}>
         Зөв цахим хаягаа оруулна уу
       </p>
@@ -44,11 +40,8 @@ const ForgetPass = () => {
       <div
         className="bg-main rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
         onClick={() => {
-          if (emailValue.includes(".com") && emailValue.includes("@")) {
-            handleClick();
-          } else {
-            setError(false);
-          }
+          updateUserPassword();
+          handleClick();
         }}
       >
         Илгээх
