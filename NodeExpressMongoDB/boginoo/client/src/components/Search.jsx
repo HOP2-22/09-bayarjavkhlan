@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import BigLogo from "../img/boginoo3.png";
 import { Context } from "../context/Context";
 
-const Search = ({ setLink }) => {
+const Search = ({ setLink, createShort }) => {
   const { makeId, setCut } = useContext(Context);
 
   const [searchValue, setSearchValue] = useState("");
@@ -32,6 +32,7 @@ const Search = ({ setLink }) => {
               makeId();
               setCut(true);
               cleanInput();
+              createShort();
             }
           }}
         >

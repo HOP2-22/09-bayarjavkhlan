@@ -9,6 +9,7 @@ const usersModel = mongoose.Schema({
   },
   email: {
     type: String,
+    unique: true,
     required: [true, "Цахим хаягаа оруулна уу"],
   },
   password: {

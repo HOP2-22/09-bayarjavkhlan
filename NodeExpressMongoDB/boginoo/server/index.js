@@ -15,8 +15,8 @@ const app = express();
 
 app.use(express.json());
 
-app.use(userRoute);
-// app.use(shortRoute);
+app.use("/user", userRoute);
+app.use(shortRoute);
 app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {

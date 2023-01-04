@@ -33,6 +33,7 @@ const ThemeContext = ({ children }) => {
       setUser(newUser);
       SetLoading(false);
     } catch (error) {
+      console.log(error);
       setError(false);
     }
   };

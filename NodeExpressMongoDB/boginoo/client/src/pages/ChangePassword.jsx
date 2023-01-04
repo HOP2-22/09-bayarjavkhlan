@@ -13,7 +13,7 @@ const ChangePassword = () => {
   let errorPass = true;
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
   }, [user]);
 
   return (
