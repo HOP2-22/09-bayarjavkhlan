@@ -5,13 +5,33 @@ import { useState, createContext, useEffect } from "react";
 export const Context = createContext();
 
 const ThemeContext = ({ children }) => {
-  // const [allHistory, SetAllHistory] = useState([]);
+  const [allHistory, SetAllHistory] = useState([]);
   const [loading, SetLoading] = useState(false);
 
   const [cut, setCut] = useState(false);
   const [stringId, setStringId] = useState("");
+
+  const [emailValue, setEmailValue] = useState("");
+  const [error, setError] = useState(true);
+  const [user, setUser] = useState();
+
   let characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  useEffect(() => {
+    const getAllHistory = async () => {
+      SetLoading(true);
+      try {
+        const res = await axios.get("http://localhost:8000/home/:id");
+        SetAllHistory(res.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+      SetLoading(false);
+    };
+    getAllHistory();
+  }, []);
+
   const makeId = () => {
     setStringId("");
     let newId = "";
@@ -21,9 +41,6 @@ const ThemeContext = ({ children }) => {
     setStringId(newId);
   };
 
-  const [emailValue, setEmailValue] = useState("");
-  const [error, setError] = useState(true);
-  const [user, setUser] = useState();
   const updateUserPassword = async () => {
     try {
       SetLoading(true);
@@ -37,20 +54,6 @@ const ThemeContext = ({ children }) => {
       setError(false);
     }
   };
-
-  useEffect(() => {
-    const getAllHistory = async () => {
-      SetLoading(true);
-      // try {
-      //   const res = await instance.get("/");
-      //   SetAllHistory(res.data.data);
-      // } catch (error) {
-      //   console.log(error);
-      // }
-      SetLoading(false);
-    };
-    getAllHistory();
-  }, []);
 
   return (
     <Context.Provider

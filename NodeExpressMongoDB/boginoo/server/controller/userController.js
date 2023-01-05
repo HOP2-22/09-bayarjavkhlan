@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 const usersModel = require("../models/userModel");
 const asyncHandler = require("../middleware/asyncHandler");
 
@@ -28,7 +30,13 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 });
 
 exports.createUser = asyncHandler(async (req, res, next) => {
-  const users = await usersModel.create(req.body);
+  const { email, password } = req.body;
+
+  const salt = await bcrypt.genSalt(10);
+
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const users = await usersModel.create({ email, password: hashedPassword });
 
   res.status(200).json({
     isDone: true,

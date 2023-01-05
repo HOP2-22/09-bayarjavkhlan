@@ -1,20 +1,21 @@
 import React, { useState, useContext, useEffect } from "react";
-import Search from "../components/Search";
+// import Search from "../components/Search";
 import { Context } from "../context/Context";
 
 const Home = () => {
-  const { stringId } = useContext(Context);
+  // const { stringId } = useContext(Context);
 
-  const [link, setLink] = useState();
-  const [moreLink, setMoreLink] = useState();
+  // const [link, setLink] = useState();
+  // const [moreLink, setMoreLink] = useState();
 
-  useEffect(() => {
-    link?.length > 40 && setMoreLink(link);
-  }, [link]);
+  // useEffect(() => {
+  //   link?.length > 40 && setMoreLink(link);
+  // }, [link]);
 
   return (
     <div>
-      <Search setLink={setLink} />
+      asda
+      {/* <Search setLink={setLink} />
       <p className="pt-12 pb-6 text-main text-3xl font-extrabold">Түүх</p>
       <div className="flex items-end pb-4 border-b-2 decoration-black">
         <div className="flex">
@@ -32,7 +33,7 @@ const Home = () => {
         <div className="text-md text-main underline decoration-main">
           Хуулж авах
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

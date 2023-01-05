@@ -3,9 +3,7 @@ import BigLogo from "../img/boginoo3.png";
 import { Context } from "../context/Context";
 
 const Search = ({ setLink, createShort }) => {
-  const { makeId, setCut } = useContext(Context);
-
-  const [searchValue, setSearchValue] = useState("");
+  const { makeId, setCut, searchValue, setSearchValue } = useContext(Context);
 
   const cleanInput = () => {
     setSearchValue("");

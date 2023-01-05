@@ -5,7 +5,6 @@ const usersModel = mongoose.Schema({
     type: String,
     maxLength: [50, "нэр дээд талдаа 50 тэмдэгтэнд багтаана уу"],
     minLength: [2, "нэр доод талдаа 2 тэмдэгтэнд багтаана уу"],
-    required: [true, "нэрээ оруулна уу"],
   },
   email: {
     type: String,
