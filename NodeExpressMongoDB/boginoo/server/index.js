@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
 const connectDB = require("./config/DB");
+const cors = require("cors");
 
 const userRoute = require("./routes/userRoute");
 const shortRoute = require("./routes/shortRoute");
@@ -12,6 +13,7 @@ connectDB();
 dotenv.config({ path: "./config/config.env" });
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 

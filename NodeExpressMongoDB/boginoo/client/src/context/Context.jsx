@@ -8,15 +8,9 @@ const ThemeContext = ({ children }) => {
   const [allHistory, SetAllHistory] = useState([]);
   const [loading, SetLoading] = useState(false);
 
-  const [cut, setCut] = useState(false);
-  const [stringId, setStringId] = useState("");
-
   const [emailValue, setEmailValue] = useState("");
   const [error, setError] = useState(true);
   const [user, setUser] = useState();
-
-  let characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   useEffect(() => {
     const getAllHistory = async () => {
@@ -31,15 +25,6 @@ const ThemeContext = ({ children }) => {
     };
     getAllHistory();
   }, []);
-
-  const makeId = () => {
-    setStringId("");
-    let newId = "";
-    for (let i = 0; i < 6; i++) {
-      newId += characters.charAt(Math.floor(Math.random() * 62));
-    }
-    setStringId(newId);
-  };
 
   const updateUserPassword = async () => {
     try {
@@ -60,11 +45,6 @@ const ThemeContext = ({ children }) => {
       value={{
         // allHistory: allHistory,
         Loading: loading,
-
-        makeId: makeId,
-        stringId: stringId,
-        cut: cut,
-        setCut: setCut,
 
         updateUserPassword: updateUserPassword,
         error: error,

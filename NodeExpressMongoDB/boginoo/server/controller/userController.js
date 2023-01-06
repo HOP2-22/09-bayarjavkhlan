@@ -1,7 +1,9 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const usersModel = require("../models/userModel");
 const asyncHandler = require("../middleware/asyncHandler");
+const MyError = require("../utils/myError");
 
 exports.getUsers = asyncHandler(async (req, res, next) => {
   const users = await usersModel.find();
@@ -41,6 +43,33 @@ exports.createUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     isDone: true,
     data: users,
+    message: "амжилттай бүртгүүллээ",
+  });
+});
+
+const ACCESS_TOKEN_KEY = "secret123";
+
+exports.login = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const user = await usersModel.findOne({ email: email });
+
+  const match = await bcrypt.compare(password, user.password);
+
+  if (!match) {
+    throw new MyError(`Password алдаатай байна`, 404);
+  }
+
+  const token = jwt.sign(
+    {
+      user: user.email,
+    },
+    ACCESS_TOKEN_KEY
+  );
+
+  res.status(200).json({
+    isDone: true,
+    token: token,
     message: "амжилттай бүртгүүллээ",
   });
 });

@@ -41,7 +41,18 @@ exports.getShortsByUser = asyncHandler(async (req, res, next) => {
 });
 
 exports.createShort = asyncHandler(async (req, res, next) => {
-  const createdShort = await shortModel.create(req.body);
+  let characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  let stringId = "";
+  for (let i = 0; i < 6; i++) {
+    stringId += characters.charAt(Math.floor(Math.random() * 62));
+  }
+
+  const createdShort = await shortModel.create({
+    orignalLink: req.body.orignalLink,
+    shortLink: stringId,
+  });
 
   res.status(200).json({
     isDone: true,

@@ -4,26 +4,23 @@ import BigLogo from "../img/boginoo3.png";
 import { Context } from "../context/Context";
 
 const Entered = () => {
-  const { stringId, cut, makeId, setCut } = useContext(Context);
-
-  const [link, setLink] = useState();
-  const [searchValue, setSearchValue] = useState("");
+  const [shortUrl, setShortUrl] = useState();
+  const [link, setLink] = useState("");
+  const [enteredValue, SetEnteredValue] = useState("");
 
   const createShort = async () => {
     try {
-      await makeId();
-      await axios.post("http://localhost:8000", {
-        orignalLink: searchValue,
-        shortLink: `http://localhost:3000/${stringId}`,
+      const response = await axios.post("http://localhost:8000", {
+        orignalLink: enteredValue,
       });
-      cleanInput();
+      setShortUrl("as");
     } catch (error) {
       console.log(error);
     }
   };
 
   const cleanInput = () => {
-    setSearchValue("");
+    enteredValue("");
   };
   return (
     <div>
@@ -32,9 +29,9 @@ const Entered = () => {
         <div className="flex gap-2 mt-16">
           <input
             type="text"
-            value={searchValue}
+            value={enteredValue}
             onChange={(e) => {
-              setSearchValue(e.target.value);
+              SetEnteredValue(e.target.value);
             }}
             placeholder="https://www.web-huudas.mn"
             className="sm:w-[430px] md:w-[480px] lg:w-[530px] h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0"
@@ -42,10 +39,9 @@ const Entered = () => {
           <div
             className="bg-main text-white rounded-full py-1 px-6 cursor-pointer"
             onClick={() => {
-              if (searchValue.includes(".com")) {
-                setLink(searchValue);
-                setCut(true);
+              if (enteredValue.includes(".com")) {
                 createShort();
+                setLink(SetEnteredValue);
               }
             }}
           >
@@ -53,14 +49,14 @@ const Entered = () => {
           </div>
         </div>
       </div>
-      <div className={`${!cut ? "hidden" : "block"}`}>
+      <div className="block">
         <div className="">
           <div className="py-2 px-4 opacity-50">Өгөгдсөн холбоос:</div>
           <p className="pl-6 h-6">{link}</p>
         </div>
         <div className="">
           <div className="py-2 px-4 opacity-50">Богино холбоос:</div>
-          <p className="pl-6 h-6">{`www.boginoo.com/${stringId}`}</p>
+          <p className="pl-6 h-6">{`www.boginoo.com/${shortUrl}`}</p>
         </div>
       </div>
     </div>
