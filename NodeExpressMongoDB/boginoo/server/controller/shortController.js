@@ -12,17 +12,17 @@ exports.getShorts = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.getShortById = asyncHandler(async (req, res, next) => {
-  const short = await shortModel.findById(req.params.id);
+exports.getOrignalByShort = asyncHandler(async (req, res, next) => {
+  const orignalByShort = await shortModel.find({ shortLink: req.params.id });
 
-  if (!short) {
-    throw new MyError(`богиноо алдаатай байна`, 404);
+  if (!orignalByShort) {
+    throw new MyError(`богино линк алдаатай байна`, 404);
   }
 
   res.status(200).json({
     isDone: true,
-    data: short,
-    message: "амжилттай богиноо авлаа",
+    data: orignalByShort,
+    message: "амжилттай шилжлээ",
   });
 });
 
@@ -36,7 +36,7 @@ exports.getShortsByUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     isDone: true,
     data: shortsByUser,
-    message: "амжилттай хэрэглэгчийн богиноонуудыг авлаа",
+    message: "амжилттай хэрэглэгчийн богино линкүүдийг авлаа",
   });
 });
 
@@ -52,12 +52,13 @@ exports.createShort = asyncHandler(async (req, res, next) => {
   const createdShort = await shortModel.create({
     orignalLink: req.body.orignalLink,
     shortLink: stringId,
+    ownerId: req.body.ownerId,
   });
 
   res.status(200).json({
     isDone: true,
     data: createdShort,
-    message: "амжилттай богиноо үүсгэллээ",
+    message: "амжилттай богино линк үүсгэллээ",
   });
 });
 

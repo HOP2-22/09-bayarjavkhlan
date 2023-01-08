@@ -5,8 +5,9 @@ import LogIn from "./LogIn";
 import Home from "./Home";
 import Entered from "./Entered";
 import SignUp from "./SignUp";
-import ForgetPass from "./ForgetPass";
+import ForgetPass from "./ForgetPassEmail";
 import ChangePassword from "./ChangePassword";
+import SwitchHref from "./SwitchHref";
 
 const Index = () => {
   return (
@@ -20,6 +21,7 @@ const Index = () => {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/forgetpassword" element={<ForgetPass />} />
             <Route path="/changePassword" element={<ChangePassword />} />
+            <Route path="/:id" element={<SwitchHref />} />
           </Routes>
         </Layout>
       </Context>

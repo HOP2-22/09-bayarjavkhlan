@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../context/Context";
+
 import Logo from "../img/boginoo1.png";
 import { EyeIcon } from "@heroicons/react/24/solid";
 import { EyeSlashIcon } from "@heroicons/react/24/solid";
+import { FaSpinner } from "react-icons/fa";
 
 const LogIn = () => {
-  const [emailValue, setEmailValue] = useState("");
-  const [passValue, setPassValue] = useState("");
+  const {
+    loading,
+    logIn,
+    loginEmailValue,
+    setLoginEmailValue,
+    loginPasslValue,
+    setLoginPassValue,
+  } = useContext(Context);
+
   const [pass, setPass] = useState(true);
 
   const navigate = useNavigate();
@@ -19,74 +30,83 @@ const LogIn = () => {
     navigate("/signup");
   }
 
-  function handleClickLogIn() {
-    navigate("/home");
-  }
-
   return (
-    <div className="flex flex-col items-center">
-      <img src={Logo} alt="" className="logInLogo" />
-      <div className="font-extrabold text-main text-[20px]">Нэвтрэх</div>
-      <div className="logInEmail">
-        <p className="px-2 py-1">Цахим хаяг</p>
-        <input
-          type="text"
-          value={emailValue}
-          onChange={(e) => {
-            setEmailValue(e.target.value);
-          }}
-          placeholder="write your email address"
-          className="logWidth h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0"
-        />
-      </div>
-      <div className="">
-        <p className="px-2 py-1 font-ubuntu">Нууц үг</p>
-        <div className="relative">
+    <div className="">
+      <button
+        disabled
+        className={`${
+          loading ? "flex" : "hidden"
+        } justify-center items-center bg-green-600 py-4 px-6 my-10 rounded-lg`}
+      >
+        <FaSpinner className=" h-7 w-7 mr-3 animate-spin" color="white" />
+        <p className="font-semibold pt-2 text-white"> Loading</p>
+      </button>
+      <div className={`${loading ? "hidden" : "flex"} flex-col items-center`}>
+        <img src={Logo} alt="" className="logInLogo" />
+        <div className="font-extrabold text-main text-[20px]">Нэвтрэх</div>
+        <div className="logInEmail">
+          <p className="px-2 py-1">Цахим хаяг</p>
           <input
-            type={pass ? "password" : "text"}
-            value={passValue}
+            type="text"
+            value={loginEmailValue}
             onChange={(e) => {
-              setPassValue(e.target.value);
+              setLoginEmailValue(e.target.value);
             }}
-            placeholder="write your password"
-            className="relative logWidth h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0 "
+            placeholder="write your email address"
+            className="logWidth h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0"
           />
-          {pass ? (
-            <EyeIcon
-              className="absolute w-6 fill-main right-4 top-1.5"
-              onClick={() => setPass(!pass)}
-            />
-          ) : (
-            <EyeSlashIcon
-              className="absolute w-6 fill-main right-4 top-1.5"
-              onClick={() => setPass(!pass)}
-            />
-          )}
         </div>
-      </div>
-      <div className="logWidth flex justify-between px-3 py-3">
-        <div className="text-main">
-          <input type="checkbox" /> Намайг сана
+        <div className="">
+          <p className="px-2 py-1 font-ubuntu">Нууц үг</p>
+          <div className="relative">
+            <input
+              type={pass ? "password" : "text"}
+              value={loginPasslValue}
+              onChange={(e) => {
+                setLoginPassValue(e.target.value);
+              }}
+              placeholder="write your password"
+              className="relative logWidth h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0 "
+            />
+            {pass ? (
+              <EyeIcon
+                className="absolute w-6 fill-main right-4 top-1.5"
+                onClick={() => setPass(!pass)}
+              />
+            ) : (
+              <EyeSlashIcon
+                className="absolute w-6 fill-main right-4 top-1.5"
+                onClick={() => setPass(!pass)}
+              />
+            )}
+          </div>
+        </div>
+        <div className="logWidth flex justify-between px-3 py-3">
+          <div className="text-main">
+            <input type="checkbox" /> Намайг сана
+          </div>
+          <div
+            className="hover:text-gray-600 cursor-pointer underline"
+            onClick={handleClickForgetPassword}
+          >
+            Нууц үгээ мартсан
+          </div>
         </div>
         <div
-          className="cursor-pointer underline"
-          onClick={handleClickForgetPassword}
+          className="bg-main hover:bg-green-accent-700 rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
+          onClick={() => {
+            logIn();
+          }}
         >
-          Нууц үгээ мартсан
+          Нэвтрэх
         </div>
+        <p
+          className="underline decoration-main hover:decoration-green-700 text-main hover:text-green-700 pt-2 cursor-pointer"
+          onClick={handleClickSignUp}
+        >
+          Шинэ хэрэглэгч бол энд дарна уу?
+        </p>
       </div>
-      <div
-        className="bg-main rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
-        onClick={handleClickLogIn}
-      >
-        Нэвтрэх
-      </div>
-      <p
-        className="underline decoration-main text-main pt-2"
-        onClick={handleClickSignUp}
-      >
-        Шинэ хэрэглэгч бол энд дарна уу?
-      </p>
     </div>
   );
 };

@@ -12,7 +12,6 @@ const shortModel = mongoose.Schema({
   },
   ownerId: {
     type: String,
-    // required: true,
   },
   registerDate: { type: Date, default: Date.now },
 });

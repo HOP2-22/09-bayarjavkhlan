@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const UseEffect = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(false);
 
   useEffect(() => {
     document.title = `You clicked ${count} times`;
@@ -12,9 +12,7 @@ const UseEffect = () => {
   }, [count]);
 
   return (
-    <button onClick={() => setCount(count + 1)}>
-      You clicked {count} times
-    </button>
+    <button onClick={() => setCount(true)}>You clicked {count} times</button>
   );
 };
 

@@ -1,9 +1,10 @@
 import StopWatch from "./Components/useEffect/Stopwatch";
+import UseEffect from "./Components/useEffect/Useeffect";
 
 const App = () => {
   return (
     <div>
-      <StopWatch />
+      <UseEffect />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 const express = require("express");
 
 const {
-  getShortById,
+  getOrignalByShort,
   getShortsByUser,
   createShort,
   updateShort,
@@ -13,8 +13,8 @@ const usersRouter = express.Router();
 
 usersRouter.route("/allShorts").get(getShorts);
 usersRouter.route("/").post(createShort);
-usersRouter.route("/:id").get(getShortById);
-usersRouter.route("/home").post(createShort);
+usersRouter.route("/:id").get(getOrignalByShort);
+
 usersRouter
   .route("/home/:id")
   .get(getShortsByUser)

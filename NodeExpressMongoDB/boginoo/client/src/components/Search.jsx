@@ -1,13 +1,11 @@
-import React, { useState, useContext } from "react";
-import BigLogo from "../img/boginoo3.png";
+import React, { useContext } from "react";
 import { Context } from "../context/Context";
 
-const Search = ({ setLink, createShort }) => {
-  const { makeId, setCut, searchValue, setSearchValue } = useContext(Context);
+import BigLogo from "../img/boginoo3.png";
 
-  const cleanInput = () => {
-    setSearchValue("");
-  };
+const Search = () => {
+  const { SetEnteredValue, enteredValue, createShort, user } =
+    useContext(Context);
 
   return (
     <div className="flex flex-col items-center">
@@ -15,21 +13,19 @@ const Search = ({ setLink, createShort }) => {
       <div className="flex gap-2 mt-16">
         <input
           type="text"
-          value={searchValue}
+          value={enteredValue}
           onChange={(e) => {
-            setSearchValue(e.target.value);
+            SetEnteredValue(e.target.value);
           }}
           placeholder="https://www.web-huudas.mn"
           className="sm:w-[430px] md:w-[480px] lg:w-[530px] h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0"
         />
         <div
-          className="bg-main text-white rounded-full py-1 px-6 cursor-pointer"
+          className="bg-main hover:bg-green-accent-700 text-white rounded-full py-1 px-6 cursor-pointer"
           onClick={() => {
-            if (searchValue.includes(".com")) {
-              setLink(searchValue);
-              makeId();
-              setCut(true);
-              cleanInput();
+            if (user) {
+              createShort(user?._id);
+            } else {
               createShort();
             }
           }}

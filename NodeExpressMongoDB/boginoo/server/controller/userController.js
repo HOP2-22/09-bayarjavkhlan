@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const colors = require("colors");
 
 const usersModel = require("../models/userModel");
 const asyncHandler = require("../middleware/asyncHandler");
@@ -15,19 +16,19 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.getUser = asyncHandler(async (req, res, next) => {
+exports.getUserByEmail = asyncHandler(async (req, res, next) => {
   const user = await usersModel.find({
     email: req.params.id,
   });
 
-  if (!user) {
+  if (user.length === 0) {
     throw new MyError(`и-майл алдаатай байна`, 404);
   }
 
   res.status(200).json({
     isDone: true,
-    data: user,
-    message: "амжилттай нэвтэрлээ",
+    data: user[0],
+    message: "амжилттай хэрэглэгчийн мэдээлэл авлаа",
   });
 });
 
@@ -38,11 +39,14 @@ exports.createUser = asyncHandler(async (req, res, next) => {
 
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const users = await usersModel.create({ email, password: hashedPassword });
+  const newUser = await usersModel.create({
+    email: email,
+    password: hashedPassword,
+  });
 
   res.status(200).json({
     isDone: true,
-    data: users,
+    data: newUser,
     message: "амжилттай бүртгүүллээ",
   });
 });
@@ -53,6 +57,10 @@ exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   const user = await usersModel.findOne({ email: email });
+
+  if (!user) {
+    throw new MyError(`ийм Email-тэй хэрэглэгч алга байна`, 404);
+  }
 
   const match = await bcrypt.compare(password, user.password);
 
@@ -70,14 +78,38 @@ exports.login = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     isDone: true,
     token: token,
-    message: "амжилттай бүртгүүллээ",
+    message: "амжилттай нэвтэрлээ",
   });
 });
 
-exports.updateUser = asyncHandler(async (req, res, next) => {
+exports.updateUserPass = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const salt = await bcrypt.genSalt(10);
+
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const updatedUser = await usersModel.findOneAndUpdate(
+    { email: email },
+    { password: hashedPassword },
+    {
+      runValidators: true,
+    }
+  );
+
+  res.status(200).json({
+    isDone: true,
+    data: updatedUser,
+    message: "амжилттай password солигдлоо",
+  });
+});
+
+exports.updateUserName = asyncHandler(async (req, res, next) => {
   const updatedUser = await usersModel.findByIdAndUpdate(
     req.params.id,
-    req.body,
+    {
+      name: req.body.name,
+    },
     {
       runValidators: true,
     }

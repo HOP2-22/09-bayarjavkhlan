@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Option from "./Option";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -10,22 +11,20 @@ const Nav = () => {
   }
 
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-end gap-10 px-20 pt-14">
-        <div className="text-main text-[20px] font-bold">
+    <div className="w-full h-20">
+      <div className="flex items-start justify-end gap-10 px-20 pt-14">
+        <div className="pt-1 text-main hover:text-green-accent-700 text-[20px] font-bold cursor-pointer">
           Хэрхэн ажилладаж вэ?
         </div>
         {pathname === "/" ? (
           <div
-            className="bg-main rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
+            className="bg-main hover:bg-green-accent-700 rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
             onClick={handleClick}
           >
             Нэвтрэх
           </div>
-        ) : pathname === "/Loged" ? (
-          <div className="px-[45px] py-2 font-semibold text-gray-900 text-[20px]">
-            {/* {User.name} */}
-          </div>
+        ) : pathname === "/home" ? (
+          <Option />
         ) : (
           <></>
         )}
