@@ -4,7 +4,7 @@ import { Context } from "../context/Context";
 import BigLogo from "../img/boginoo3.png";
 
 const Search = () => {
-  const { SetEnteredValue, enteredValue, createShort, user } =
+  const { SetEnteredValue, enteredValue, createShort, user, getUserHistory } =
     useContext(Context);
 
   return (
@@ -25,6 +25,8 @@ const Search = () => {
           onClick={() => {
             if (user) {
               createShort(user?._id);
+              console.log(user?.email);
+              getUserHistory(user?.email);
             } else {
               createShort();
             }

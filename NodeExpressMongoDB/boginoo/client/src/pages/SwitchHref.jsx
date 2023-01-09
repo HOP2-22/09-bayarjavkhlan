@@ -10,8 +10,7 @@ const SwitchHref = () => {
     const switchLink = async () => {
       try {
         const href = await axios.get(`http://localhost:8000/${id}`);
-        console.log(href);
-        window.location.href = href;
+        window.location.href = href.data.data[0].orignalLink;
       } catch (error) {
         console.log(error);
       }

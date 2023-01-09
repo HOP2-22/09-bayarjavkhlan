@@ -9,11 +9,11 @@ import { useNavigate } from "react-router-dom";
 const options = ["нэрээ өөрчиллөх", "гарах"];
 
 const Option = () => {
-  const { user, setUser, getUserHistory, setAllData } = useContext(Context);
+  const { user, setUser, getUserHistory, setShow } = useContext(Context);
 
   const [dropShow, setDropShow] = useState(true);
   const [showName, setShowName] = useState(false);
-  const [nameValue, setNameValue] = useState();
+  const [nameValue, setNameValue] = useState("");
 
   const navigate = useNavigate();
 
@@ -64,6 +64,7 @@ const Option = () => {
                   className="text-gray-600 pt-4 border border-t-0 px-2 cursor-pointer"
                   onClick={() => {
                     if (index === 1) {
+                      setShow(false);
                       logout();
                     } else {
                       setShowName(true);

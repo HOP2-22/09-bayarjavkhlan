@@ -38,7 +38,6 @@ const ThemeContext = ({ children }) => {
       });
       setLoginEmailValue("");
       setLoading(false);
-      handleClickHome();
       getUserHistory(loginEmailValue);
       setTimeout(() => {
         alert(LogedUser.data.message);
@@ -111,6 +110,7 @@ const ThemeContext = ({ children }) => {
 
       setUser(user.data.data);
       setUserHistory(shortsByUser.data.data);
+      handleClickHome();
     } catch (error) {
       setTimeout(() => {
         alert(error.response.data.error.message);
@@ -122,6 +122,7 @@ const ThemeContext = ({ children }) => {
   const [show, setShow] = useState(false);
   const [enteredValue, SetEnteredValue] = useState("");
   const createShort = async (id) => {
+    setLoading(true);
     setShow(false);
     try {
       const response = await axios.post("http://localhost:8000", {
@@ -131,6 +132,18 @@ const ThemeContext = ({ children }) => {
       setLinks(response.data.data);
       SetEnteredValue("");
       setShow(true);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteShortLink = async (_id) => {
+    setLoading(true);
+    try {
+      await axios.delete(`http://localhost:8000/home/${_id}`);
+      setLoading(false);
+      getUserHistory(User?.email);
     } catch (error) {
       console.log(error);
     }
@@ -140,44 +153,47 @@ const ThemeContext = ({ children }) => {
     <Context.Provider
       value={{
         //LOADING
-        loading: loading,
-        setLoading: setLoading,
+        loading,
+        setLoading,
 
         //AUTHENTICATOR
-        createUser: createUser,
-        logIn: logIn,
-        checkEmail: checkEmail,
-        changePass: changePass,
+        createUser,
+        logIn,
+        checkEmail,
+        changePass,
 
-        emailValue: emailValue,
-        setEmailValue: setEmailValue,
-        passValue: passValue,
-        setPassValue: setPassValue,
+        emailValue,
+        setEmailValue,
+        passValue,
+        setPassValue,
 
-        loginEmailValue: loginEmailValue,
-        setLoginEmailValue: setLoginEmailValue,
-        loginPassValue: loginPassValue,
-        setLoginPassValue: setLoginPassValue,
+        loginEmailValue,
+        setLoginEmailValue,
+        loginPassValue,
+        setLoginPassValue,
 
-        forgetEmailValue: forgetEmailValue,
-        setForgetEmailValue: setForgetEmailValue,
+        forgetEmailValue,
+        setForgetEmailValue,
 
-        changePassValue: changePassValue,
-        setChangePassValue: setChangePassValue,
-        setChangePassVerifyValue: setChangePassVerifyValue,
-        changePassVerifyValue: changePassVerifyValue,
+        changePassValue,
+        setChangePassValue,
+        setChangePassVerifyValue,
+        changePassVerifyValue,
 
         //LINK
-        createShort: createShort,
-        SetEnteredValue: SetEnteredValue,
-        enteredValue: enteredValue,
-        links: links,
-        show: show,
+        createShort,
+        SetEnteredValue,
+        enteredValue,
+        links,
+        show,
+        setShow,
 
         //LINK WITH USER
         user: User,
-        setUser: setUser,
-        userHistory: userHistory,
+        setUser,
+        userHistory,
+        getUserHistory,
+        deleteShortLink,
       }}
     >
       {children}
