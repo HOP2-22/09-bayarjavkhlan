@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const colors = require("colors");
+const nodemailer = require("nodemailer");
 
 const usersModel = require("../models/userModel");
 const asyncHandler = require("../middleware/asyncHandler");
@@ -139,3 +140,49 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
     message: "амжилттай устаглаа",
   });
 });
+
+exports.verifyUser = (req, res, next) => {
+  let characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  let stringId = "";
+  for (let i = 0; i < 5; i++) {
+    stringId += characters.charAt(Math.floor(Math.random() * 62));
+  }
+
+  const main = async () => {
+    let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "jawkhlan626@gmail.com",
+        pass: "yrzswrigcwgattyy",
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+
+    console.log(req.body.email);
+    console.log(stringId);
+
+    let info = await transporter.sendMail({
+      from: "jawkhlan626@gmail.com",
+      to: req.body.email,
+      subject: "Boginoo",
+      text: "Vertification",
+      html: `<b>code: ${stringId}</b><br>
+      <a href="https://www.facebook.com/profile.php?id=100010820288664">onclick and follow me</a>
+      `,
+    });
+    console.log(info);
+  };
+
+  main().catch(console.error);
+  res.status(200).json({
+    isDone: true,
+    verifyCode: stringId,
+    message: "амжилттай устаглаа",
+  });
+};

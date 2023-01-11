@@ -43,7 +43,7 @@ const ForgetPass = () => {
           />
         </div>
         <div
-          className="bg-main rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
+          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
           onClick={() => {
             checkEmail();
           }}

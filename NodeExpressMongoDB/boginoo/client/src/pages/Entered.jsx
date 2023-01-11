@@ -30,7 +30,7 @@ const Entered = () => {
             <p className=" pl-2 h-6">{`http://localhost:3000/${links?.shortLink}`}</p>
           </div>
           <p
-            className="text-main hover:text-green-accent-700 text-lg font-sans font-medium cursor-pointer"
+            className="text-main hover:text-green-accent-700 transition-colors duration-200 ease-in text-lg font-sans font-medium cursor-pointer"
             onClick={() => {
               navigator.clipboard.writeText(
                 `http://localhost:3000/${links?.shortLink}`

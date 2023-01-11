@@ -1,6 +1,4 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Context } from "../context/Context";
 
 import Logo from "../img/boginoo1.png";
@@ -11,7 +9,7 @@ import { EyeSlashIcon } from "@heroicons/react/24/solid";
 const SignUp = () => {
   const {
     loading,
-    createUser,
+    toVerify,
     emailValue,
     setEmailValue,
     passValue,
@@ -112,14 +110,15 @@ const SignUp = () => {
           </div>
         </div>
         <div
-          className="bg-main hover:bg-green-accent-700 rounded-[100px] px-[45px] mt-5 py-2 font-bold text-white text-[20px] cursor-pointer"
+          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 rounded-[100px] px-[45px] mt-5 py-2 font-bold text-white text-[20px] cursor-pointer"
           onClick={() => {
             if (
               emailValue.includes(".com") &&
               emailValue.includes("@") &&
               passValue === passVerifyValue
             ) {
-              createUser();
+              toVerify();
+              setPassVerifyValue("");
             } else {
               emailValue.includes(".com") || emailValue.includes("@")
                 ? setErrorMail(false)

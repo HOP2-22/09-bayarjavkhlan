@@ -4,21 +4,19 @@ import { Context } from "../context/Context";
 
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { ChevronUpIcon } from "@heroicons/react/24/solid";
-import { useNavigate } from "react-router-dom";
 
 const options = ["нэрээ өөрчиллөх", "гарах"];
 
 const Option = () => {
-  const { user, setUser, getUserHistory, setShow } = useContext(Context);
+  const { user, setUser, getUserHistory, setShow, navigateToSlash } =
+    useContext(Context);
 
   const [dropShow, setDropShow] = useState(true);
   const [showName, setShowName] = useState(false);
   const [nameValue, setNameValue] = useState("");
 
-  const navigate = useNavigate();
-
   const logout = () => {
-    navigate("/");
+    navigateToSlash();
     setUser({});
   };
 
@@ -81,11 +79,11 @@ const Option = () => {
       <div
         className={`${
           showName ? "block" : "hidden"
-        } bg-black/40 fixed top-0 left-0 flex justify-center items-center w-full h-screen`}
+        } bg-black/40 fixed z-50 top-0 left-0 flex justify-center items-center w-full h-screen`}
       >
-        <div className="fixed w-full z-[100]">
+        <div className="fixed w-full z-10">
           <div className="max-w-[500px] h-[220px] mx-auto bg-white text-white">
-            <div className="max-w-[320px] mx-auto py-16">
+            <div className="relative max-w-[320px] mx-auto py-16">
               <h1 className="text-main text-3xl font-bold pb-6">Нэрээ солих</h1>
               <div className="flex gap-8">
                 <input
@@ -105,6 +103,14 @@ const Option = () => {
                 >
                   Солих
                 </button>
+              </div>
+              <div
+                className="w-8 h-8 absolute flex items-center justify-center rounded-full z-20 top-5 -right-16 text-main border-2 border-main cursor-pointer hover:text-white hover:bg-main transition-colors duration-200 ease-in"
+                onClick={() => {
+                  setShowName(false);
+                }}
+              >
+                <div className="">X</div>
               </div>
             </div>
           </div>

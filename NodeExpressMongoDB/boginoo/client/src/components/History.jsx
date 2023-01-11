@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../context/Context";
 
 import { FaSpinner } from "react-icons/fa";
@@ -59,7 +59,7 @@ const History = () => {
                   </div>
                   <div className="flex flex-col gap-1 pt-[3px]">
                     <BackspaceIcon
-                      className="w-4 h-4 fill-blue-600 cursor-pointer"
+                      className="w-4 h-4 fill-blue-600 cursor-pointer hover:fill-red-500 transition-colors duration-150 ease-in"
                       onClick={() => {
                         deleteShortLink(el?._id);
                       }}

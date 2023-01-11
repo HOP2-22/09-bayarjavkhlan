@@ -14,10 +14,18 @@ const ChangePassword = () => {
     setChangePassValue,
     changePassVerifyValue,
     setChangePassVerifyValue,
+    forgetUser,
+    navigateToSlash,
   } = useContext(Context);
 
   const [pass, setPass] = useState(true);
   const [passVerify, setPassVerify] = useState(true);
+
+  useEffect(() => {
+    if (forgetUser === null) {
+      navigateToSlash();
+    }
+  }, []);
 
   return (
     <>
@@ -93,7 +101,7 @@ const ChangePassword = () => {
           </div>
         </div>
         <div
-          className="bg-main hover:bg-green-accent-700 rounded-[100px] px-[45px] mt-5 py-2 font-bold text-white text-[20px] cursor-pointer"
+          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 ease-in rounded-[100px] px-[45px] mt-5 py-2 font-bold text-white text-[20px] cursor-pointer"
           onClick={() => {
             if (changePassValue === changePassVerifyValue) {
               changePass();

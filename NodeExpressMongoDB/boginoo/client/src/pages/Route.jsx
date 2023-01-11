@@ -8,6 +8,8 @@ import SignUp from "./SignUp";
 import ForgetPass from "./ForgetPassEmail";
 import ChangePassword from "./ChangePassword";
 import SwitchHref from "./SwitchHref";
+import VerifyCreate from "./VerifyCreate";
+import VerifyChange from "./VerifyChange";
 
 const Index = () => {
   return (
@@ -22,6 +24,8 @@ const Index = () => {
             <Route path="/forgetpassword" element={<ForgetPass />} />
             <Route path="/changePassword" element={<ChangePassword />} />
             <Route path="/:id" element={<SwitchHref />} />
+            <Route path="/verifyChange" element={<VerifyChange />} />
+            <Route path="/verifyCreate" element={<VerifyCreate />} />
           </Routes>
         </Layout>
       </Context>

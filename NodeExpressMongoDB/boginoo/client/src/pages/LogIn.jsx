@@ -1,6 +1,4 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Context } from "../context/Context";
 
 import Logo from "../img/boginoo1.png";
@@ -16,19 +14,11 @@ const LogIn = () => {
     setLoginEmailValue,
     loginPasslValue,
     setLoginPassValue,
+    navigateToSignup,
+    navigateToForgetPass,
   } = useContext(Context);
 
   const [pass, setPass] = useState(true);
-
-  const navigate = useNavigate();
-
-  function handleClickForgetPassword() {
-    navigate("/forgetpassword");
-  }
-
-  function handleClickSignUp() {
-    navigate("/signup");
-  }
 
   return (
     <div className="">
@@ -87,13 +77,15 @@ const LogIn = () => {
           </div>
           <div
             className="hover:text-gray-600 cursor-pointer underline"
-            onClick={handleClickForgetPassword}
+            onClick={() => {
+              navigateToForgetPass();
+            }}
           >
             Нууц үгээ мартсан
           </div>
         </div>
         <div
-          className="bg-main hover:bg-green-accent-700 rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
+          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
           onClick={() => {
             logIn();
           }}
@@ -101,8 +93,10 @@ const LogIn = () => {
           Нэвтрэх
         </div>
         <p
-          className="underline decoration-main hover:decoration-green-700 text-main hover:text-green-700 pt-2 cursor-pointer"
-          onClick={handleClickSignUp}
+          className="underline decoration-main hover:decoration-green-700 transition-colors duration-200 text-main hover:text-green-700 pt-2 cursor-pointer"
+          onClick={() => {
+            navigateToSignup();
+          }}
         >
           Шинэ хэрэглэгч бол энд дарна уу?
         </p>

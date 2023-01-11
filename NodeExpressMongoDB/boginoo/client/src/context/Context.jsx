@@ -1,32 +1,89 @@
 import React from "react";
 import axios from "axios";
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Context = createContext();
 
 const ThemeContext = ({ children }) => {
+  const navigateToLogin = () => {
+    navigate("/login");
+  };
+  const navigateToSlash = () => {
+    navigate("/");
+  };
+  const navigateToSignup = () => {
+    navigate("/signup");
+  };
+  const navigateToForgetPass = () => {
+    navigate("/forgetpassword");
+  };
+  const navigateToVerifyCreate = () => {
+    navigate("/verifyCreate");
+  };
+  const navigateToVerifyChange = () => {
+    navigate("/verifyChange");
+  };
+  const navigateToChangePass = () => {
+    navigate("/changePassword");
+  };
+
   const [loading, setLoading] = useState(false);
+
+  const [changePassVerifyValue, setChangePassVerifyValue] = useState("");
+  const [verifyValue, setVerifyValue] = useState("");
+  const [VerifyCode, setVerifyCode] = useState(null);
 
   const navigate = useNavigate();
 
+  const [verifyUser, setVerifyUser] = useState(null);
   const [emailValue, setEmailValue] = useState("");
   const [passValue, setPassValue] = useState("");
+  const toVerify = async () => {
+    setLoading(true);
+    try {
+      const verifyCode = await axios.post("http://localhost:8000/user/verify", {
+        email: emailValue,
+      });
+      setVerifyCode(verifyCode);
+
+      navigateToVerifyCreate();
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setTimeout(() => {
+        alert(error.response.data.error.message);
+      }, [500]);
+    }
+  };
+  const checkVerifyLoginCode = async () => {
+    setLoading(true);
+    if (VerifyCode.data.verifyCode === verifyValue) {
+      createUser();
+      setLoading(false);
+    } else {
+      setLoading(false);
+      setTimeout(() => {
+        alert("алдаа гарлаа");
+      }, [500]);
+    }
+  };
   const createUser = async () => {
+    setLoading(true);
     try {
       await axios.post("http://localhost:8000/user/createUser", {
         email: emailValue,
         password: passValue,
       });
-      handleClickLogIn();
+      setEmailValue("");
+      setPassValue("");
+      navigateToLogin();
+      setLoading(false);
     } catch (error) {
       alert(error.message);
     }
   };
 
-  function handleClickHome() {
-    navigate("/home");
-  }
   const [loginEmailValue, setLoginEmailValue] = useState("");
   const [loginPassValue, setLoginPassValue] = useState("");
   const logIn = async () => {
@@ -43,25 +100,31 @@ const ThemeContext = ({ children }) => {
         alert(LogedUser.data.message);
       }, [500]);
     } catch (error) {
-      alert(error.response.data.error.message);
       setLoading(false);
+      setTimeout(() => {
+        alert(error.response.data.error.message);
+      }, [500]);
     }
   };
 
-  function handleClickChangePass() {
-    navigate("/changePassword");
-  }
   const [forgetEmailValue, setForgetEmailValue] = useState("");
   const [changePassValue, setChangePassValue] = useState("");
-  const [changePassVerifyValue, setChangePassVerifyValue] = useState("");
+  const [forgetUser, setForgetUser] = useState(null);
   const checkEmail = async () => {
     setLoading(true);
     try {
-      await axios.get(
+      const user = await axios.get(
         `http://localhost:8000/user/checkEmail/${forgetEmailValue}`
       );
+      setForgetUser(user);
 
-      handleClickChangePass();
+      const verifyCode = await axios.post("http://localhost:8000/user/verify", {
+        email: forgetEmailValue,
+      });
+
+      setVerifyCode(verifyCode);
+
+      navigateToVerifyChange();
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -70,9 +133,18 @@ const ThemeContext = ({ children }) => {
       }, [500]);
     }
   };
-  function handleClickLogIn() {
-    navigate("/login");
-  }
+  const checkVerifyCode = async () => {
+    setLoading(true);
+    if (VerifyCode.data.verifyCode === verifyValue) {
+      navigateToChangePass();
+      setLoading(false);
+    } else {
+      setLoading(false);
+      setTimeout(() => {
+        alert("алдаа гарлаа");
+      }, [500]);
+    }
+  };
   const changePass = async () => {
     setLoading(true);
     try {
@@ -83,8 +155,9 @@ const ThemeContext = ({ children }) => {
           password: changePassValue,
         }
       );
-      handleClickLogIn();
+      navigateToLogin();
       setLoading(false);
+      setForgetUser(null);
       setTimeout(() => {
         alert(changedPass.data.message);
       }, [500]);
@@ -110,7 +183,7 @@ const ThemeContext = ({ children }) => {
 
       setUser(user.data.data);
       setUserHistory(shortsByUser.data.data);
-      handleClickHome();
+      navigate("/home");
     } catch (error) {
       setTimeout(() => {
         alert(error.response.data.error.message);
@@ -152,15 +225,21 @@ const ThemeContext = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        //LOADING
+        //SYSTEM
         loading,
         setLoading,
+        navigateToLogin,
+        navigateToSlash,
+        navigateToSignup,
+        navigateToForgetPass,
 
         //AUTHENTICATOR
-        createUser,
         logIn,
         checkEmail,
         changePass,
+        toVerify,
+        checkVerifyLoginCode,
+        checkVerifyCode,
 
         emailValue,
         setEmailValue,
@@ -174,6 +253,13 @@ const ThemeContext = ({ children }) => {
 
         forgetEmailValue,
         setForgetEmailValue,
+        forgetUser,
+
+        verifyValue,
+        setVerifyValue,
+        verifyUser,
+        setVerifyUser,
+        VerifyCode,
 
         changePassValue,
         setChangePassValue,

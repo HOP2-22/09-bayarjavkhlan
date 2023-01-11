@@ -21,11 +21,10 @@ const Search = () => {
           className="sm:w-[430px] md:w-[480px] lg:w-[530px] h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0"
         />
         <div
-          className="bg-main hover:bg-green-accent-700 text-white rounded-full py-1 px-6 cursor-pointer"
+          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 ease-in text-white rounded-full py-1 px-6 cursor-pointer"
           onClick={() => {
             if (user) {
               createShort(user?._id);
-              console.log(user?.email);
               getUserHistory(user?.email);
             } else {
               createShort();
