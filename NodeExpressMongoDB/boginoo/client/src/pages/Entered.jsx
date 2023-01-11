@@ -22,15 +22,19 @@ const Entered = () => {
       <div className={`${show && !loading ? "block" : "hidden"}`}>
         <div className="">
           <div className="py-2 px-4 opacity-50">Өгөгдсөн холбоос:</div>
-          <p className="pl-6 h-6">{links?.orignalLink}</p>
+          <p className="pl-6 h-6">
+            {links?.orignalLink.length > 40
+              ? links?.orignalLink.slice(0, 40) + "..."
+              : links?.orignalLink}
+          </p>
         </div>
-        <div className="px-4 flex justify-between items-end">
+        <div className="px-3 sm:px-4 flex justify-between items-end">
           <div className="">
             <div className="py-2 opacity-50">Богино холбоос:</div>
-            <p className=" pl-2 h-6">{`http://localhost:3000/${links?.shortLink}`}</p>
+            <p className=" pl-2 h-6 text-sm sm:text:base">{`http://localhost:3000/${links?.shortLink}`}</p>
           </div>
           <p
-            className="text-main hover:text-green-accent-700 transition-colors duration-200 ease-in text-lg font-sans font-medium cursor-pointer"
+            className="text-main hover:text-green-accent-700 transition-colors duration-200 ease-in pb-[2px] sm:pb-0 sm:text-lg font-sans font-medium cursor-pointer"
             onClick={() => {
               navigator.clipboard.writeText(
                 `http://localhost:3000/${links?.shortLink}`

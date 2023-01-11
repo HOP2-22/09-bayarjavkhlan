@@ -2,12 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-.logWidth {
-  @apply w-[530px];
-}
-
 @layer components {
+  .logInLogo {
+    @apply w-[130px];
+  }
+  .logWidth {
+    @apply w-[260px];
+  }
   @screen sm {
+    .logWidth {
+      @apply w-[530px];
+    }
     .logInLogo {
       @apply pb-[20px] w-[140px];
     }

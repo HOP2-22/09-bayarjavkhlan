@@ -49,6 +49,9 @@ const ThemeContext = ({ children }) => {
 
       navigateToVerifyCreate();
       setLoading(false);
+      setTimeout(() => {
+        setVerifyValue("");
+      }, [6000]);
     } catch (error) {
       setLoading(false);
       setTimeout(() => {
@@ -60,7 +63,14 @@ const ThemeContext = ({ children }) => {
     setLoading(true);
     if (VerifyCode.data.verifyCode === verifyValue) {
       createUser();
+      setVerifyValue("");
       setLoading(false);
+    } else if (verifyValue === "") {
+      setLoading(false);
+      navigateToLogin();
+      setTimeout(() => {
+        alert("баталгаажуулах хугацаа дууслаа");
+      }, [500]);
     } else {
       setLoading(false);
       setTimeout(() => {
@@ -126,6 +136,9 @@ const ThemeContext = ({ children }) => {
 
       navigateToVerifyChange();
       setLoading(false);
+      setTimeout(() => {
+        setVerifyValue("");
+      }, [6000]);
     } catch (error) {
       setLoading(false);
       setTimeout(() => {
@@ -137,7 +150,14 @@ const ThemeContext = ({ children }) => {
     setLoading(true);
     if (VerifyCode.data.verifyCode === verifyValue) {
       navigateToChangePass();
+      setVerifyValue("");
       setLoading(false);
+    } else if (verifyValue === "") {
+      setLoading(false);
+      navigateToForgetPass();
+      setTimeout(() => {
+        alert("баталгаажуулах хугацаа дуусcан байна");
+      }, [500]);
     } else {
       setLoading(false);
       setTimeout(() => {

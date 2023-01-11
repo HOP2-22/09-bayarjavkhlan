@@ -33,7 +33,7 @@ const LogIn = () => {
       </button>
       <div className={`${loading ? "hidden" : "flex"} flex-col items-center`}>
         <img src={Logo} alt="" className="logInLogo" />
-        <div className="font-extrabold text-main text-[20px]">Нэвтрэх</div>
+        <div className="font-extrabold text-main  text-[20px]">Нэвтрэх</div>
         <div className="logInEmail">
           <p className="px-2 py-1">Цахим хаяг</p>
           <input
@@ -43,7 +43,7 @@ const LogIn = () => {
               setLoginEmailValue(e.target.value);
             }}
             placeholder="write your email address"
-            className="logWidth h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0"
+            className="logWidth h-6 sm:h-7 py-3 sm:py-4 px-3 sm:px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0"
           />
         </div>
         <div className="">
@@ -71,7 +71,7 @@ const LogIn = () => {
             )}
           </div>
         </div>
-        <div className="logWidth flex justify-between px-3 py-3">
+        <div className="logWidth flex justify-between px-3 py-3 text-sm sm:text-base">
           <div className="text-main">
             <input type="checkbox" /> Намайг сана
           </div>
@@ -85,7 +85,7 @@ const LogIn = () => {
           </div>
         </div>
         <div
-          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
+          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 rounded-[100px] px-7 sm:px-[45px] py-1 sm:py-2 font-semibold sm:font-bold text-white text-base sm:text-[20px] cursor-pointer"
           onClick={() => {
             logIn();
           }}
@@ -93,7 +93,7 @@ const LogIn = () => {
           Нэвтрэх
         </div>
         <p
-          className="underline decoration-main hover:decoration-green-700 transition-colors duration-200 text-main hover:text-green-700 pt-2 cursor-pointer"
+          className="text-[14px] sm:text-base underline decoration-main hover:decoration-green-700 transition-colors duration-200 text-main hover:text-green-700 pt-2 cursor-pointer"
           onClick={() => {
             navigateToSignup();
           }}

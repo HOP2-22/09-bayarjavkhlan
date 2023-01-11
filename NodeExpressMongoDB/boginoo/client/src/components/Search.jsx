@@ -9,8 +9,8 @@ const Search = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <img src={BigLogo} className="w-[184px]" alt="" />
-      <div className="flex gap-2 mt-16">
+      <img src={BigLogo} className="w-[130px] sm: w-[184px]" alt="" />
+      <div className="flex gap-2 mt-10 sm:mt-16">
         <input
           type="text"
           value={enteredValue}
@@ -18,10 +18,10 @@ const Search = () => {
             SetEnteredValue(e.target.value);
           }}
           placeholder="https://www.web-huudas.mn"
-          className="sm:w-[430px] md:w-[480px] lg:w-[530px] h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0"
+          className="w-[180px] sm:w-[430px] md:w-[480px] lg:w-[530px] h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-sm text-main focus:outline-0"
         />
         <div
-          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 ease-in text-white rounded-full py-1 px-6 cursor-pointer"
+          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 ease-in text-white rounded-full py-1 px-2 sm:px-6 cursor-pointer"
           onClick={() => {
             if (user) {
               createShort(user?._id);
