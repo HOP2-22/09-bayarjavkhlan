@@ -10,6 +10,7 @@ import ChangePassword from "./ChangePassword";
 import SwitchHref from "./SwitchHref";
 import VerifyCreate from "./VerifyCreate";
 import VerifyChange from "./VerifyChange";
+import MobileHistory from "./MobileHistory";
 
 const Index = () => {
   return (
@@ -26,6 +27,7 @@ const Index = () => {
             <Route path="/:id" element={<SwitchHref />} />
             <Route path="/verifyChange" element={<VerifyChange />} />
             <Route path="/verifyCreate" element={<VerifyCreate />} />
+            <Route path="/history" element={<MobileHistory />} />
           </Routes>
         </Layout>
       </Context>

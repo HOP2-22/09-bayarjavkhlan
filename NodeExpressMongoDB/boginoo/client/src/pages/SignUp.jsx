@@ -40,7 +40,7 @@ const SignUp = () => {
         <div className="logInEmail">
           <p className="px-2 py-1">Цахим хаяг</p>
           <input
-            type="text"
+            type="email"
             value={emailValue}
             onChange={(e) => {
               setEmailValue(e.target.value);
@@ -48,7 +48,7 @@ const SignUp = () => {
             placeholder="write your email address"
             className={`${
               errorMail ? "border-[#F0F0F0]" : "border-red-accent-400"
-            } logWidth h-7 py-4 px-6 border rounded-full text-main focus:outline-0 `}
+            } logWidth h-7 py-3 sm:py-4 px-6 border rounded-full text-main focus:outline-0 `}
           />
         </div>
         <div className="sm:pb-4 md:pb-5 lg:pb-6 xl:pb-7">
@@ -63,18 +63,18 @@ const SignUp = () => {
               placeholder="write your password"
               className={`${
                 errorPass ? "border-[#F0F0F0]" : "border-red-accent-400"
-              } relative logWidth h-7 py-4 px-6 border rounded-full text-main focus:outline-0 `}
+              } relative logWidth h-7 py-3 sm:py-4 px-6 border rounded-full text-main focus:outline-0 `}
             />
             {pass ? (
               <EyeIcon
-                className="absolute w-6 fill-main right-4 top-1.5 cursor-pointer"
+                className="passEyeIcon cursor-pointer"
                 onClick={() => {
                   setPass(!pass);
                 }}
               />
             ) : (
               <EyeSlashIcon
-                className="absolute w-6 fill-main right-4 top-1.5 cursor-pointer"
+                className="passEyeIcon cursor-pointer"
                 onClick={() => {
                   setPass(!pass);
                 }}
@@ -94,23 +94,23 @@ const SignUp = () => {
               placeholder="write your password"
               className={`${
                 errorPass ? "border-[#F0F0F0]" : "border-red-accent-400"
-              } relative logWidth h-7 py-4 px-6 border rounded-full text-main focus:outline-0 `}
+              } relative logWidth h-7 py-3 sm:py-4 px-6 border rounded-full text-main focus:outline-0 `}
             />
             {passVerify ? (
               <EyeIcon
-                className="absolute w-6 fill-main right-4 top-1.5 cursor-pointer"
+                className="passEyeIcon cursor-pointer"
                 onClick={() => setPassVerify(!passVerify)}
               />
             ) : (
               <EyeSlashIcon
-                className="absolute w-6 fill-main right-4 top-1.5 cursor-pointer"
+                className="passEyeIcon cursor-pointer"
                 onClick={() => setPassVerify(!passVerify)}
               />
             )}
           </div>
         </div>
         <div
-          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 rounded-[100px] px-[45px] mt-5 py-2 font-bold text-white text-[20px] cursor-pointer"
+          className="button mt-3 sm:mt-0"
           onClick={() => {
             if (
               emailValue.includes(".com") &&

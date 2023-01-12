@@ -56,16 +56,13 @@ const LogIn = () => {
                 setLoginPassValue(e.target.value);
               }}
               placeholder="write your password"
-              className="relative logWidth h-7 py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0 "
+              className="relative logWidth h-6 py-3 sm:py-4 px-6 border border-[#F0F0F0] rounded-full text-main focus:outline-0 "
             />
             {pass ? (
-              <EyeIcon
-                className="absolute w-6 fill-main right-4 top-1.5"
-                onClick={() => setPass(!pass)}
-              />
+              <EyeIcon className="passEyeIcon" onClick={() => setPass(!pass)} />
             ) : (
               <EyeSlashIcon
-                className="absolute w-6 fill-main right-4 top-1.5"
+                className="passEyeIcon"
                 onClick={() => setPass(!pass)}
               />
             )}
@@ -85,7 +82,7 @@ const LogIn = () => {
           </div>
         </div>
         <div
-          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 rounded-[100px] px-7 sm:px-[45px] py-1 sm:py-2 font-semibold sm:font-bold text-white text-base sm:text-[20px] cursor-pointer"
+          className="button"
           onClick={() => {
             logIn();
           }}

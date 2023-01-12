@@ -1,19 +1,22 @@
 import React, { useContext } from "react";
 import { Context } from "../context/Context";
+import { useNavigate } from "react-router-dom";
 
 import { FaSpinner } from "react-icons/fa";
 import { BackspaceIcon } from "@heroicons/react/24/solid";
 
 const History = () => {
-  const { userHistory, loading, deleteShortLink } = useContext(Context);
+  const { links, show, userHistory, loading, deleteShortLink } =
+    useContext(Context);
 
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col">
         <p
           className={`${
-            userHistory.length < 1 ? "hidden" : "block"
-          } pt-12 pb-6 text-main text-3xl font-extrabold`}
+            userHistory.length < 1 ? "sm:hidden" : "sm:block"
+          } hidden pt-12 pb-6 text-main text-3xl font-extrabold`}
         >
           Түүх
         </p>
@@ -31,7 +34,7 @@ const History = () => {
         {userHistory.map((el, index) => {
           return (
             <div key={index}>
-              <div className="flex items-end pb-4 border-b-2 decoration-black">
+              <div className="hidden sm:flex items-end pb-4 border-b-2 decoration-black">
                 <div className="flex">
                   <div className="flex flex-col gap-3 w-80">
                     <div className="opacity-50">Өгөгдсөн холбоос:</div>
@@ -70,6 +73,47 @@ const History = () => {
             </div>
           );
         })}
+        <div className="flex flex-col sm:hidden">
+          {links && (
+            <div className={`${show && !loading ? "block" : "hidden"}`}>
+              <div className="">
+                <div className="py-2 px-4 opacity-50">Өгөгдсөн холбоос:</div>
+                <p className="pl-6 h-6">
+                  {links?.orignalLink.length > 40
+                    ? links?.orignalLink.slice(0, 40) + "..."
+                    : links?.orignalLink}
+                </p>
+              </div>
+              <div className="px-3 sm:px-4 flex justify-between items-end">
+                <div className="">
+                  <div className="py-2 opacity-50">Богино холбоос:</div>
+                  <p className=" pl-2 h-6 text-sm sm:text:base">
+                    {`http://localhost:3000/${links?.shortLink}`}
+                  </p>
+                </div>
+                <p
+                  className="text-main hover:text-green-accent-700 transition-colors duration-200 ease-in pb-[2px] sm:pb-0 sm:text-lg font-sans font-medium cursor-pointer"
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `http://localhost:3000/${links?.shortLink}`
+                    );
+                  }}
+                >
+                  хуулж авах
+                </p>
+              </div>
+            </div>
+          )}
+          <p className="w-full flex justify-end pt-4 text-blue-accent-400 decoration-blue-accent-400 underline underline-offset-4">
+            <div
+              onClick={() => {
+                navigate("/history");
+              }}
+            >
+              Түүх харах
+            </div>
+          </p>
+        </div>
       </div>
     </>
   );

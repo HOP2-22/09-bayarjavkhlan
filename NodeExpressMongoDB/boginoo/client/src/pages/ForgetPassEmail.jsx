@@ -26,7 +26,7 @@ const ForgetPass = () => {
         <div className="font-extrabold text-main text-[20px]">
           Нууц үг сэргээх
         </div>
-        <p className="text-center pt-4 lg:pt-6">
+        <p className="text-center text-sm sm:text-base pt-10 sm:pt-4 lg:pt-6">
           Бид таны цахим хаяг руу нууц үг <br />
           сэргээх хаяг явуулах болно.
         </p>
@@ -39,13 +39,17 @@ const ForgetPass = () => {
               setForgetEmailValue(e.target.value);
             }}
             placeholder="write your email address"
-            className="border-[#F0F0F0] logWidth h-7 py-4 px-6 border rounded-full text-main focus:outline-0"
+            className="border-[#F0F0F0] logWidth h-7 py-3 sm:py-4 px-6 border rounded-full text-main focus:outline-0"
           />
         </div>
         <div
-          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 rounded-[100px] px-[45px] py-2 font-bold text-white text-[20px] cursor-pointer"
+          className="button"
           onClick={() => {
-            checkEmail();
+            if (forgetEmailValue.includes("@" && ".com")) {
+              checkEmail();
+            } else {
+              alert("и-майл ээ зөв оруулна уу");
+            }
           }}
         >
           Илгээх

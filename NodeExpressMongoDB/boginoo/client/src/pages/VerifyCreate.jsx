@@ -39,13 +39,13 @@ const VerifyCreate = () => {
           Баталгаажуулах
         </div>
         <div
-          className="pt-16 pb-10 flex gap-7"
+          className="pt-16 pb-10 flex gap-4 sm:gap-7"
           onClick={() => {
             inputRef.current.focus();
           }}
         >
           {new Array(5).fill(0).map((_, index) => (
-            <div className="flex w-16 h-24 border-2 rounded-lg border-main justify-center items-center text-5xl text-blue-gray-500">
+            <div className="flex w-10 sm:w-16 h-14 sm:h-24 border-2 rounded-lg border-main justify-center items-center text-5xl text-blue-gray-500">
               {verifyValue[index]}
             </div>
           ))}
@@ -60,7 +60,7 @@ const VerifyCreate = () => {
           }}
         />
         <div
-          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 rounded-[100px] px-[45px] mt-5 py-2 font-bold text-white text-[20px] cursor-pointer"
+          className="button"
           onClick={() => {
             checkVerifyLoginCode();
           }}

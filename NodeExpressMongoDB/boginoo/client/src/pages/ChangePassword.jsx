@@ -45,8 +45,10 @@ const ChangePassword = () => {
         <div className="font-extrabold text-main text-[20px]">
           Нууц үг сэргээх
         </div>
-        <p className="text-center pt-4 lg:pt-6">шинэ нууц үг ээ бичнэ үү </p>
-        <div className="sm:pb-5 md:pb-6 lg:pb-7 xl:pb-8">
+        <p className="text-center pt-8 pb-6 sm:pt-4 lg:pt-6">
+          шинэ нууц үг ээ бичнэ үү{" "}
+        </p>
+        <div className="pb-2 sm:pb-5 md:pb-6 lg:pb-7 xl:pb-8">
           <p className="px-2 py-1 font-ubuntu">Нууц үг</p>
           <div className="relative">
             <input
@@ -60,14 +62,14 @@ const ChangePassword = () => {
             />
             {pass ? (
               <EyeIcon
-                className="absolute w-6 fill-main right-4 top-1.5"
+                className="passEyeIcon"
                 onClick={() => {
                   setPass(!pass);
                 }}
               />
             ) : (
               <EyeSlashIcon
-                className="absolute w-6 fill-main right-4 top-1.5"
+                className="passEyeIcon"
                 onClick={() => {
                   setPass(!pass);
                 }}
@@ -75,7 +77,7 @@ const ChangePassword = () => {
             )}
           </div>
         </div>
-        <div className="">
+        <div className="pb-5">
           <p className="px-2 py-1 font-ubuntu">Нууц үг дахин давтах</p>
           <div className="relative">
             <input
@@ -89,19 +91,19 @@ const ChangePassword = () => {
             />
             {passVerify ? (
               <EyeIcon
-                className="absolute w-6 fill-main right-4 top-1.5"
+                className="passEyeIcon"
                 onClick={() => setPassVerify(!passVerify)}
               />
             ) : (
               <EyeSlashIcon
-                className="absolute w-6 fill-main right-4 top-1.5"
+                className="passEyeIcon"
                 onClick={() => setPassVerify(!passVerify)}
               />
             )}
           </div>
         </div>
         <div
-          className="bg-main hover:bg-green-accent-700 transition-colors duration-200 ease-in rounded-[100px] px-[45px] mt-5 py-2 font-bold text-white text-[20px] cursor-pointer"
+          className="button"
           onClick={() => {
             if (changePassValue === changePassVerifyValue) {
               changePass();

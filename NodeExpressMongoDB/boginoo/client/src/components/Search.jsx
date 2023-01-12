@@ -9,7 +9,7 @@ const Search = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <img src={BigLogo} className="w-[130px] sm: w-[184px]" alt="" />
+      <img src={BigLogo} className="w-[130px] sm:w-[184px] sm:pt-14" alt="" />
       <div className="flex gap-2 mt-10 sm:mt-16">
         <input
           type="text"

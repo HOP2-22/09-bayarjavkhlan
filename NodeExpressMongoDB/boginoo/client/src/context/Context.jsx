@@ -27,6 +27,9 @@ const ThemeContext = ({ children }) => {
   const navigateToChangePass = () => {
     navigate("/changePassword");
   };
+  const navigateToHome = () => {
+    navigate("/home");
+  };
 
   const [loading, setLoading] = useState(false);
 
@@ -106,6 +109,9 @@ const ThemeContext = ({ children }) => {
       setLoginEmailValue("");
       setLoading(false);
       getUserHistory(loginEmailValue);
+      setTimeout(() => {
+        navigateToHome();
+      }, [200]);
       setTimeout(() => {
         alert(LogedUser.data.message);
       }, [500]);
@@ -203,7 +209,6 @@ const ThemeContext = ({ children }) => {
 
       setUser(user.data.data);
       setUserHistory(shortsByUser.data.data);
-      navigate("/home");
     } catch (error) {
       setTimeout(() => {
         alert(error.response.data.error.message);
@@ -242,6 +247,7 @@ const ThemeContext = ({ children }) => {
     }
   };
 
+  const toHistory = () => {};
   return (
     <Context.Provider
       value={{
@@ -252,6 +258,7 @@ const ThemeContext = ({ children }) => {
         navigateToSlash,
         navigateToSignup,
         navigateToForgetPass,
+        navigateToHome,
 
         //AUTHENTICATOR
         logIn,
@@ -291,6 +298,7 @@ const ThemeContext = ({ children }) => {
         SetEnteredValue,
         enteredValue,
         links,
+        setLinks,
         show,
         setShow,
 

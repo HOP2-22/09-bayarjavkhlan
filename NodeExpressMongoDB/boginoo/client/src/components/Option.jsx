@@ -35,9 +35,9 @@ const Option = () => {
 
   return (
     <div>
-      <div className="pr-[40px] font-semibold text-gray-900 text-[20px]">
-        <div className="w-[250px]">
-          <div className="flex justify-between text-xl border-b px-1 py-1">
+      <div className="pr-2 sm:pr-[40px] font-semibold text-gray-900 text-[20px]">
+        <div className="w-[160px] sm:w-[250px]">
+          <div className="flex text-[18px] sm:text-xl border-b pt-4 sm:pt-0 px-1 py-1">
             {user?.name === "user" ? user?.email : user?.name}
             <ChevronDownIcon
               className={`${
@@ -59,7 +59,7 @@ const Option = () => {
               return (
                 <p
                   key={index}
-                  className="text-gray-600 pt-4 border border-t-0 px-2 cursor-pointer"
+                  className="text-base sm:text-[20px] text-gray-600 pt-4 border border-t-0 px-2 cursor-pointer"
                   onClick={() => {
                     if (index === 1) {
                       setShow(false);
@@ -79,34 +79,40 @@ const Option = () => {
       <div
         className={`${
           showName ? "block" : "hidden"
-        } bg-black/40 fixed z-50 top-0 left-0 flex justify-center items-center w-full h-screen`}
+        } bg-black/40 fixed z-20 top-0 left-0 flex justify-center items-center w-full h-screen`}
       >
         <div className="fixed w-full z-10">
-          <div className="max-w-[500px] h-[220px] mx-auto bg-white text-white">
-            <div className="relative max-w-[320px] mx-auto py-16">
-              <h1 className="text-main text-3xl font-bold pb-6">Нэрээ солих</h1>
-              <div className="flex gap-8">
+          <div className="max-w-[340px] sm:max-w-[500px] h-[180px] sm:h-[220px] mx-auto bg-white text-white">
+            <div className="relative sm:max-w-[320px] mx-auto py-7 sm:py-16">
+              <h1 className="text-main text-3xl font-bold pb-6 pl-4 sm:pl-0">
+                Нэрээ солих
+              </h1>
+              <div className="flex gap-4 sm:gap-8">
                 <input
-                  className="w-[250px] h-10 mt-2 pb-3 border-b border-main rounded text-2xl text-gray-700 focus:outline-none"
+                  className="w-[80%] sm:w-[250px] h-10 mt-2 ml-4 sm:ml-0 pl-4 sm:pl-0 pb-3 border-b border-main rounded text-lg sm:text-2xl text-gray-700 focus:outline-none"
                   placeholder="Write your new Name"
                   type={"text"}
                   value={nameValue}
                   onChange={(e) => setNameValue(e.target.value)}
                 />
                 <button
-                  className="bg-main hover:bg-green-accent-700 py-3 px-6 rounded font-bold"
+                  className="bg-main hover:bg-green-accent-700 py-1 sm:py-3  px-4 sm:px-6 mr-3 sm:mr-0 rounded font-bold"
                   onClick={() => {
-                    changeName();
+                    if (nameValue !== "") {
+                      changeName();
+                      setNameValue("");
+                    }
                     setShowName(false);
-                    setNameValue("");
+                    setDropShow(true);
                   }}
                 >
                   Солих
                 </button>
               </div>
               <div
-                className="w-8 h-8 absolute flex items-center justify-center rounded-full z-20 top-5 -right-16 text-main border-2 border-main cursor-pointer hover:text-white hover:bg-main transition-colors duration-200 ease-in"
+                className="w-8 h-8 absolute flex items-center justify-center rounded-full z-20 top-5 right-2 sm:-right-16 text-main border-2 border-main cursor-pointer hover:text-white hover:bg-main transition-colors duration-200 ease-in"
                 onClick={() => {
+                  setDropShow(true);
                   setShowName(false);
                 }}
               >

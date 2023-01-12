@@ -164,9 +164,6 @@ exports.verifyUser = (req, res, next) => {
       },
     });
 
-    console.log(req.body.email);
-    console.log(stringId);
-
     let info = await transporter.sendMail({
       from: "jawkhlan626@gmail.com",
       to: req.body.email,
@@ -176,7 +173,6 @@ exports.verifyUser = (req, res, next) => {
       <a href="https://www.facebook.com/profile.php?id=100010820288664">onclick and follow me</a>
       `,
     });
-    console.log(info);
   };
 
   main().catch(console.error);

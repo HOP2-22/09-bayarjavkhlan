@@ -9,6 +9,7 @@ const Home = () => {
   const { user, loading, navigateToSlash } = useContext(Context);
 
   useEffect(() => {
+    console.log(user);
     if (user === undefined) {
       navigateToSlash();
     }
