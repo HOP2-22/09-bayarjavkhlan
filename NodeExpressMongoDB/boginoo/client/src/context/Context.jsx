@@ -111,7 +111,7 @@ const ThemeContext = ({ children }) => {
       getUserHistory(loginEmailValue);
       setTimeout(() => {
         navigateToHome();
-      }, [200]);
+      }, [300]);
       setTimeout(() => {
         alert(LogedUser.data.message);
       }, [500]);
@@ -247,7 +247,6 @@ const ThemeContext = ({ children }) => {
     }
   };
 
-  const toHistory = () => {};
   return (
     <Context.Provider
       value={{

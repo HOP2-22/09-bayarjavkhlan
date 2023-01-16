@@ -157,7 +157,7 @@ exports.verifyUser = (req, res, next) => {
       secure: false,
       auth: {
         user: "jawkhlan626@gmail.com",
-        pass: "yrzswrigcwgattyy",
+        pass: "hnyrapoofcuttlnf",
       },
       tls: {
         rejectUnauthorized: false,

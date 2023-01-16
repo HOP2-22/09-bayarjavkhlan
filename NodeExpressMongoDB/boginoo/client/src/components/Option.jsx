@@ -36,8 +36,8 @@ const Option = () => {
   return (
     <div>
       <div className="pr-2 sm:pr-[40px] font-semibold text-gray-900 text-[20px]">
-        <div className="w-[160px] sm:w-[250px]">
-          <div className="flex text-[18px] sm:text-xl border-b pt-4 sm:pt-0 px-1 py-1">
+        <div className="w-[160px] sm:w-[280px]">
+          <div className="flex text-[16px] sm:text-xl border-b pt-4 sm:pt-0 px-1 py-1">
             {user?.name === "user" ? user?.email : user?.name}
             <ChevronDownIcon
               className={`${

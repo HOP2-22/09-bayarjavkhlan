@@ -38,7 +38,7 @@ const SignUp = () => {
         <img src={Logo} alt="" className="logInLogo" />
         <div className="font-extrabold text-main text-[20px]">Бүртгүүлэх</div>
         <div className="logInEmail">
-          <p className="px-2 py-1">Цахим хаяг</p>
+          <p className="px-2 py-1">г</p>
           <input
             type="email"
             value={emailValue}
