@@ -9,6 +9,7 @@ const {
   login,
   getUserByEmail,
   verifyUser,
+  getuser,
 } = require("../controller/userController");
 
 const usersRouter = express.Router();
@@ -20,5 +21,6 @@ usersRouter.route("/createUser").post(createUser);
 usersRouter.route("/login").post(login);
 usersRouter.route("/:id").put(updateUserName).delete(deleteUser);
 usersRouter.route("/verify").post(verifyUser);
+usersRouter.route("/getUser").get(getuser);
 
 module.exports = usersRouter;

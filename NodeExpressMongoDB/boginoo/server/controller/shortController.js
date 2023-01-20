@@ -28,7 +28,7 @@ exports.getOrignalByShort = asyncHandler(async (req, res, next) => {
 
 exports.getShortsByUser = asyncHandler(async (req, res, next) => {
   const shortsByUser = await shortModel.find({ ownerId: req.params.id });
-
+  console.log(shortsByUser);
   if (!shortsByUser) {
     throw new MyError(`хэрэглэгч алдаатай байна`, 404);
   }

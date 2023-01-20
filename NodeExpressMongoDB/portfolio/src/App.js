@@ -9,7 +9,9 @@ const App = () => {
     <BrowserRouter>
       <div className="w-[14px] h-[14px] rounded-full bg-main absolute top-14 left-8"></div>
       <div className="w-[14px] h-[14px] rounded-full bg-main absolute top-[113px] left-[407px]"></div>
+      <div className="w-[14px] h-[14px] rounded-full bg-main absolute top-[113px] left-[407px]"></div>
       <div className="w-[14px] h-[14px] rounded-full bg-[#0047FF] absolute top-[22px] left-[556px]"></div>
+      <div className="w-[14px] h-[14px] rounded-full bg-[#0047FF] absolute top-[116px] left-[126px]"></div>
       <div className="w-[14px] h-[14px] rounded-full bg-[#0047FF] absolute top-[116px] left-[126px]"></div>
       <div className="w-[6px] h-[6px] rounded-full bg-[#FF0000] absolute top-[46px] left-[120px]"></div>
       <div className="w-[6px] h-[6px] rounded-full bg-[#0047FF] absolute top-[6px] left-[332px]"></div>

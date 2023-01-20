@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 export const Context = createContext();
 
@@ -41,11 +43,33 @@ const ThemeContext = ({ children }) => {
 
   const [verifyUser, setVerifyUser] = useState(null);
   const [emailValue, setEmailValue] = useState("");
+
   const [passValue, setPassValue] = useState("");
+
+  const [loginEmailValue, setLoginEmailValue] = useState("");
+  const [loginPassValue, setLoginPassValue] = useState("");
+
+  const [forgetEmailValue, setForgetEmailValue] = useState("");
+  const [changePassValue, setChangePassValue] = useState("");
+  const [forgetUser, setForgetUser] = useState(null);
+
+  const [userHistory, setUserHistory] = useState([]);
+  const [User, setUser] = useState();
+
+  const [links, setLinks] = useState();
+  const [show, setShow] = useState(false);
+  const [enteredValue, SetEnteredValue] = useState("");
+
+  axios.interceptors.request.use((config) => {
+    const token = Cookies.get("token");
+    config.headers.set("token", token);
+    return config;
+  });
+
   const toVerify = async () => {
     setLoading(true);
     try {
-      const verifyCode = await axios.post("http://localhost:8000/user/verify", {
+      const verifyCode = await axios.post("http://localhost:9000/user/verify", {
         email: emailValue,
       });
       setVerifyCode(verifyCode);
@@ -84,7 +108,7 @@ const ThemeContext = ({ children }) => {
   const createUser = async () => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:8000/user/createUser", {
+      await axios.post("http://localhost:9000/user/createUser", {
         email: emailValue,
         password: passValue,
       });
@@ -97,15 +121,14 @@ const ThemeContext = ({ children }) => {
     }
   };
 
-  const [loginEmailValue, setLoginEmailValue] = useState("");
-  const [loginPassValue, setLoginPassValue] = useState("");
   const logIn = async () => {
     setLoading(true);
     try {
-      const LogedUser = await axios.post("http://localhost:8000/user/login", {
+      const LogedUser = await axios.post("http://localhost:9000/user/login", {
         email: loginEmailValue,
         password: loginPassValue,
       });
+      Cookies.set("token", LogedUser.data.token);
       setLoginEmailValue("");
       setLoading(false);
       getUserHistory(loginEmailValue);
@@ -123,18 +146,15 @@ const ThemeContext = ({ children }) => {
     }
   };
 
-  const [forgetEmailValue, setForgetEmailValue] = useState("");
-  const [changePassValue, setChangePassValue] = useState("");
-  const [forgetUser, setForgetUser] = useState(null);
   const checkEmail = async () => {
     setLoading(true);
     try {
       const user = await axios.get(
-        `http://localhost:8000/user/checkEmail/${forgetEmailValue}`
+        `http://localhost:9000/user/checkEmail/${forgetEmailValue}`
       );
       setForgetUser(user);
 
-      const verifyCode = await axios.post("http://localhost:8000/user/verify", {
+      const verifyCode = await axios.post("http://localhost:9000/user/verify", {
         email: forgetEmailValue,
       });
 
@@ -175,7 +195,7 @@ const ThemeContext = ({ children }) => {
     setLoading(true);
     try {
       const changedPass = await axios.put(
-        `http://localhost:8000/user/changePass`,
+        `http://localhost:9000/user/changePass`,
         {
           email: forgetEmailValue,
           password: changePassValue,
@@ -195,16 +215,13 @@ const ThemeContext = ({ children }) => {
     }
   };
 
-  const [userHistory, setUserHistory] = useState([]);
-  const [User, setUser] = useState();
   const getUserHistory = async (email) => {
     try {
       const user = await axios.get(
-        `http://localhost:8000/user/checkEmail/${email}`
+        `http://localhost:9000/user/checkEmail/${email}`
       );
-
       const shortsByUser = await axios.get(
-        `http://localhost:8000/home/${user?.data?.data?._id}`
+        `http://localhost:9000/home/${user?.data?.data?._id}`
       );
 
       setUser(user.data.data);
@@ -216,14 +233,11 @@ const ThemeContext = ({ children }) => {
     }
   };
 
-  const [links, setLinks] = useState();
-  const [show, setShow] = useState(false);
-  const [enteredValue, SetEnteredValue] = useState("");
   const createShort = async (id) => {
     setLoading(true);
     setShow(false);
     try {
-      const response = await axios.post("http://localhost:8000", {
+      const response = await axios.post("http://localhost:9000", {
         orignalLink: enteredValue,
         ownerId: id || "",
       });
@@ -239,12 +253,33 @@ const ThemeContext = ({ children }) => {
   const deleteShortLink = async (_id) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8000/home/${_id}`);
+      await axios.delete(`http://localhost:9000/home/${_id}`);
       setLoading(false);
       getUserHistory(User?.email);
     } catch (error) {
       console.log(error);
     }
+  };
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const user = await axios.get(`http://localhost:9000/user/getUser`);
+        console.log(user.data.data.user);
+        if (user.data.data.exp * 1000 < Date.now()) {
+          logout();
+        }
+        getUserHistory(user.data.data.user);
+        console.log(user);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUser();
+  }, []);
+
+  const logout = () => {
+    Cookies.remove("token");
+    navigateToSlash();
   };
 
   return (

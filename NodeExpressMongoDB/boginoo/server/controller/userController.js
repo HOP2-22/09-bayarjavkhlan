@@ -7,6 +7,24 @@ const usersModel = require("../models/userModel");
 const asyncHandler = require("../middleware/asyncHandler");
 const MyError = require("../utils/myError");
 
+exports.getuser = (req, res) => {
+  const token = req?.headers?.token;
+  if (!token) {
+    return res.status(400).json({
+      message: "Bad request",
+    });
+  }
+  const data = jwt.decode(token, ACCESS_TOKEN_KEY);
+  console.log("data===========> " + data);
+  if (!data) {
+    return res.status(200).json({
+      message: "Expired token",
+    });
+  }
+  console.log(token, data);
+  res.status(200).json({ data: data });
+};
+
 exports.getUsers = asyncHandler(async (req, res, next) => {
   const users = await usersModel.find();
 
@@ -73,7 +91,10 @@ exports.login = asyncHandler(async (req, res, next) => {
     {
       user: user.email,
     },
-    ACCESS_TOKEN_KEY
+    ACCESS_TOKEN_KEY,
+    {
+      expiresIn: "60s",
+    }
   );
 
   res.status(200).json({

@@ -22,7 +22,7 @@ const Option = () => {
 
   const changeName = async () => {
     try {
-      await axios.put(`http://localhost:8000/user/${user?._id}`, {
+      await axios.put(`http://localhost:9000/user/${user?._id}`, {
         name: nameValue,
       });
       getUserHistory(user?.email);
