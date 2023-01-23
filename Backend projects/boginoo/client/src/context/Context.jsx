@@ -45,9 +45,10 @@ const Provider = ({ children }) => {
   const toVerify = async () => {
     setLoading(true);
     try {
-      const verifyCode = await axios.post("http://localhost:8000/user/verify", {
+      const verifyCode = await axios.post("http://localhost:9000/user/verify", {
         email: emailValue,
       });
+
       setVerifyCode(verifyCode);
 
       navigateToVerifyCreate();
@@ -58,7 +59,7 @@ const Provider = ({ children }) => {
     } catch (error) {
       setLoading(false);
       setTimeout(() => {
-        alert(error.response.data.error.message);
+        alert(error);
       }, [500]);
     }
   };
@@ -84,7 +85,7 @@ const Provider = ({ children }) => {
   const createUser = async () => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:8000/user/createUser", {
+      await axios.post("http://localhost:9000/user/createUser", {
         email: emailValue,
         password: passValue,
       });
@@ -102,7 +103,7 @@ const Provider = ({ children }) => {
   const logIn = async () => {
     setLoading(true);
     try {
-      const LogedUser = await axios.post("http://localhost:8000/user/login", {
+      const LogedUser = await axios.post("http://localhost:9000/user/login", {
         email: loginEmailValue,
         password: loginPassValue,
       });
@@ -130,11 +131,11 @@ const Provider = ({ children }) => {
     setLoading(true);
     try {
       const user = await axios.get(
-        `http://localhost:8000/user/checkEmail/${forgetEmailValue}`
+        `http://localhost:9000/user/checkEmail/${forgetEmailValue}`
       );
       setForgetUser(user);
 
-      const verifyCode = await axios.post("http://localhost:8000/user/verify", {
+      const verifyCode = await axios.post("http://localhost:9000/user/verify", {
         email: forgetEmailValue,
       });
 
@@ -175,7 +176,7 @@ const Provider = ({ children }) => {
     setLoading(true);
     try {
       const changedPass = await axios.put(
-        `http://localhost:8000/user/changePass`,
+        `http://localhost:9000/user/changePass`,
         {
           email: forgetEmailValue,
           password: changePassValue,
@@ -200,11 +201,11 @@ const Provider = ({ children }) => {
   const getUserHistory = async (email) => {
     try {
       const user = await axios.get(
-        `http://localhost:8000/user/checkEmail/${email}`
+        `http://localhost:9000/user/checkEmail/${email}`
       );
 
       const shortsByUser = await axios.get(
-        `http://localhost:8000/home/${user?.data?.data?._id}`
+        `http://localhost:9000/home/${user?.data?.data?._id}`
       );
 
       setUser(user.data.data);
@@ -223,7 +224,7 @@ const Provider = ({ children }) => {
     setLoading(true);
     setShow(false);
     try {
-      const response = await axios.post("http://localhost:8000", {
+      const response = await axios.post("http://localhost:9000", {
         orignalLink: enteredValue,
         ownerId: id || "",
       });
@@ -239,7 +240,7 @@ const Provider = ({ children }) => {
   const deleteShortLink = async (_id) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8000/home/${_id}`);
+      await axios.delete(`http://localhost:9000/home/${_id}`);
       setLoading(false);
       getUserHistory(User?.email);
     } catch (error) {

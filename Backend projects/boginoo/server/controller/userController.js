@@ -18,9 +18,11 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 });
 
 exports.getUserByEmail = asyncHandler(async (req, res, next) => {
-  const user = await usersModel.find({
-    email: req.params.id,
-  });
+  const user = await usersModel
+    .findOne({
+      email: req.params.id,
+    })
+    .populate("histories");
 
   if (user.length === 0) {
     throw new MyError(`и-майл алдаатай байна`, 404);
@@ -34,16 +36,8 @@ exports.getUserByEmail = asyncHandler(async (req, res, next) => {
 });
 
 exports.createUser = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
-
-  const salt = await bcrypt.genSalt(10);
-
-  const hashedPassword = await bcrypt.hash(password, salt);
-
-  const newUser = await usersModel.create({
-    email: email,
-    password: hashedPassword,
-  });
+  console.log(req.body);
+  const newUser = await usersModel.create(req.body);
 
   res.status(200).json({
     isDone: true,
@@ -52,33 +46,31 @@ exports.createUser = asyncHandler(async (req, res, next) => {
   });
 });
 
-const ACCESS_TOKEN_KEY = "secret123";
-
 exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
-  const user = await usersModel.findOne({ email: email });
-
-  if (!user) {
-    throw new MyError(`ийм Email-тэй хэрэглэгч алга байна`, 404);
+  if (!email || !password) {
+    throw new MyError("и-мэйл болон нууц үгээ дамжуулна уу", 400);
   }
 
-  const match = await bcrypt.compare(password, user.password);
+  const user = await usersModel.findOne({ email: email }).select("+password");
 
-  if (!match) {
+  if (!user) {
+    throw new MyError("ийм и-мэйл болон нууц алдаатай байна", 400);
+  }
+
+  const token = await user.checkPassword(password);
+
+  if (!token) {
     throw new MyError(`Password алдаатай байна`, 404);
   }
 
-  const token = jwt.sign(
-    {
-      user: user.email,
-    },
-    ACCESS_TOKEN_KEY
-  );
+  console.log(token);
 
   res.status(200).json({
     isDone: true,
-    token: token,
+    token,
+    data: user,
     message: "амжилттай нэвтэрлээ",
   });
 });
@@ -140,8 +132,10 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
     message: "амжилттай устаглаа",
   });
 });
+
 let verifyCount = 0;
-exports.verifyUser = (req, res, next) => {
+exports.verifyUser = async (req, res, next) => {
+  console.log("asdf");
   let characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -149,6 +143,7 @@ exports.verifyUser = (req, res, next) => {
   for (let i = 0; i < 5; i++) {
     stringId += characters.charAt(Math.floor(Math.random() * 62));
   }
+  console.log(stringId);
 
   const main = async () => {
     let transporter = nodemailer.createTransport({

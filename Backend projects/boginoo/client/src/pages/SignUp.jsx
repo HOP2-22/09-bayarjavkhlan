@@ -112,11 +112,7 @@ const SignUp = () => {
         <div
           className="button mt-3 sm:mt-0"
           onClick={() => {
-            if (
-              emailValue.includes(".com") &&
-              emailValue.includes("@") &&
-              passValue === passVerifyValue
-            ) {
+            if (passValue === passVerifyValue) {
               toVerify();
               setPassVerifyValue("");
             } else {

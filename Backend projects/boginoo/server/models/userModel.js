@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-const usersModel = mongoose.Schema({
+const usersSchema = mongoose.Schema({
   name: {
     type: String,
     maxLength: [50, "нэр дээд талдаа 50 тэмдэгтэнд багтаана уу"],
@@ -9,16 +11,58 @@ const usersModel = mongoose.Schema({
   },
   email: {
     type: String,
+    required: [true, "хэрэглэгчийн и-мэйл хаягийг оруулж өгнө үү"],
     unique: true,
-    required: [true, "Цахим хаягаа оруулна уу"],
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "и-мэйл хаяг оруулнуу",
+    ],
   },
   password: {
     type: String,
+    min: [4, "пассвортны урт доод талдаа 4 тэмдэгтэй байх ёстой"],
     required: [true, "пасс аа оруулна уу"],
+    select: false,
   },
-  registerDate: { type: Date, default: Date.now },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
+  createdAt: { type: Date, default: Date.now },
 });
 
-const users = mongoose.model("users", usersModel);
+usersSchema.virtual("histories", {
+  ref: "histories",
+  localField: "_id",
+  foreignField: "user",
+});
+
+usersSchema.pre("remove", async function (next) {
+  await this.model("histories").deleteMany({ user: this._id });
+  next();
+});
+
+usersSchema.pre("save", async function () {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+usersSchema.methods.getJWT = function () {
+  const token = jwt.sign(
+    {
+      user: user.email,
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRESIN,
+    }
+  );
+
+  return token;
+};
+
+usersSchema.methods.checkPassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+const users = mongoose.model("users", usersSchema);
 
 module.exports = users;
