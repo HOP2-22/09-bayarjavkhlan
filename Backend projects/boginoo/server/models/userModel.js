@@ -2,37 +2,41 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const usersSchema = mongoose.Schema({
-  name: {
-    type: String,
-    maxLength: [50, "нэр дээд талдаа 50 тэмдэгтэнд багтаана уу"],
-    minLength: [2, "нэр доод талдаа 2 тэмдэгтэнд багтаана уу"],
-    default: "user",
+const usersSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      maxLength: [50, "нэр дээд талдаа 50 тэмдэгтэнд багтаана уу"],
+      minLength: [2, "нэр доод талдаа 2 тэмдэгтэнд багтаана уу"],
+      default: "user",
+    },
+    email: {
+      type: String,
+      required: [true, "хэрэглэгчийн и-мэйл хаягийг оруулж өгнө үү"],
+      unique: true,
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "и-мэйл хаяг оруулнуу",
+      ],
+    },
+    password: {
+      type: String,
+      min: [4, "пассвортны урт доод талдаа 4 тэмдэгтэй байх ёстой"],
+      required: [true, "пасс аа оруулна уу"],
+      select: false,
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+    createdAt: { type: Date, default: Date.now },
   },
-  email: {
-    type: String,
-    required: [true, "хэрэглэгчийн и-мэйл хаягийг оруулж өгнө үү"],
-    unique: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "и-мэйл хаяг оруулнуу",
-    ],
-  },
-  password: {
-    type: String,
-    min: [4, "пассвортны урт доод талдаа 4 тэмдэгтэй байх ёстой"],
-    required: [true, "пасс аа оруулна уу"],
-    select: false,
-  },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
-  createdAt: { type: Date, default: Date.now },
-});
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
+);
 
 usersSchema.virtual("histories", {
   ref: "histories",
   localField: "_id",
   foreignField: "user",
+  justOne: false,
 });
 
 usersSchema.pre("remove", async function (next) {
@@ -48,9 +52,9 @@ usersSchema.pre("save", async function () {
 usersSchema.methods.getJWT = function () {
   const token = jwt.sign(
     {
-      user: user.email,
+      id: this._id,
     },
-    process.env.ACCESS_TOKEN_SECRET,
+    process.env.ACCESS_TOKEN,
     {
       expiresIn: process.env.JWT_EXPIRESIN,
     }

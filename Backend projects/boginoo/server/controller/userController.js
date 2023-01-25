@@ -7,22 +7,25 @@ const usersModel = require("../models/userModel");
 const asyncHandler = require("../middleware/asyncHandler");
 const MyError = require("../utils/myError");
 
-exports.getUsers = asyncHandler(async (req, res, next) => {
-  const users = await usersModel.find();
+exports.getUserById = asyncHandler(async (req, res, next) => {
+  const user = await usersModel.findById(req.userId).populate("histories");
+
+  if (user.length === 0) {
+    throw new MyError(`и-майл алдаатай байна`, 404);
+  }
 
   res.status(200).json({
     isDone: true,
-    data: users,
-    message: "амжилттай мэдээлэлүүдийг авлаа",
+    user: user,
+    data: user[0],
+    message: "амжилттай хэрэглэгчийн мэдээлэл авлаа",
   });
 });
 
 exports.getUserByEmail = asyncHandler(async (req, res, next) => {
-  const user = await usersModel
-    .findOne({
-      email: req.params.id,
-    })
-    .populate("histories");
+  const user = await usersModel.findOne({
+    email: req.params.id,
+  });
 
   if (user.length === 0) {
     throw new MyError(`и-майл алдаатай байна`, 404);
@@ -59,13 +62,13 @@ exports.login = asyncHandler(async (req, res, next) => {
     throw new MyError("ийм и-мэйл болон нууц алдаатай байна", 400);
   }
 
-  const token = await user.checkPassword(password);
+  const match = await user.checkPassword(password);
 
-  if (!token) {
+  if (!match) {
     throw new MyError(`Password алдаатай байна`, 404);
   }
 
-  console.log(token);
+  const token = user.getJWT();
 
   res.status(200).json({
     isDone: true,

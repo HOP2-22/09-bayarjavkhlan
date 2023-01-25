@@ -3,7 +3,7 @@ const asyncHandler = require("../middleware/asyncHandler");
 const MyError = require("../utils/myError");
 
 exports.getShorts = asyncHandler(async (req, res, next) => {
-  const shorts = await shortModel.find();
+  const shorts = await shortModel.find().populate("user");
 
   res.status(200).json({
     isDone: true,
@@ -52,7 +52,7 @@ exports.createShort = asyncHandler(async (req, res, next) => {
   const createdShort = await shortModel.create({
     orignalLink: req.body.orignalLink,
     shortLink: stringId,
-    ownerId: req.body.ownerId,
+    user: req.body.user,
   });
 
   res.status(200).json({
