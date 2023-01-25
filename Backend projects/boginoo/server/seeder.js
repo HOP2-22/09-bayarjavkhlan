@@ -32,7 +32,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await shortModel.deleteMany();
-    // await userModel.deleteMany();
+    await userModel.deleteMany();
     console.log("ogogdliig bvgdiig ustaglaa".green.inverse);
   } catch (err) {
     console.log(err);

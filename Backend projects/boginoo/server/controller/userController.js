@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const colors = require("colors");
 const nodemailer = require("nodemailer");
 
@@ -8,43 +7,52 @@ const asyncHandler = require("../middleware/asyncHandler");
 const MyError = require("../utils/myError");
 
 exports.getUserById = asyncHandler(async (req, res, next) => {
-  const user = await usersModel.findById(req.userId).populate("histories");
+  const user = await usersModel.findById(req.params.id).populate("histories");
 
-  if (user.length === 0) {
+  res.status(200).json({
+    isDone: true,
+    data: user,
+    message: "амжилттай хэрэглэгчийн мэдээлэл авлаа",
+  });
+});
+
+exports.getUsers = asyncHandler(async (req, res, next) => {
+  const users = await usersModel.find().populate("histories");
+
+  res.status(200).json({
+    isDone: true,
+    data: users,
+    message: "амжилттай хэрэглэгчийн мэдээлэл авлаа",
+  });
+});
+
+exports.checkUser = asyncHandler(async (req, res, next) => {
+  const id = await usersModel
+    .findOne({
+      email: req.params.id,
+    })
+    .select({ _id: 1 });
+
+  if (id.length === 0) {
     throw new MyError(`и-майл алдаатай байна`, 404);
   }
 
   res.status(200).json({
     isDone: true,
-    user: user,
-    data: user[0],
-    message: "амжилттай хэрэглэгчийн мэдээлэл авлаа",
+    id,
   });
 });
 
-exports.getUserByEmail = asyncHandler(async (req, res, next) => {
-  const user = await usersModel.findOne({
-    email: req.params.id,
-  });
-
-  if (user.length === 0) {
-    throw new MyError(`и-майл алдаатай байна`, 404);
-  }
-
-  res.status(200).json({
-    isDone: true,
-    data: user[0],
-    message: "амжилттай хэрэглэгчийн мэдээлэл авлаа",
-  });
-});
-
-exports.createUser = asyncHandler(async (req, res, next) => {
+exports.register = asyncHandler(async (req, res, next) => {
   console.log(req.body);
-  const newUser = await usersModel.create(req.body);
+  const user = await usersModel.create(req.body);
+
+  const token = user.getJWT();
 
   res.status(200).json({
     isDone: true,
-    data: newUser,
+    token,
+    data: user,
     message: "амжилттай бүртгүүллээ",
   });
 });
@@ -85,53 +93,62 @@ exports.updateUserPass = asyncHandler(async (req, res, next) => {
 
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const updatedUser = await usersModel.findOneAndUpdate(
+  const user = await usersModel.findOneAndUpdate(
     { email: email },
     { password: hashedPassword },
     {
+      new: true,
       runValidators: true,
     }
   );
 
+  console.log("user======>" + user);
+
   res.status(200).json({
     isDone: true,
-    data: updatedUser,
+    data: user,
     message: "амжилттай password солигдлоо",
   });
 });
 
 exports.updateUserName = asyncHandler(async (req, res, next) => {
-  const updatedUser = await usersModel.findByIdAndUpdate(
-    req.params.id,
-    {
-      name: req.body.name,
-    },
-    {
-      runValidators: true,
-    }
-  );
+  const user = await usersModel.findById(req.params.id);
 
-  if (!updatedUser) {
+  if (!user) {
     throw new MyError(`ID алдаатай байна`, 404);
   }
 
+  if (req.userId !== user.id && req.role !== "admin") {
+    throw new MyError("өөрийнхөө user-ийг л өөрчлөх боломжтой", 404);
+  }
+
+  if (req.body.name === user.name) {
+    throw new MyError(`сольж байгаа талбар өөр байх ёстой`, 404);
+  }
+
+  for (let el in req.body) {
+    user[el] = req.body[el];
+  }
+
+  user.save();
+
   res.status(200).json({
     isDone: true,
-    data: updatedUser,
+    data: user,
     message: "амжилттай шинчиллээ",
   });
 });
 
 exports.deleteUser = asyncHandler(async (req, res, next) => {
-  const deletedUser = await usersModel.findByIdAndDelete(req.params.id);
+  const user = await usersModel.findByIdAndDelete(req.params.id);
 
-  if (!deletedUser) {
+  if (!user) {
     throw new MyError(`ID алдаатай байна`, 404);
   }
 
   res.status(200).json({
     isDone: true,
-    data: deletedUser,
+    data: user,
     message: "амжилттай устаглаа",
   });
 });
@@ -181,8 +198,3 @@ exports.verifyUser = async (req, res, next) => {
     message: "амжилттай устаглаа",
   });
 };
-
-setTimeout(() => {
-  console.log(`өнөөдөр nodeMailer руу ${verifyCount} удаа хандлаа`);
-  verifyCount = 0;
-}, [24 * 3600]);

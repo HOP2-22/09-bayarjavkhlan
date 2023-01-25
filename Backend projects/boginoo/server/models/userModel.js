@@ -25,6 +25,11 @@ const usersSchema = mongoose.Schema(
       required: [true, "пасс аа оруулна уу"],
       select: false,
     },
+    role: {
+      type: String,
+      enum: ["user"],
+      default: "user",
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     createdAt: { type: Date, default: Date.now },
@@ -53,6 +58,7 @@ usersSchema.methods.getJWT = function () {
   const token = jwt.sign(
     {
       id: this._id,
+      role: this.role,
     },
     process.env.ACCESS_TOKEN,
     {

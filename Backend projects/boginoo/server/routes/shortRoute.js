@@ -1,24 +1,20 @@
 const express = require("express");
 
 const {
+  getAllShort,
   getOrignalByShort,
-  getShortsByUser,
   createShort,
-  updateShort,
   deleteShort,
-  getShorts,
 } = require("../controller/shortController");
+
+const { protect, authorize } = require("../middleWare/protect");
 
 const usersRouter = express.Router();
 
-usersRouter.route("/allShorts").get(getShorts);
-usersRouter.route("/").post(createShort);
-usersRouter.route("/:id").get(getOrignalByShort);
-
 usersRouter
-  .route("/home/:id")
-  .get(getShortsByUser)
-  .put(updateShort)
-  .delete(deleteShort);
+  .route("/")
+  .get(protect, authorize("admin"), getAllShort)
+  .post(createShort);
+usersRouter.route("/:id").get(getOrignalByShort).delete(protect, deleteShort);
 
 module.exports = usersRouter;

@@ -2,41 +2,27 @@ const shortModel = require("../models/shortModel");
 const asyncHandler = require("../middleware/asyncHandler");
 const MyError = require("../utils/myError");
 
-exports.getShorts = asyncHandler(async (req, res, next) => {
-  const shorts = await shortModel.find().populate("user");
+exports.getAllShort = asyncHandler(async (req, res, next) => {
+  const shorts = await shortModel.find();
 
   res.status(200).json({
     isDone: true,
     data: shorts,
-    message: "амжилттай мэдээлэлүүдийг авлаа",
+    message: "амжилттай шилжлээ",
   });
 });
 
 exports.getOrignalByShort = asyncHandler(async (req, res, next) => {
-  const orignalByShort = await shortModel.find({ shortLink: req.params.id });
+  const orignal = await shortModel.find({ shortLink: req.params.id });
 
-  if (!orignalByShort) {
+  if (!orignal) {
     throw new MyError(`богино линк алдаатай байна`, 404);
   }
 
   res.status(200).json({
     isDone: true,
-    data: orignalByShort,
+    orignalLink: orignal[0].orignalLink,
     message: "амжилттай шилжлээ",
-  });
-});
-
-exports.getShortsByUser = asyncHandler(async (req, res, next) => {
-  const shortsByUser = await shortModel.find({ ownerId: req.params.id });
-
-  if (!shortsByUser) {
-    throw new MyError(`хэрэглэгч алдаатай байна`, 404);
-  }
-
-  res.status(200).json({
-    isDone: true,
-    data: shortsByUser,
-    message: "амжилттай хэрэглэгчийн богино линкүүдийг авлаа",
   });
 });
 
@@ -49,7 +35,7 @@ exports.createShort = asyncHandler(async (req, res, next) => {
     stringId += characters.charAt(Math.floor(Math.random() * 62));
   }
 
-  const createdShort = await shortModel.create({
+  const short = await shortModel.create({
     orignalLink: req.body.orignalLink,
     shortLink: stringId,
     user: req.body.user,
@@ -57,41 +43,27 @@ exports.createShort = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     isDone: true,
-    data: createdShort,
+    data: short,
     message: "амжилттай богино линк үүсгэллээ",
   });
 });
 
-exports.updateShort = asyncHandler(async (req, res, next) => {
-  const updatedShort = await shortModel.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    {
-      runValidators: true,
-    }
-  );
-
-  if (!updatedShort) {
-    throw new MyError(`ID алдаатай байна`, 404);
-  }
-
-  res.status(200).json({
-    isDone: true,
-    data: updatedShort,
-    message: "амжилттай шинчиллээ",
-  });
-});
-
 exports.deleteShort = asyncHandler(async (req, res, next) => {
-  const deleteShort = await shortModel.findByIdAndDelete(req.params.id);
+  const short = await shortModel.findById(req.params.id);
 
-  if (!deleteShort) {
+  if (!short) {
     throw new MyError(`ID алдаатай байна`, 404);
   }
 
+  if (req.userId !== short.user && req.role !== "admin") {
+    throw new MyError("өөрийнхөө богиноог л устгах боломжтой", 404);
+  }
+
+  short.remove();
+
   res.status(200).json({
     isDone: true,
-    data: deleteShort,
+    data: short,
     message: "амжилттай устаглаа",
   });
 });

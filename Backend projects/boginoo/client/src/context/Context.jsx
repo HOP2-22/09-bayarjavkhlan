@@ -45,7 +45,7 @@ const Provider = ({ children }) => {
   const toVerify = async () => {
     setLoading(true);
     try {
-      const verifyCode = await axios.post("http://localhost:8000/user/verify", {
+      const verifyCode = await axios.post("http://localhost:8000/user/", {
         email: emailValue,
       });
 
@@ -66,7 +66,7 @@ const Provider = ({ children }) => {
   const checkVerifyLoginCode = async () => {
     setLoading(true);
     if (VerifyCode.data.verifyCode === verifyValue) {
-      createUser();
+      register();
       setVerifyValue("");
       setLoading(false);
     } else if (verifyValue === "") {
@@ -82,10 +82,10 @@ const Provider = ({ children }) => {
       }, [500]);
     }
   };
-  const createUser = async () => {
+  const register = async () => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:8000/user/createUser", {
+      await axios.post("http://localhost:8000/user/register", {
         email: emailValue,
         password: passValue,
       });
