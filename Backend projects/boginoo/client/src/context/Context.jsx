@@ -21,9 +21,6 @@ const Provider = ({ children }) => {
   const navigateToVerifyCreate = () => {
     navigate("/verifyCreate");
   };
-  const navigateToVerifyChange = () => {
-    navigate("/verifyChange");
-  };
   const navigateToChangePass = () => {
     navigate("/changePassword");
   };
@@ -33,29 +30,31 @@ const Provider = ({ children }) => {
 
   const [loading, setLoading] = useState(false);
 
-  const [changePassVerifyValue, setChangePassVerifyValue] = useState("");
   const [verifyValue, setVerifyValue] = useState("");
-  const [VerifyCode, setVerifyCode] = useState(null);
 
   const navigate = useNavigate();
 
-  const [verifyUser, setVerifyUser] = useState(null);
   const [emailValue, setEmailValue] = useState("");
   const [passValue, setPassValue] = useState("");
+
+  const [forgetEmailValue, setForgetEmailValue] = useState("");
+
+  const [userHistory, setUserHistory] = useState([]);
+  const [User, setUser] = useState();
+
+  const [links, setLinks] = useState();
+  const [show, setShow] = useState(false);
+  const [enteredValue, SetEnteredValue] = useState("");
+
   const toVerify = async () => {
     setLoading(true);
     try {
-      const verifyCode = await axios.post("http://localhost:8000/user/", {
+      const res = await axios.post("http://localhost:8000/user/", {
         email: emailValue,
       });
 
-      setVerifyCode(verifyCode);
-
-      navigateToVerifyCreate();
+      navigate("/verifyCreate");
       setLoading(false);
-      setTimeout(() => {
-        setVerifyValue("");
-      }, [6000]);
     } catch (error) {
       setLoading(false);
       setTimeout(() => {
@@ -63,15 +62,16 @@ const Provider = ({ children }) => {
       }, [500]);
     }
   };
-  const checkVerifyLoginCode = async () => {
+
+  const checkVerifySignupCode = async () => {
     setLoading(true);
-    if (VerifyCode.data.verifyCode === verifyValue) {
+    if (verifyCode.data.verifyCode === verifyValue) {
       register();
       setVerifyValue("");
       setLoading(false);
     } else if (verifyValue === "") {
       setLoading(false);
-      navigateToLogin();
+      navigate("/login");
       setTimeout(() => {
         alert("баталгаажуулах хугацаа дууслаа");
       }, [500]);
@@ -82,6 +82,7 @@ const Provider = ({ children }) => {
       }, [500]);
     }
   };
+
   const register = async () => {
     setLoading(true);
     try {
@@ -98,50 +99,16 @@ const Provider = ({ children }) => {
     }
   };
 
-  const [loginEmailValue, setLoginEmailValue] = useState("");
-  const [loginPassValue, setLoginPassValue] = useState("");
-  const logIn = async () => {
-    setLoading(true);
-    try {
-      const LogedUser = await axios.post("http://localhost:8000/user/login", {
-        email: loginEmailValue,
-        password: loginPassValue,
-      });
-      setLoginEmailValue("");
-      setLoading(false);
-      getUserHistory(loginEmailValue);
-      setTimeout(() => {
-        navigateToHome();
-      }, [200]);
-      setTimeout(() => {
-        alert(LogedUser.data.message);
-      }, [500]);
-    } catch (error) {
-      setLoading(false);
-      setTimeout(() => {
-        alert(error.response.data.error.message);
-      }, [500]);
-    }
-  };
-
-  const [forgetEmailValue, setForgetEmailValue] = useState("");
-  const [changePassValue, setChangePassValue] = useState("");
-  const [forgetUser, setForgetUser] = useState(null);
   const checkEmail = async () => {
     setLoading(true);
     try {
       const user = await axios.get(
         `http://localhost:8000/user/checkEmail/${forgetEmailValue}`
       );
-      setForgetUser(user);
 
-      const verifyCode = await axios.post("http://localhost:8000/user/verify", {
-        email: forgetEmailValue,
-      });
+      setVerifyCode(user);
 
-      setVerifyCode(verifyCode);
-
-      navigateToVerifyChange();
+      navigate("/verifyChange");
       setLoading(false);
       setTimeout(() => {
         setVerifyValue("");
@@ -155,7 +122,7 @@ const Provider = ({ children }) => {
   };
   const checkVerifyCode = async () => {
     setLoading(true);
-    if (VerifyCode.data.verifyCode === verifyValue) {
+    if (verifyCode.data.verifyCode === verifyValue) {
       navigateToChangePass();
       setVerifyValue("");
       setLoading(false);
@@ -172,32 +139,7 @@ const Provider = ({ children }) => {
       }, [500]);
     }
   };
-  const changePass = async () => {
-    setLoading(true);
-    try {
-      const changedPass = await axios.put(
-        `http://localhost:8000/user/changePass`,
-        {
-          email: forgetEmailValue,
-          password: changePassValue,
-        }
-      );
-      navigateToLogin();
-      setLoading(false);
-      setForgetUser(null);
-      setTimeout(() => {
-        alert(changedPass.data.message);
-      }, [500]);
-    } catch (error) {
-      setLoading(false);
-      setTimeout(() => {
-        alert(error.response.data.error.message);
-      }, [500]);
-    }
-  };
 
-  const [userHistory, setUserHistory] = useState([]);
-  const [User, setUser] = useState();
   const getUserHistory = async (email) => {
     try {
       const user = await axios.get(
@@ -217,9 +159,6 @@ const Provider = ({ children }) => {
     }
   };
 
-  const [links, setLinks] = useState();
-  const [show, setShow] = useState(false);
-  const [enteredValue, SetEnteredValue] = useState("");
   const createShort = async (id) => {
     setLoading(true);
     setShow(false);
@@ -248,7 +187,6 @@ const Provider = ({ children }) => {
     }
   };
 
-  const toHistory = () => {};
   return (
     <Context.Provider
       value={{
@@ -262,11 +200,9 @@ const Provider = ({ children }) => {
         navigateToHome,
 
         //AUTHENTICATOR
-        logIn,
         checkEmail,
-        changePass,
         toVerify,
-        checkVerifyLoginCode,
+        checkVerifySignupCode,
         checkVerifyCode,
 
         emailValue,
@@ -274,25 +210,12 @@ const Provider = ({ children }) => {
         passValue,
         setPassValue,
 
-        loginEmailValue,
-        setLoginEmailValue,
-        loginPassValue,
-        setLoginPassValue,
-
         forgetEmailValue,
         setForgetEmailValue,
-        forgetUser,
 
         verifyValue,
         setVerifyValue,
-        verifyUser,
-        setVerifyUser,
-        VerifyCode,
-
-        changePassValue,
-        setChangePassValue,
-        setChangePassVerifyValue,
-        changePassVerifyValue,
+        verifyCode,
 
         //LINK
         createShort,

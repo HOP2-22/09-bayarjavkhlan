@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../context/Context";
+import { useNavigate } from "react-router-dom";
 
 import Logo from "../img/boginoo1.png";
 import { EyeIcon } from "@heroicons/react/24/solid";
@@ -7,18 +8,37 @@ import { EyeSlashIcon } from "@heroicons/react/24/solid";
 import { FaSpinner } from "react-icons/fa";
 
 const LogIn = () => {
-  const {
-    loading,
-    logIn,
-    loginEmailValue,
-    setLoginEmailValue,
-    loginPasslValue,
-    setLoginPassValue,
-    navigateToSignup,
-    navigateToForgetPass,
-  } = useContext(Context);
+  const navigate = useNavigate();
 
+  const { loading, setLoading, getUserHistory } = useContext(Context);
+
+  const [loginEmailValue, setLoginEmailValue] = useState("");
+  const [loginPassValue, setLoginPassValue] = useState("");
   const [pass, setPass] = useState(true);
+
+  const logIn = async () => {
+    setLoading(true);
+    try {
+      const LogedUser = await axios.post("http://localhost:8000/user/login", {
+        email: loginEmailValue,
+        password: loginPassValue,
+      });
+      setLoginEmailValue("");
+      setLoading(false);
+      getUserHistory(loginEmailValue);
+      setTimeout(() => {
+        navigate("/home");
+      }, [200]);
+      setTimeout(() => {
+        alert(LogedUser.data.message);
+      }, [500]);
+    } catch (error) {
+      setLoading(false);
+      setTimeout(() => {
+        alert(error.response.data.error.message);
+      }, [500]);
+    }
+  };
 
   return (
     <div className="">
@@ -51,7 +71,7 @@ const LogIn = () => {
           <div className="relative">
             <input
               type={pass ? "password" : "text"}
-              value={loginPasslValue}
+              value={loginPassValue}
               onChange={(e) => {
                 setLoginPassValue(e.target.value);
               }}
@@ -75,7 +95,7 @@ const LogIn = () => {
           <div
             className="hover:text-gray-600 cursor-pointer underline"
             onClick={() => {
-              navigateToForgetPass();
+              navigate("/forgetpassword");
             }}
           >
             Нууц үгээ мартсан
@@ -92,7 +112,7 @@ const LogIn = () => {
         <p
           className="text-[14px] sm:text-base underline decoration-main hover:decoration-green-700 transition-colors duration-200 text-main hover:text-green-700 pt-2 cursor-pointer"
           onClick={() => {
-            navigateToSignup();
+            navigate("/signup");
           }}
         >
           Шинэ хэрэглэгч бол энд дарна уу?

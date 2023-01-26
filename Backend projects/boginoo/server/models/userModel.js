@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const usersSchema = mongoose.Schema(
   {
@@ -45,11 +46,13 @@ usersSchema.virtual("histories", {
 });
 
 usersSchema.pre("remove", async function (next) {
+  console.log("aa");
   await this.model("histories").deleteMany({ user: this._id });
   next();
 });
 
-usersSchema.pre("save", async function () {
+usersSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
@@ -71,6 +74,17 @@ usersSchema.methods.getJWT = function () {
 
 usersSchema.methods.checkPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
+};
+
+usersSchema.methods.generatePasswordChangeToken = function (password) {
+  const resetToken = crypto.randomBytes(10).toString("hex");
+
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  return resetToken;
 };
 
 const users = mongoose.model("users", usersSchema);

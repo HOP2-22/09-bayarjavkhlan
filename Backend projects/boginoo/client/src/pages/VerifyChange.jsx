@@ -5,20 +5,8 @@ import Logo from "../img/boginoo1.png";
 import { FaSpinner } from "react-icons/fa";
 
 const VerifyChange = () => {
-  const {
-    loading,
-    verifyValue,
-    setVerifyValue,
-    checkVerifyCode,
-    forgetUser,
-    navigateToSlash,
-  } = useContext(Context);
-
-  useEffect(() => {
-    if (forgetUser === null) {
-      navigateToSlash();
-    }
-  }, []);
+  const { loading, verifyValue, setVerifyValue, checkVerifyCode } =
+    useContext(Context);
 
   const inputRef = useRef();
 

@@ -1,10 +1,10 @@
-const bcrypt = require("bcrypt");
 const colors = require("colors");
-const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 
 const usersModel = require("../models/userModel");
 const asyncHandler = require("../middleware/asyncHandler");
 const MyError = require("../utils/myError");
+const sendEmail = require("../utils/email");
 
 exports.getUserById = asyncHandler(async (req, res, next) => {
   const user = await usersModel.findById(req.params.id).populate("histories");
@@ -26,25 +26,7 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.checkUser = asyncHandler(async (req, res, next) => {
-  const id = await usersModel
-    .findOne({
-      email: req.params.id,
-    })
-    .select({ _id: 1 });
-
-  if (id.length === 0) {
-    throw new MyError(`и-майл алдаатай байна`, 404);
-  }
-
-  res.status(200).json({
-    isDone: true,
-    id,
-  });
-});
-
 exports.register = asyncHandler(async (req, res, next) => {
-  console.log(req.body);
   const user = await usersModel.create(req.body);
 
   const token = user.getJWT();
@@ -86,32 +68,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.updateUserPass = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
-
-  const salt = await bcrypt.genSalt(10);
-
-  const hashedPassword = await bcrypt.hash(password, salt);
-
-  const user = await usersModel.findOneAndUpdate(
-    { email: email },
-    { password: hashedPassword },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
-
-  console.log("user======>" + user);
-
-  res.status(200).json({
-    isDone: true,
-    data: user,
-    message: "амжилттай password солигдлоо",
-  });
-});
-
-exports.updateUserName = asyncHandler(async (req, res, next) => {
+exports.updateUser = asyncHandler(async (req, res, next) => {
   const user = await usersModel.findById(req.params.id);
 
   if (!user) {
@@ -140,11 +97,13 @@ exports.updateUserName = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteUser = asyncHandler(async (req, res, next) => {
-  const user = await usersModel.findByIdAndDelete(req.params.id);
+  const user = await usersModel.findById(req.params.id);
 
   if (!user) {
     throw new MyError(`ID алдаатай байна`, 404);
   }
+
+  user.remove();
 
   res.status(200).json({
     isDone: true,
@@ -153,48 +112,71 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
   });
 });
 
-let verifyCount = 0;
-exports.verifyUser = async (req, res, next) => {
-  console.log("asdf");
-  let characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  let stringId = "";
-  for (let i = 0; i < 5; i++) {
-    stringId += characters.charAt(Math.floor(Math.random() * 62));
+exports.checkUser = asyncHandler(async (req, res, next) => {
+  if (!req.params.id) {
+    throw new MyError(
+      `та нууц үгээ сэргээхийн тулд email хаягаа илгээх шаардлагатай`,
+      404
+    );
   }
-  console.log(stringId);
 
-  const main = async () => {
-    let transporter = nodemailer.createTransport({
-      host: "",
-      port: 587,
-      secure: false,
-      auth: {
-        // user: "jawkhlan626@gmail.com",
-        // pass: "yrzswrigcwgattyy",
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
+  const user = await usersModel.findOne({
+    email: req.params.id,
+  });
 
-    let info = await transporter.sendMail({
-      from: "jawkhlan626@gmail.com",
-      to: req.body.email,
-      subject: "Boginoo",
-      text: "Vertification",
-      html: `<b>code: ${stringId}</b><br>
-      <a href="https://www.facebook.com/profile.php?id=100010820288664">onclick and follow me</a>
-      `,
-    });
-  };
-  verifyCount = verifyCount++;
+  if (!user) {
+    throw new MyError(`и-майл алдаатай байна`, 404);
+  }
 
-  main().catch(console.error);
+  const resetToken = user.generatePasswordChangeToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  const link = `https://localhost:3000/changePassword/${resetToken}`;
+
+  sendEmail({
+    id: req.params.id,
+    subject: "нууц үг өөрчлөх хүсэлт",
+    message: `Сайн байна уу <br><br> Та нууц үгээ солих хүсэль гараглаа.<br>Нууц үгээ доорх линк нь дээр дарж солино уу.<br><br><a href="${link}">${link}</a><br><br>Өдөрийг сайхан өнгөрүүлээрэй.`,
+  });
+
   res.status(200).json({
     isDone: true,
-    verifyCode: stringId,
-    message: "амжилттай устаглаа",
+    resetToken,
+    message: "Баталгаажуулах код илгээлээ",
   });
-};
+});
+
+exports.updateUserPass = asyncHandler(async (req, res, next) => {
+  if (!req.body.resetToken || !req.body.password) {
+    throw new MyError(`Та токен болон нууц үгээ дамжуулна уу`, 404);
+  }
+
+  const encrypt = crypto
+    .createHash("sha256")
+    .update(req.body.resetToken)
+    .digest("hex");
+
+  const user = await usersModel.findOne({
+    resetPasswordToken: encrypt,
+    resetPasswordExpired: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    throw new MyError(`нууц үг сэргээх хугацаа дууссан байна`, 404);
+  }
+
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save({ validateBeforeSave: false });
+
+  const token = user.getJWT();
+
+  res.status(200).json({
+    isDone: true,
+    token,
+    data: user,
+    message: "амжилттай password солигдлоо",
+  });
+});
