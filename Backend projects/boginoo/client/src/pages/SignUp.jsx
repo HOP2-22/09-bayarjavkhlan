@@ -9,11 +9,11 @@ import { EyeSlashIcon } from "@heroicons/react/24/solid";
 const SignUp = () => {
   const {
     loading,
-    toVerify,
     emailValue,
     setEmailValue,
     passValue,
     setPassValue,
+    register,
   } = useContext(Context);
 
   const [passVerifyValue, setPassVerifyValue] = useState("");
@@ -113,7 +113,7 @@ const SignUp = () => {
           className="button mt-3 sm:mt-0"
           onClick={() => {
             if (passValue === passVerifyValue) {
-              toVerify();
+              register();
               setPassVerifyValue("");
             } else {
               emailValue.includes(".com") || emailValue.includes("@")

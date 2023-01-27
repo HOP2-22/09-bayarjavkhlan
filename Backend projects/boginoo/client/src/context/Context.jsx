@@ -2,32 +2,11 @@ import React from "react";
 import axios from "axios";
 import { useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export const Context = createContext();
 
 const Provider = ({ children }) => {
-  const navigateToLogin = () => {
-    navigate("/login");
-  };
-  const navigateToSlash = () => {
-    navigate("/");
-  };
-  const navigateToSignup = () => {
-    navigate("/signup");
-  };
-  const navigateToForgetPass = () => {
-    navigate("/forgetpassword");
-  };
-  const navigateToVerifyCreate = () => {
-    navigate("/verifyCreate");
-  };
-  const navigateToChangePass = () => {
-    navigate("/changePassword");
-  };
-  const navigateToHome = () => {
-    navigate("/home");
-  };
-
   const [loading, setLoading] = useState(false);
 
   const [verifyValue, setVerifyValue] = useState("");
@@ -46,42 +25,21 @@ const Provider = ({ children }) => {
   const [show, setShow] = useState(false);
   const [enteredValue, SetEnteredValue] = useState("");
 
-  const toVerify = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.post("http://localhost:8000/user/", {
-        email: emailValue,
-      });
-
-      navigate("/verifyCreate");
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setTimeout(() => {
-        alert(error);
-      }, [500]);
+  axios.interceptors.request.use(
+    (config) => {
+      const token = Cookies.get("token");
+      if (!token) {
+        return config;
+      }
+      console.log(token);
+      config.headers.set("token", token);
+      setUser()
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
     }
-  };
-
-  const checkVerifySignupCode = async () => {
-    setLoading(true);
-    if (verifyCode.data.verifyCode === verifyValue) {
-      register();
-      setVerifyValue("");
-      setLoading(false);
-    } else if (verifyValue === "") {
-      setLoading(false);
-      navigate("/login");
-      setTimeout(() => {
-        alert("баталгаажуулах хугацаа дууслаа");
-      }, [500]);
-    } else {
-      setLoading(false);
-      setTimeout(() => {
-        alert("алдаа гарлаа");
-      }, [500]);
-    }
-  };
+  );
 
   const register = async () => {
     setLoading(true);
@@ -92,7 +50,7 @@ const Provider = ({ children }) => {
       });
       setEmailValue("");
       setPassValue("");
-      navigateToLogin();
+      navigate("/login");
       setLoading(false);
     } catch (error) {
       alert(error.message);
@@ -106,8 +64,6 @@ const Provider = ({ children }) => {
         `http://localhost:8000/user/checkEmail/${forgetEmailValue}`
       );
 
-      setVerifyCode(user);
-
       navigate("/verifyChange");
       setLoading(false);
       setTimeout(() => {
@@ -120,44 +76,21 @@ const Provider = ({ children }) => {
       }, [500]);
     }
   };
-  const checkVerifyCode = async () => {
-    setLoading(true);
-    if (verifyCode.data.verifyCode === verifyValue) {
-      navigateToChangePass();
-      setVerifyValue("");
-      setLoading(false);
-    } else if (verifyValue === "") {
-      setLoading(false);
-      navigateToForgetPass();
-      setTimeout(() => {
-        alert("баталгаажуулах хугацаа дуусcан байна");
-      }, [500]);
-    } else {
-      setLoading(false);
-      setTimeout(() => {
-        alert("алдаа гарлаа");
-      }, [500]);
-    }
-  };
-
-  const getUserHistory = async (email) => {
-    try {
-      const user = await axios.get(
-        `http://localhost:8000/user/checkEmail/${email}`
-      );
-
-      const shortsByUser = await axios.get(
-        `http://localhost:8000/home/${user?.data?.data?._id}`
-      );
-
-      setUser(user.data.data);
-      setUserHistory(shortsByUser.data.data);
-    } catch (error) {
-      setTimeout(() => {
-        alert(error.response.data.error.message);
-      }, [500]);
-    }
-  };
+  // const checkVerifyCode = async () => {
+  //   setLoading(true);
+  //   if (verifyCode.data.verifyCode === verifyValue) {
+  //     navigate("/changePssword");
+  //     setVerifyValue("");
+  //     setLoading(false);
+  //   } else if (verifyValue === "") {
+  //     setLoading(false);
+  //     navigate("/forgetPassword");
+  //     alert("баталгаажуулах хугацаа дуусcан байна");
+  //   } else {
+  //     setLoading(false);
+  //     alert("алдаа гарлаа");
+  //   }
+  // };
 
   const createShort = async (id) => {
     setLoading(true);
@@ -181,7 +114,6 @@ const Provider = ({ children }) => {
     try {
       await axios.delete(`http://localhost:8000/home/${_id}`);
       setLoading(false);
-      getUserHistory(User?.email);
     } catch (error) {
       console.log(error);
     }
@@ -193,17 +125,10 @@ const Provider = ({ children }) => {
         //SYSTEM
         loading,
         setLoading,
-        navigateToLogin,
-        navigateToSlash,
-        navigateToSignup,
-        navigateToForgetPass,
-        navigateToHome,
 
         //AUTHENTICATOR
         checkEmail,
-        toVerify,
-        checkVerifySignupCode,
-        checkVerifyCode,
+        // checkVerifyCode,
 
         emailValue,
         setEmailValue,
@@ -215,8 +140,8 @@ const Provider = ({ children }) => {
 
         verifyValue,
         setVerifyValue,
-        verifyCode,
 
+        register,
         //LINK
         createShort,
         SetEnteredValue,
@@ -230,7 +155,6 @@ const Provider = ({ children }) => {
         user: User,
         setUser,
         userHistory,
-        getUserHistory,
         deleteShortLink,
       }}
     >

@@ -9,6 +9,7 @@ const {
   updateUser,
   updateUserPass,
   deleteUser,
+  checkCookie,
 } = require("../controller/userController");
 
 const { protect, authorize } = require("../middleWare/protect");
@@ -16,6 +17,7 @@ const { protect, authorize } = require("../middleWare/protect");
 const usersRouter = express.Router();
 
 usersRouter.route("/").get(protect, authorize("admin"), getUsers);
+usersRouter.route("/cookie").get(checkCookie);
 usersRouter.route("/checkEmail/:id").post(checkUser);
 
 usersRouter.route("/register").post(register);

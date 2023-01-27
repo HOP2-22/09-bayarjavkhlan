@@ -4,7 +4,7 @@ import { Context } from "../context/Context";
 import Logo from "../img/boginoo1.png";
 import { FaSpinner } from "react-icons/fa";
 
-const VerifyChange = () => {
+const Verify = () => {
   const { loading, verifyValue, setVerifyValue, checkVerifyCode } =
     useContext(Context);
 
@@ -50,7 +50,7 @@ const VerifyChange = () => {
         <div
           className="button"
           onClick={() => {
-            checkVerifyCode();
+            // checkVerifyCode();
           }}
         >
           Илгээх
@@ -60,4 +60,4 @@ const VerifyChange = () => {
   );
 };
 
-export default VerifyChange;
+export default Verify;

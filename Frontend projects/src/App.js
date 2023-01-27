@@ -1,5 +1,5 @@
 import React from "react";
-import Index from "./Components/MemoryCardGame/MemoryCardGame";
+import Index from "./News web/Pages/Index";
 
 const App = () => {
   return (

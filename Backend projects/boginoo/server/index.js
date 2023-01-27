@@ -13,9 +13,8 @@ connectDB();
 dotenv.config({ path: "./config/config.env" });
 
 const app = express();
-app.use(cors());
-
 app.use(express.json());
+app.use(cors());
 
 app.use("/user", userRoute);
 app.use(shortRoute);

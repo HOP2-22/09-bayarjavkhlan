@@ -1,6 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../context/Context";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
+
+import { Context } from "../context/Context";
 
 import Logo from "../img/boginoo1.png";
 import { EyeIcon } from "@heroicons/react/24/solid";
@@ -10,7 +13,7 @@ import { FaSpinner } from "react-icons/fa";
 const LogIn = () => {
   const navigate = useNavigate();
 
-  const { loading, setLoading, getUserHistory } = useContext(Context);
+  const { loading, setLoading } = useContext(Context);
 
   const [loginEmailValue, setLoginEmailValue] = useState("");
   const [loginPassValue, setLoginPassValue] = useState("");
@@ -19,24 +22,19 @@ const LogIn = () => {
   const logIn = async () => {
     setLoading(true);
     try {
-      const LogedUser = await axios.post("http://localhost:8000/user/login", {
+      const res = await axios.post("http://localhost:8000/user/login", {
         email: loginEmailValue,
         password: loginPassValue,
       });
-      setLoginEmailValue("");
+      Cookies.set("token", res.data.token);
       setLoading(false);
-      getUserHistory(loginEmailValue);
       setTimeout(() => {
         navigate("/home");
-      }, [200]);
-      setTimeout(() => {
-        alert(LogedUser.data.message);
-      }, [500]);
+        alert(res.data.message);
+      }, [300]);
     } catch (error) {
       setLoading(false);
-      setTimeout(() => {
-        alert(error.response.data.error.message);
-      }, [500]);
+      alert(error.response.data.error.message);
     }
   };
 
@@ -105,6 +103,7 @@ const LogIn = () => {
           className="button"
           onClick={() => {
             logIn();
+            setLoginEmailValue("");
           }}
         >
           Нэвтрэх

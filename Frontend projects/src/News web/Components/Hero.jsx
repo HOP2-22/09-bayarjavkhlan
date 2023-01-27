@@ -5,12 +5,12 @@ import {
   CalendarDaysIcon,
   BellAlertIcon,
 } from "@heroicons/react/24/solid";
-import Meeting from "../../IMG/routerWeb.png";
-import BgImg1 from "../../IMG/routerWomen1.png";
-import BgImg2 from "../../IMG/routerWomen2.png";
-import Calendar from "../../IMG/Calendar.png";
-import Event1 from "../../IMG/event2.png";
-import Event2 from "../../IMG/event3.png";
+import Meeting from "../IMG/routerWeb.png";
+import BgImg1 from "../IMG/routerWomen1.png";
+import BgImg2 from "../IMG/routerWomen2.png";
+import Calendar from "../IMG/Calendar.png";
+import Event1 from "../IMG/event2.png";
+import Event2 from "../IMG/event3.png";
 import CardIndex from "../../Components/Card/CardIndex";
 
 const Hero = () => {

@@ -8,8 +8,7 @@ import SignUp from "./SignUp";
 import ForgetPass from "./ForgetPassEmail";
 import ChangePassword from "./ChangePassword";
 import SwitchHref from "./SwitchHref";
-import VerifyCreate from "./VerifyCreate";
-import VerifyChange from "./VerifyChange";
+import Verify from "./Verify";
 import MobileHistory from "./MobileHistory";
 
 const Index = () => {
@@ -25,8 +24,7 @@ const Index = () => {
             <Route path="/forgetpassword" element={<ForgetPass />} />
             <Route path="/changePassword" element={<ChangePassword />} />
             <Route path="/:id" element={<SwitchHref />} />
-            <Route path="/verifyChange" element={<VerifyChange />} />
-            <Route path="/verifyCreate" element={<VerifyCreate />} />
+            <Route path="/verify" element={<Verify />} />
             <Route path="/history" element={<MobileHistory />} />
           </Routes>
         </Layout>

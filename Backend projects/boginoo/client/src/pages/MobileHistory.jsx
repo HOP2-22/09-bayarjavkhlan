@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useContext } from "react";
 import { Context } from "../context/Context";
 
@@ -6,15 +6,7 @@ import { BackspaceIcon } from "@heroicons/react/24/solid";
 import { FaSpinner } from "react-icons/fa";
 
 const MobileHistory = () => {
-  const { user, userHistory, loading, deleteShortLink, navigateToSlash } =
-    useContext(Context);
-
-  useEffect(() => {
-    console.log(user);
-    if (user === undefined) {
-      navigateToSlash();
-    }
-  }, []);
+  const { userHistory, loading, deleteShortLink } = useContext(Context);
 
   return (
     <>

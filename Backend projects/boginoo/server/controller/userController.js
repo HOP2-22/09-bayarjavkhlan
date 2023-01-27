@@ -1,10 +1,27 @@
 const colors = require("colors");
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 
 const usersModel = require("../models/userModel");
 const asyncHandler = require("../middleware/asyncHandler");
 const MyError = require("../utils/myError");
 const sendEmail = require("../utils/email");
+
+exports.checkCookie = asyncHandler(async (req, res, next) => {
+  const token = req?.headers?.token;
+
+  if (!token) {
+    throw new MyError("токен байхгүй байна", 400);
+  }
+
+  const data = await jwt.decode(token, process.env.ACCESS_TOKEN);
+
+  res.status(200).json({
+    isDone: true,
+    data,
+    message: "амжилттай хэрэглэгчийн мэдээлэл авлаа",
+  });
+});
 
 exports.getUserById = asyncHandler(async (req, res, next) => {
   const user = await usersModel.findById(req.params.id).populate("histories");

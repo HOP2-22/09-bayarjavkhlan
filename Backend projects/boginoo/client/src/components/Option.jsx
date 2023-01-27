@@ -1,23 +1,28 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Context } from "../context/Context";
+import { useNavigate } from "react-router-dom";
 
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { ChevronUpIcon } from "@heroicons/react/24/solid";
+import Cookies from "js-cookie";
 
 const options = ["нэрээ өөрчиллөх", "гарах"];
 
 const Option = () => {
-  const { user, setUser, getUserHistory, setShow, navigateToSlash } =
-    useContext(Context);
+  const navigate = useNavigate();
 
+  const { user, setUser, getUserHistory, setShow } = useContext(Context);
+
+  const [nameValue, setNameValue] = useState("");
   const [dropShow, setDropShow] = useState(true);
   const [showName, setShowName] = useState(false);
-  const [nameValue, setNameValue] = useState("");
 
-  const logout = () => {
-    navigateToSlash();
-    setUser({});
+  const logout = (config) => {
+    Cookies.remove("token");
+    config.headers.remove("token");
+    navigate("/");
+    setUser();
   };
 
   const changeName = async () => {
@@ -101,6 +106,8 @@ const Option = () => {
                     if (nameValue !== "") {
                       changeName();
                       setNameValue("");
+                    } else {
+                      alert("Please enter name");
                     }
                     setShowName(false);
                     setDropShow(true);

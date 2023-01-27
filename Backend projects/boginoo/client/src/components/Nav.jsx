@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import { Context } from "../context/Context";
 import Option from "./Option";
+import { useNavigate } from "react-router-dom";
 
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
 
 const Nav = () => {
-  const { navigateToLogin, navigateToHome, setLinks } = useContext(Context);
+  const navigate = useNavigate();
+  const { setLinks } = useContext(Context);
   const pathname = window.location.pathname;
 
   return (
@@ -20,7 +22,7 @@ const Nav = () => {
               <div
                 className="button"
                 onClick={() => {
-                  navigateToLogin();
+                  navigate("/login");
                 }}
               >
                 Нэвтрэх
@@ -36,7 +38,7 @@ const Nav = () => {
             <div
               className="bg-main flex justify-center items-center w-10 h-10 rounded-full"
               onClick={() => {
-                navigateToHome();
+                navigate("/home");
                 setLinks();
               }}
             >
