@@ -1,17 +1,1 @@
-[
-  {
-    "_id": "63d102c7c8232270321afecc",
-    "name": "admin",
-    "email": "admin@gmail.com"
-  },
-  {
-    "_id": "63d102cbc8232270321afece",
-    "name": "user",
-    "email": "user@gmail.com"
-  },
-  {
-    "_id": "63d10c80660a874b1f14acef",
-    "name": "operator",
-    "email": "operator1@gmail.com"
-  }
-]
+[{}]

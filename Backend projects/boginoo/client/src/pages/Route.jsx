@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Provider from "../context/Context";
+import Context from "../context/Context";
 import Layout from "../components/Layout";
 import LogIn from "./LogIn";
 import Home from "./Home";
@@ -8,13 +8,14 @@ import SignUp from "./SignUp";
 import ForgetPass from "./ForgetPassEmail";
 import ChangePassword from "./ChangePassword";
 import SwitchHref from "./SwitchHref";
-import Verify from "./Verify";
+import VerifyCreate from "./VerifyCreate";
+import VerifyChange from "./VerifyChange";
 import MobileHistory from "./MobileHistory";
 
 const Index = () => {
   return (
     <BrowserRouter>
-      <Provider>
+      <Context>
         <Layout>
           <Routes>
             <Route path="/" element={<Entered />} />
@@ -24,11 +25,12 @@ const Index = () => {
             <Route path="/forgetpassword" element={<ForgetPass />} />
             <Route path="/changePassword" element={<ChangePassword />} />
             <Route path="/:id" element={<SwitchHref />} />
-            <Route path="/verify" element={<Verify />} />
+            <Route path="/verifyChange" element={<VerifyChange />} />
+            <Route path="/verifyCreate" element={<VerifyCreate />} />
             <Route path="/history" element={<MobileHistory />} />
           </Routes>
         </Layout>
-      </Provider>
+      </Context>
     </BrowserRouter>
   );
 };

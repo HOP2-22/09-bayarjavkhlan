@@ -45,7 +45,7 @@ const ForgetPass = () => {
         <div
           className="button"
           onClick={() => {
-            if (forgetEmailValue.includes("@" && ".")) {
+            if (forgetEmailValue.includes("@" && ".com")) {
               checkEmail();
             } else {
               alert("и-майл ээ зөв оруулна уу");

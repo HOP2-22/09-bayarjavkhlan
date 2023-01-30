@@ -1,6 +1,4 @@
-import React, { useContext } from "react";
-// import { useNavigate } from "react-router-dom";
-
+import React, { useContext, useEffect } from "react";
 import { Context } from "../context/Context";
 import Search from "../components/Search";
 import History from "../components/History";
@@ -8,8 +6,14 @@ import History from "../components/History";
 import { FaSpinner } from "react-icons/fa";
 
 const Home = () => {
-  // const navigate = useNavigate();
-  const { loading } = useContext(Context);
+  const { user, loading, navigateToSlash } = useContext(Context);
+
+  useEffect(() => {
+    console.log(user);
+    if (user === undefined) {
+      navigateToSlash();
+    }
+  }, []);
 
   return (
     <>

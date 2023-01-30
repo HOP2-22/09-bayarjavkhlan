@@ -4,11 +4,23 @@ import { Context } from "../context/Context";
 import Logo from "../img/boginoo1.png";
 import { FaSpinner } from "react-icons/fa";
 
-const Verify = () => {
-  const { loading, verifyValue, setVerifyValue, checkVerifyCode } =
-    useContext(Context);
+const VerifyCreate = () => {
+  const {
+    loading,
+    verifyValue,
+    checkVerifyLoginCode,
+    setVerifyValue,
+    VerifyCode,
+    navigateToSlash,
+  } = useContext(Context);
 
   const inputRef = useRef();
+
+  useEffect(() => {
+    if (VerifyCode === null) {
+      navigateToSlash();
+    }
+  }, []);
 
   return (
     <div className="">
@@ -50,7 +62,7 @@ const Verify = () => {
         <div
           className="button"
           onClick={() => {
-            // checkVerifyCode();
+            checkVerifyLoginCode();
           }}
         >
           Илгээх
@@ -60,4 +72,4 @@ const Verify = () => {
   );
 };
 
-export default Verify;
+export default VerifyCreate;

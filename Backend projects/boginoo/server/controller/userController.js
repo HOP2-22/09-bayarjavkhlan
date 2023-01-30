@@ -1,199 +1,184 @@
-const colors = require("colors");
-const crypto = require("crypto");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const colors = require("colors");
+const nodemailer = require("nodemailer");
 
 const usersModel = require("../models/userModel");
-const asyncHandler = require("../middleware/asyncHandler");
+const asyncHandler = require("../middleWare/asyncHandler");
 const MyError = require("../utils/myError");
-const sendEmail = require("../utils/email");
-
-exports.checkCookie = asyncHandler(async (req, res, next) => {
-  const token = req?.headers?.token;
-
-  if (!token) {
-    throw new MyError("токен байхгүй байна", 400);
-  }
-
-  const data = await jwt.decode(token, process.env.ACCESS_TOKEN);
-
-  res.status(200).json({
-    isDone: true,
-    data,
-    message: "амжилттай хэрэглэгчийн мэдээлэл авлаа",
-  });
-});
-
-exports.getUserById = asyncHandler(async (req, res, next) => {
-  const user = await usersModel.findById(req.params.id).populate("histories");
-
-  res.status(200).json({
-    isDone: true,
-    data: user,
-    message: "амжилттай хэрэглэгчийн мэдээлэл авлаа",
-  });
-});
 
 exports.getUsers = asyncHandler(async (req, res, next) => {
-  const users = await usersModel.find().populate("histories");
+  const users = await usersModel.find();
 
   res.status(200).json({
     isDone: true,
     data: users,
+    message: "амжилттай мэдээлэлүүдийг авлаа",
+  });
+});
+
+exports.getUserByEmail = asyncHandler(async (req, res, next) => {
+  const user = await usersModel.find({
+    email: req.params.id,
+  });
+
+  if (user.length === 0) {
+    throw new MyError(`и-майл алдаатай байна`, 404);
+  }
+
+  res.status(200).json({
+    isDone: true,
+    data: user[0],
     message: "амжилттай хэрэглэгчийн мэдээлэл авлаа",
   });
 });
 
-exports.register = asyncHandler(async (req, res, next) => {
-  const user = await usersModel.create(req.body);
+exports.createUser = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
 
-  const token = user.getJWT();
+  const salt = await bcrypt.genSalt(10);
+
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const newUser = await usersModel.create({
+    email: email,
+    password: hashedPassword,
+  });
 
   res.status(200).json({
     isDone: true,
-    token,
-    data: user,
+    data: newUser,
     message: "амжилттай бүртгүүллээ",
   });
 });
 
+const ACCESS_TOKEN_KEY = "secret123";
+
 exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    throw new MyError("и-мэйл болон нууц үгээ дамжуулна уу", 400);
-  }
-
-  const user = await usersModel.findOne({ email: email }).select("+password");
+  const user = await usersModel.findOne({ email: email });
 
   if (!user) {
-    throw new MyError("ийм и-мэйл болон нууц алдаатай байна", 400);
+    throw new MyError(`ийм Email-тэй хэрэглэгч алга байна`, 404);
   }
 
-  const match = await user.checkPassword(password);
+  const match = await bcrypt.compare(password, user.password);
 
   if (!match) {
     throw new MyError(`Password алдаатай байна`, 404);
   }
 
-  const token = user.getJWT();
+  const token = jwt.sign(
+    {
+      user: user.email,
+    },
+    ACCESS_TOKEN_KEY
+  );
 
   res.status(200).json({
     isDone: true,
-    token,
-    data: user,
+    token: token,
     message: "амжилттай нэвтэрлээ",
   });
 });
 
-exports.updateUser = asyncHandler(async (req, res, next) => {
-  const user = await usersModel.findById(req.params.id);
+exports.updateUserPass = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
 
-  if (!user) {
-    throw new MyError(`ID алдаатай байна`, 404);
-  }
+  const salt = await bcrypt.genSalt(10);
 
-  if (req.userId !== user.id && req.role !== "admin") {
-    throw new MyError("өөрийнхөө user-ийг л өөрчлөх боломжтой", 404);
-  }
+  const hashedPassword = await bcrypt.hash(password, salt);
 
-  if (req.body.name === user.name) {
-    throw new MyError(`сольж байгаа талбар өөр байх ёстой`, 404);
-  }
-
-  for (let el in req.body) {
-    user[el] = req.body[el];
-  }
-
-  user.save();
+  const updatedUser = await usersModel.findOneAndUpdate(
+    { email: email },
+    { password: hashedPassword },
+    {
+      runValidators: true,
+    }
+  );
 
   res.status(200).json({
     isDone: true,
-    data: user,
+    data: updatedUser,
+    message: "амжилттай password солигдлоо",
+  });
+});
+
+exports.updateUserName = asyncHandler(async (req, res, next) => {
+  const updatedUser = await usersModel.findByIdAndUpdate(
+    req.params.id,
+    {
+      name: req.body.name,
+    },
+    {
+      runValidators: true,
+    }
+  );
+
+  if (!updatedUser) {
+    throw new MyError(`ID алдаатай байна`, 404);
+  }
+
+  res.status(200).json({
+    isDone: true,
+    data: updatedUser,
     message: "амжилттай шинчиллээ",
   });
 });
 
 exports.deleteUser = asyncHandler(async (req, res, next) => {
-  const user = await usersModel.findById(req.params.id);
+  const deletedUser = await usersModel.findByIdAndDelete(req.params.id);
 
-  if (!user) {
+  if (!deletedUser) {
     throw new MyError(`ID алдаатай байна`, 404);
   }
 
-  user.remove();
-
   res.status(200).json({
     isDone: true,
-    data: user,
+    data: deletedUser,
     message: "амжилттай устаглаа",
   });
 });
 
-exports.checkUser = asyncHandler(async (req, res, next) => {
-  if (!req.params.id) {
-    throw new MyError(
-      `та нууц үгээ сэргээхийн тулд email хаягаа илгээх шаардлагатай`,
-      404
-    );
+exports.verifyUser = (req, res, next) => {
+  let characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  let stringId = "";
+  for (let i = 0; i < 5; i++) {
+    stringId += characters.charAt(Math.floor(Math.random() * 62));
   }
 
-  const user = await usersModel.findOne({
-    email: req.params.id,
-  });
+  const main = async () => {
+    let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "jawkhlan626@gmail.com",
+        pass: "yrzswrigcwgattyy",
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
 
-  if (!user) {
-    throw new MyError(`и-майл алдаатай байна`, 404);
-  }
+    let info = await transporter.sendMail({
+      from: "jawkhlan626@gmail.com",
+      to: req.body.email,
+      subject: "Boginoo",
+      text: "Vertification",
+      html: `<b>code: ${stringId}</b><br>
+      <a href="https://www.facebook.com/profile.php?id=100010820288664">onclick and follow me</a>
+      `,
+    });
+  };
 
-  const resetToken = user.generatePasswordChangeToken();
-
-  await user.save({ validateBeforeSave: false });
-
-  const link = `https://localhost:3000/changePassword/${resetToken}`;
-
-  sendEmail({
-    id: req.params.id,
-    subject: "нууц үг өөрчлөх хүсэлт",
-    message: `Сайн байна уу <br><br> Та нууц үгээ солих хүсэль гараглаа.<br>Нууц үгээ доорх линк нь дээр дарж солино уу.<br><br><a href="${link}">${link}</a><br><br>Өдөрийг сайхан өнгөрүүлээрэй.`,
-  });
-
+  main().catch(console.error);
   res.status(200).json({
     isDone: true,
-    resetToken,
-    message: "Баталгаажуулах код илгээлээ",
+    verifyCode: stringId,
+    message: "амжилттай устаглаа",
   });
-});
-
-exports.updateUserPass = asyncHandler(async (req, res, next) => {
-  if (!req.body.resetToken || !req.body.password) {
-    throw new MyError(`Та токен болон нууц үгээ дамжуулна уу`, 404);
-  }
-
-  const encrypt = crypto
-    .createHash("sha256")
-    .update(req.body.resetToken)
-    .digest("hex");
-
-  const user = await usersModel.findOne({
-    resetPasswordToken: encrypt,
-    resetPasswordExpired: { $gt: Date.now() },
-  });
-
-  if (!user) {
-    throw new MyError(`нууц үг сэргээх хугацаа дууссан байна`, 404);
-  }
-
-  user.password = req.body.password;
-  user.resetPasswordToken = undefined;
-  user.resetPasswordExpire = undefined;
-  await user.save({ validateBeforeSave: false });
-
-  const token = user.getJWT();
-
-  res.status(200).json({
-    isDone: true,
-    token,
-    data: user,
-    message: "амжилттай password солигдлоо",
-  });
-});
+};

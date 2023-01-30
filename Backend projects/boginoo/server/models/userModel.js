@@ -1,92 +1,24 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
 
-const usersSchema = mongoose.Schema(
-  {
-    name: {
-      type: String,
-      maxLength: [50, "нэр дээд талдаа 50 тэмдэгтэнд багтаана уу"],
-      minLength: [2, "нэр доод талдаа 2 тэмдэгтэнд багтаана уу"],
-      default: "user",
-    },
-    email: {
-      type: String,
-      required: [true, "хэрэглэгчийн и-мэйл хаягийг оруулж өгнө үү"],
-      unique: true,
-      match: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "и-мэйл хаяг оруулнуу",
-      ],
-    },
-    password: {
-      type: String,
-      min: [4, "пассвортны урт доод талдаа 4 тэмдэгтэй байх ёстой"],
-      required: [true, "пасс аа оруулна уу"],
-      select: false,
-    },
-    role: {
-      type: String,
-      enum: ["user"],
-      default: "user",
-    },
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
-    createdAt: { type: Date, default: Date.now },
+const usersModel = mongoose.Schema({
+  name: {
+    type: String,
+    maxLength: [50, "нэр дээд талдаа 50 тэмдэгтэнд багтаана уу"],
+    minLength: [2, "нэр доод талдаа 2 тэмдэгтэнд багтаана уу"],
+    default: "user",
   },
-  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
-);
-
-usersSchema.virtual("histories", {
-  ref: "histories",
-  localField: "_id",
-  foreignField: "user",
-  justOne: false,
+  email: {
+    type: String,
+    unique: true,
+    required: [true, "Цахим хаягаа оруулна уу"],
+  },
+  password: {
+    type: String,
+    required: [true, "пасс аа оруулна уу"],
+  },
+  registerDate: { type: Date, default: Date.now },
 });
 
-usersSchema.pre("remove", async function (next) {
-  console.log("aa");
-  await this.model("histories").deleteMany({ user: this._id });
-  next();
-});
-
-usersSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) next();
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
-
-usersSchema.methods.getJWT = function () {
-  const token = jwt.sign(
-    {
-      id: this._id,
-      role: this.role,
-    },
-    process.env.ACCESS_TOKEN,
-    {
-      expiresIn: process.env.JWT_EXPIRESIN,
-    }
-  );
-
-  return token;
-};
-
-usersSchema.methods.checkPassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
-};
-
-usersSchema.methods.generatePasswordChangeToken = function (password) {
-  const resetToken = crypto.randomBytes(10).toString("hex");
-
-  this.resetPasswordToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
-
-  return resetToken;
-};
-
-const users = mongoose.model("users", usersSchema);
+const users = mongoose.model("users", usersModel);
 
 module.exports = users;

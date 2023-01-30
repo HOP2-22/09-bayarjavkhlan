@@ -1,7 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
 import { Context } from "../context/Context";
-import { useNavigate } from "react-router-dom";
 
 import Logo from "../img/boginoo3.png";
 import { FaSpinner } from "react-icons/fa";
@@ -9,38 +7,25 @@ import { EyeIcon } from "@heroicons/react/24/solid";
 import { EyeSlashIcon } from "@heroicons/react/24/solid";
 
 const ChangePassword = () => {
-  const navigate = useNavigate();
-
-  const { loading, setLoading, forgetEmailValue } = useContext(Context);
+  const {
+    loading,
+    changePass,
+    changePassValue,
+    setChangePassValue,
+    changePassVerifyValue,
+    setChangePassVerifyValue,
+    forgetUser,
+    navigateToSlash,
+  } = useContext(Context);
 
   const [pass, setPass] = useState(true);
   const [passVerify, setPassVerify] = useState(true);
 
-  const [changePassValue, setChangePassValue] = useState("");
-  const [changePassVerifyValue, setChangePassVerifyValue] = useState("");
-
-  const changePass = async () => {
-    setLoading(true);
-    try {
-      const changedPass = await axios.put(
-        `http://localhost:8000/user/changePass`,
-        {
-          email: forgetEmailValue,
-          password: changePassValue,
-        }
-      );
-      navigate("/login");
-      setLoading(false);
-      setTimeout(() => {
-        alert(changedPass.data.message);
-      }, [500]);
-    } catch (error) {
-      setLoading(false);
-      setTimeout(() => {
-        alert(error.response.data.error.message);
-      }, [500]);
+  useEffect(() => {
+    if (forgetUser === null) {
+      navigateToSlash();
     }
-  };
+  }, []);
 
   return (
     <>

@@ -1,35 +1,33 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Context } from "../context/Context";
-import { useNavigate } from "react-router-dom";
 
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { ChevronUpIcon } from "@heroicons/react/24/solid";
-import Cookies from "js-cookie";
 
 const options = ["нэрээ өөрчиллөх", "гарах"];
 
 const Option = () => {
-  const navigate = useNavigate();
+  const { user, setUser, getUserHistory, setShow, navigateToSlash } =
+    useContext(Context);
 
-  const { user, setUser, getUserHistory, setShow } = useContext(Context);
-
-  const [nameValue, setNameValue] = useState("");
   const [dropShow, setDropShow] = useState(true);
   const [showName, setShowName] = useState(false);
+  const [nameValue, setNameValue] = useState("");
 
-  const logout = (config) => {
-    Cookies.remove("token");
-    config.headers.remove("token");
-    navigate("/");
-    setUser();
+  const logout = () => {
+    navigateToSlash();
+    setUser({});
   };
 
   const changeName = async () => {
     try {
-      await axios.put(`http://localhost:8000/user/${user?._id}`, {
-        name: nameValue,
-      });
+      await axios.put(
+        `https://boginoo-full-responsive.onrender.com/user/${user?._id}`,
+        {
+          name: nameValue,
+        }
+      );
       getUserHistory(user?.email);
     } catch (error) {
       setTimeout(() => {
@@ -42,7 +40,7 @@ const Option = () => {
     <div>
       <div className="pr-2 sm:pr-[40px] font-semibold text-gray-900 text-[20px]">
         <div className="w-[160px] sm:w-[250px]">
-          <div className="flex text-[18px] sm:text-xl border-b pt-4 sm:pt-0 px-1 py-1">
+          <div className="w-full justify-between flex text-[18px] sm:text-xl border-b pt-4 sm:pt-0 px-1 py-1">
             {user?.name === "user" ? user?.email : user?.name}
             <ChevronDownIcon
               className={`${
@@ -106,8 +104,6 @@ const Option = () => {
                     if (nameValue !== "") {
                       changeName();
                       setNameValue("");
-                    } else {
-                      alert("Please enter name");
                     }
                     setShowName(false);
                     setDropShow(true);

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const shortSchema = mongoose.Schema({
+const shortModel = mongoose.Schema({
   orignalLink: {
     type: String,
     required: true,
@@ -10,13 +10,12 @@ const shortSchema = mongoose.Schema({
     unique: true,
     required: true,
   },
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: "users",
+  ownerId: {
+    type: String,
   },
-  createdAt: { type: Date, default: Date.now },
+  registerDate: { type: Date, default: Date.now },
 });
 
-const shorts = mongoose.model("histories", shortSchema);
+const shorts = mongoose.model("histories", shortModel);
 
 module.exports = shorts;

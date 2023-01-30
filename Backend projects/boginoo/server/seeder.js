@@ -12,16 +12,15 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 
-// const shorts = JSON.parse(
-//   fs.readFileSync(__dirname + "/data/users.json", "utf-8")
-// );
-const users = JSON.parse(
+const shorts = JSON.parse(
   fs.readFileSync(__dirname + "/data/users.json", "utf-8")
+);
+const users = JSON.parse(
+  fs.readFileSync(__dirname + "/data/shorts.json", "utf-8")
 );
 
 const importData = async () => {
   try {
-    console.log(users);
     await shortModel.create(shorts);
     await userModel.create(users);
     console.log("ogogdliig importloloo".green.inverse);
@@ -32,7 +31,7 @@ const importData = async () => {
 
 const deleteData = async () => {
   try {
-    // await shortModel.deleteMany();
+    await shortModel.deleteMany();
     await userModel.deleteMany();
     console.log("ogogdliig bvgdiig ustaglaa".green.inverse);
   } catch (err) {
