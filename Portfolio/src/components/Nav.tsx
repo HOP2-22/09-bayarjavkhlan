@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPaw } from "react-icons/fa";
 import { AiFillGithub } from "react-icons/ai";
 import { BsFillSunFill } from "react-icons/bs";
@@ -12,21 +12,30 @@ const Nav = ({ theme, setTheme }: any) => {
     { title: "Sources" },
   ];
 
+  const [button, setButton] = useState<boolean[]>(new Array(4).fill(false));
+  const [buttonIndex, setButtonIndex] = useState<number>(0);
+
   const [hamburger, setHamburger] = useState<boolean>(false);
+
+  useEffect(() => {
+    let newArray: boolean[] = new Array(4).fill(false);
+    newArray[buttonIndex] = true;
+    setButton(newArray);
+  }, [buttonIndex]);
 
   return (
     <div
       className={`${
         !theme ? "bg-[#f4ede4]" : "bg-main"
-      } w-full flex justify-center`}
+      } w-full flex justify-center transition fixed`}
     >
       <div className="w-full md:w-[768px] flex justify-between py-3">
         <div className="flex items-center gap-8">
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center group">
             <FaPaw
               className={`${
                 theme ? "text-white" : "text-gray-900"
-              } text-white text-2xl -rotate-[30deg] hover:rotate-0 transition-transform`}
+              }  text-2xl -rotate-[30deg] group-hover:rotate-0 transition-transform`}
             />
             <div
               className={`${
@@ -39,7 +48,12 @@ const Nav = ({ theme, setTheme }: any) => {
           <div className="md:flex hidden gap-4">
             {header.map((item: any, index: number) => {
               return (
-                <div className="flex items-center">
+                <div
+                  className="flex items-center"
+                  onClick={() => {
+                    setButtonIndex(index);
+                  }}
+                >
                   {index === 3 && (
                     <div>
                       <AiFillGithub
@@ -77,7 +91,7 @@ const Nav = ({ theme, setTheme }: any) => {
             <div
               className={`${
                 theme ? "translate-y-0" : "-translate-y-20"
-              } w-full h-full flex items-center justify-center rounded-lg transition duration-400 bg-indigo-400 absolute`}
+              } w-full h-full flex items-center justify-center rounded-lg transition duration-700 bg-indigo-400 absolute`}
               onClick={() => {
                 setTheme(!theme);
                 setHamburger(false);
