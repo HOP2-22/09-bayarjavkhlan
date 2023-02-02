@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { FaPaw } from "react-icons/fa";
 import { AiFillGithub } from "react-icons/ai";
 import { BsFillSunFill } from "react-icons/bs";
 import { BsFillMoonFill } from "react-icons/bs";
 
 const Nav = ({ theme, setTheme }: any) => {
+  const navigate = useNavigate();
+
   const header = [
-    { title: "Works" },
-    { title: "Posts" },
-    { title: "Uses" },
-    { title: "Sources" },
+    { title: "Works", link: "works" },
+    { title: "Posts", link: "posts" },
+    { title: "Uses", link: "uses" },
+    { title: "Sources", link: "sources" },
   ];
 
   const [button, setButton] = useState<boolean[]>(new Array(4).fill(false));
@@ -31,7 +35,13 @@ const Nav = ({ theme, setTheme }: any) => {
     >
       <div className="w-full md:w-[768px] flex justify-between py-3">
         <div className="flex items-center gap-8">
-          <div className="flex gap-2 items-center group">
+          <div
+            className="flex gap-2 items-center group cursor-pointer"
+            onClick={() => {
+              navigate("/");
+              setButton(new Array(4).fill(false));
+            }}
+          >
             <FaPaw
               className={`${
                 theme ? "text-white" : "text-gray-900"
@@ -45,13 +55,16 @@ const Nav = ({ theme, setTheme }: any) => {
               Takuya Matsuyama
             </div>
           </div>
-          <div className="md:flex hidden gap-4">
+          <div className="md:flex hidden">
             {header.map((item: any, index: number) => {
               return (
                 <div
-                  className="flex items-center"
+                  className={`${
+                    button[index] ? "bg-[#88CCCA] rounded text-gray-800" : ""
+                  } flex items-center cursor-pointer py-[5px] px-[10px] font-light`}
                   onClick={() => {
                     setButtonIndex(index);
+                    navigate(item?.link);
                   }}
                 >
                   {index === 3 && (
@@ -63,7 +76,9 @@ const Nav = ({ theme, setTheme }: any) => {
                   )}
                   <p
                     className={`${
-                      theme
+                      button[index]
+                        ? "text-gray-800 hover:underline"
+                        : theme
                         ? "text-white hover:decoration-white"
                         : "text-gray-800 hover:decoration-gray-8000"
                     } hover:underline underline-offset-4`}

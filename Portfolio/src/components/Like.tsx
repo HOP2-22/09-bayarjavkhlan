@@ -1,6 +1,6 @@
 import React from "react";
 
-const Like = ({ setTheme, theme }: any) => {
+const Like = ({ theme }: any) => {
   return (
     <div className="w-[90%] sm:w-[80%] md:w-[570px] flex flex-col pt-4 pb-6 gap-4">
       <div
@@ -12,9 +12,27 @@ const Like = ({ setTheme, theme }: any) => {
       >
         I ❤
       </div>
-      <div className="indent-2 font-light text-[14px]">
-        Art,Music,<span className="text-[#E159AC]">Drawing</span>,Playing Drums,
-        <span className="text-[#E159AC]">Photography</span>
+      <div className="indent-2 text-[16px]">
+        Art,Music,
+        <span
+          className={`${
+            theme
+              ? "text-[#E159AC] border-[#E159AC]"
+              : "text-blue-700 border-blue-700"
+          } hover:border-b pb-[2px] cursor-pointer ml-1`}
+        >
+          Drawing
+        </span>
+        ,Playing Drums,
+        <span
+          className={`${
+            theme
+              ? "text-[#E159AC] border-[#E159AC]"
+              : "text-blue-700 border-blue-700"
+          } hover:border-b pb-[2px] cursor-pointer ml-1`}
+        >
+          Photography
+        </span>
         ,Leica,Machine Learning
       </div>
     </div>

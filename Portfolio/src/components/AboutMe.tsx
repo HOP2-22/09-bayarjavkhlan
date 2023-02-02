@@ -1,11 +1,9 @@
-import React from "react";
-
 const profileImg: string =
   "https://www.craftz.dog/_next/image?url=%2Fimages%2Ftakuya.jpg&w=256&q=75";
 
 const AboutMe = ({ theme }: any) => {
   return (
-    <div className="w-[90%] sm:w-[80%] md:w-[570px] flex flex-col gap-10">
+    <div className="w-[90%] sm:w-[80%] md:w-[570px] flex flex-col gap-6">
       <div
         className={`w-full rounded flex overflow-hidden justify-center items-center ${
           !theme ? "bg-[#f6f0e8] " : "bg-[#313134] "
@@ -17,7 +15,9 @@ const AboutMe = ({ theme }: any) => {
       </div>
       <div className="w-full flex flex-col gap-4 md:gap-0 md:flex-row md:justify-between ">
         <div className="flex flex-col">
-          <div className="text-[30px] font-bold">Takuya Matsuyama</div>
+          <div className="text-[30px] md:text-6 font-[monospace] font-bold">
+            Batgerel Bayrjavkhlan
+          </div>
           <div className="">
             Digital Craftsman ( Artist / Developer / Designer )
           </div>

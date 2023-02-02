@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 interface CurrentUserContextType {
-  user: any;
+  setTheme: (theme: boolean) => void;
+  theme: boolean;
 }
-export const MyContext = React.createContext<CurrentUserContextType | null>(
+
+export const Provider = React.createContext<CurrentUserContextType | null>(
   null
 );
-const DataContext = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<string>("iserma,e");
+const Context = ({ children }: { children: React.ReactNode }) => {
+  const [theme, setTheme] = useState<boolean>(false);
 
-  return <MyContext.Provider value={{ user }}>{children}</MyContext.Provider>;
+  return (
+    <Provider.Provider value={{ setTheme, theme }}>
+      {children}
+    </Provider.Provider>
+  );
 };
 
-export default DataContext;
+export default Context;

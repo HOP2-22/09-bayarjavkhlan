@@ -155,10 +155,7 @@ exports.verifyUser = (req, res, next) => {
       host: "smtp.gmail.com",
       port: 587,
       secure: false,
-      auth: {
-        user: "jawkhlan626@gmail.com",
-        pass: "yrzswrigcwgattyy",
-      },
+      auth: {},
       tls: {
         rejectUnauthorized: false,
       },

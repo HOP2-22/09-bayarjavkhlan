@@ -1,7 +1,10 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import { BsChevronRight } from "react-icons/bs";
 
 const Work = ({ theme }: any) => {
+  const navigate = useNavigate();
+
   return (
     <div className="w-[90%] sm:w-[80%] md:w-[570px] flex flex-col">
       <p
@@ -24,13 +27,15 @@ const Work = ({ theme }: any) => {
         to solving real-life problems with code. When not online, he loves
         hanging out with his camera. Currently, he is living off of his own
         product called{" "}
-        <span className="font-light text-blue-600 hover:underline">
-          Inkdrop
+        <span className="font-light text-blue-600 hover:underline cursor-pointer">
+          <a href="https://www.craftz.dog/works/inkdrop">Inkdrop</a>
         </span>
         . He publishes content for marketing his products and his YouTube
         channel called "{" "}
-        <span className="font-light text-blue-600 hover:underline">
-          Dev as Life
+        <span className="font-light text-blue-600 hover:underline cursor-pointer">
+          <a href="https://www.youtube.com/devaslife" target={"_blank"}>
+            Dev as Life
+          </a>
         </span>{" "}
         " has more than 100k subscribers.
       </p>
@@ -40,7 +45,10 @@ const Work = ({ theme }: any) => {
             theme
               ? "bg-[#81E6D9] text-black/80 hover:bg-teal-500"
               : "bg-[#319795] text-white/80 hover:bg-teal-700"
-          } px-4 py-2 flex font-medium items-center rounded`}
+          } px-4 py-2 flex font-medium items-center cursor-pointer rounded`}
+          onClick={() => {
+            navigate("/works");
+          }}
         >
           My portfolio{" "}
           <span>
