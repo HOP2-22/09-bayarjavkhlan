@@ -17,7 +17,7 @@ const Nav = ({ theme, setTheme }: any) => {
   ];
 
   const [button, setButton] = useState<boolean[]>(new Array(4).fill(false));
-  const [buttonIndex, setButtonIndex] = useState<number>(0);
+  const [buttonIndex, setButtonIndex] = useState<number>(10);
 
   const [hamburger, setHamburger] = useState<boolean>(false);
 
