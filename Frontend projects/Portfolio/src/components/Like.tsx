@@ -13,7 +13,7 @@ const Like = ({ theme }: any) => {
         I ❤
       </div>
       <div className="indent-2 text-[16px]">
-        Art,Music,
+        Anime,Music,
         <span
           className={`${
             theme
@@ -21,9 +21,9 @@ const Like = ({ theme }: any) => {
               : "text-blue-700 border-blue-700"
           } hover:border-b pb-[2px] cursor-pointer ml-1`}
         >
-          Drawing
+          Online Game
         </span>
-        ,Playing Drums,
+        ,Playing Basketball,
         <span
           className={`${
             theme

@@ -1,5 +1,5 @@
 const profileImg: string =
-  "https://www.craftz.dog/_next/image?url=%2Fimages%2Ftakuya.jpg&w=256&q=75";
+  "https://avatars.githubusercontent.com/u/110808418?s=96&v=4";
 
 const AboutMe = ({ theme }: any) => {
   return (
@@ -10,7 +10,7 @@ const AboutMe = ({ theme }: any) => {
         } `}
       >
         <p className=" py-[10px]">
-          Hello, I'm an indie app developer based in Japan!
+          Hello, I'm study at software engineer in Mongolia
         </p>
       </div>
       <div className="w-full flex flex-col gap-4 md:gap-0 md:flex-row md:justify-between ">

@@ -52,7 +52,7 @@ const Nav = ({ theme, setTheme }: any) => {
                 theme ? "text-white" : "text-gray-900"
               } text-lg font-medium`}
             >
-              Takuya Matsuyama
+              Batgerel Bayrjavkhlan
             </div>
           </div>
           <div className="md:flex hidden">

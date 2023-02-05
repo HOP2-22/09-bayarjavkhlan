@@ -21,7 +21,7 @@ const Work = ({ theme }: any) => {
           theme ? "text-gray-300" : "text-[#1A202C]"
         } w-full indent-4 `}
       >
-        Takuya is a freelance and a full-stack developer based in Osaka with a
+        Jawkhlan is a freelance and a full-stack developer based in Osaka with a
         passion for building digital services/stuff he wants. He has a knack for
         all things launching products, from planning and designing all the way
         to solving real-life problems with code. When not online, he loves
@@ -71,24 +71,23 @@ const Work = ({ theme }: any) => {
         } w-full flex flex-col`}
       >
         <div className="w-full flex">
-          <div className="w-[54px] font-semibold pr-10">1984</div>
-          <div className="">Born in Osaka (大阪), Japan.</div>
+          <div className="w-[54px] font-semibold pr-10">2004</div>
+          <div className="">Born in Ulaanbaatar, Mongolia.</div>
         </div>
         <div className="w-full flex">
           <div className="w-[54px] font-semibold">2010</div>
           <div className="pl-4">
             Completed the Master's Program in the Graduate School of Information
             Science at Nara Institute of Science and Technology
-            (奈良先端科学技術大学院大学情報科学研究科修士課程)
           </div>
         </div>
         <div className="w-full flex">
-          <div className="w-[54px] font-semibold">2010</div>
-          <div className="">Worked at Yahoo! Japan (ヤフー株式会社入社)</div>
+          <div className="w-[54px] font-semibold">2011</div>
+          <div className="">Studied at 5th School! Mongolia Ulaanbaatar</div>
         </div>
         <div className="w-full flex">
           <div className="font-semibold pr-2">2012 to present </div>
-          <div className="">Working as a freelancer</div>
+          <div className="">Studing at 53th School</div>
         </div>
       </div>
     </div>
