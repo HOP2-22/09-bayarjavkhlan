@@ -12,7 +12,7 @@ const Layout = ({ children }: any) => {
         theme ? "bg-main text-[#efefef]" : "bg-[#f1e7db] text-[#1a202c] "
       } flex flex-col items-center w-full bg-main pb-10 transition`}
     >
-      <Nav setTheme={setTheme} theme={theme} />
+      <Nav />
       {children}
       <Footer />
     </div>

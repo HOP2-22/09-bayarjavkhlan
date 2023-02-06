@@ -1,9 +1,18 @@
+import React, { useContext } from "react";
+import { Provider } from "../provider/DataContext";
+
 const profileImg: string =
   "https://avatars.githubusercontent.com/u/110808418?s=96&v=4";
 
-const AboutMe = ({ theme }: any) => {
+const AboutMe = () => {
+  const { theme, transition } = useContext<any>(Provider);
+
   return (
-    <div className="w-[90%] sm:w-[80%] md:w-[570px] flex flex-col gap-6">
+    <div
+      className={`${
+        transition ? "translate-y-0" : "translate-y-7"
+      } transition-transform duration-500 delay-200 ease-out w-[90%] sm:w-[80%] md:w-[570px] flex flex-col gap-6`}
+    >
       <div
         className={`w-full rounded flex overflow-hidden justify-center items-center ${
           !theme ? "bg-[#f6f0e8] " : "bg-[#313134] "
@@ -18,9 +27,7 @@ const AboutMe = ({ theme }: any) => {
           <div className="text-[30px] md:text-6 font-[monospace] font-bold">
             Batgerel Bayrjavkhlan
           </div>
-          <div className="">
-            Digital Craftsman ( Artist / Developer / Designer )
-          </div>
+          <div>Digital Craftsman ( Artist / Developer / Designer )</div>
         </div>
         <div className="w-full md:w-auto flex justify-center">
           <img

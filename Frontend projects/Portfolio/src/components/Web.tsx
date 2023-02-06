@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { AiFillGithub } from "react-icons/ai";
 import { BsTwitter } from "react-icons/bs";
 import { AiFillInstagram } from "react-icons/ai";
 import { BsChevronRight } from "react-icons/bs";
+import { Provider } from "../provider/DataContext";
 
-const Web = ({ theme }: any) => {
+const Web = () => {
+  const { theme, transition } = useContext<any>(Provider);
+
   return (
-    <div className="w-[90%] sm:w-[80%] md:w-[570px] flex flex-col pt-4 pb-6 gap-4">
+    <div
+      className={`${
+        transition ? "translate-y-0" : "translate-y-10"
+      } transition-transform duration-500 delay-100 ease-outw-[90%] sm:w-[80%] md:w-[570px] flex flex-col pt-4 pb-6 gap-4`}
+    >
       <div
         className={`${
           theme
@@ -23,25 +30,25 @@ const Web = ({ theme }: any) => {
         } flex flex-col justify-start`}
       >
         <div className="w-36 px-4 flex items-center gap-2 h-10 cursor-pointer rounded hover:bg-[#319795]/60 group transition duration-300">
-          <AiFillGithub className="text-[18px]" />{" "}
+          <AiFillGithub className="text-[18px]" />
           <p className="font-medium group-hover:underline decoration-[#E159AC]">
             @craftzdog
           </p>
         </div>
         <div className="w-60 px-4 flex items-center gap-2 h-10 cursor-pointer rounded hover:bg-[#319795]/60 group transition duration-300">
-          <BsTwitter className="text-[18px]" />{" "}
+          <BsTwitter className="text-[18px]" />
           <p className="font-medium group-hover:underline decoration-[#E159AC]">
             @inkdrop_app (English)
           </p>
         </div>
         <div className="w-[216px] px-4 flex items-center gap-2 h-10 cursor-pointer rounded hover:bg-[#319795]/60 group transition duration-300">
-          <BsTwitter className="text-[18px]" />{" "}
+          <BsTwitter className="text-[18px]" />
           <p className="font-medium group-hover:underline decoration-[#E159AC]">
             @craftzdog (hahaha)
           </p>
         </div>
         <div className="w-36 px-4 flex items-center gap-2 h-10 cursor-pointer rounded hover:bg-[#319795]/60 group transition duration-300">
-          <AiFillInstagram className="text-[18px]" />{" "}
+          <AiFillInstagram className="text-[18px]" />
           <p className="font-medium group-hover:underline decoration-[#E159AC]">
             @craftzdog
           </p>

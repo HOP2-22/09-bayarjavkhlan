@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Provider } from "../provider/DataContext";
 
-const Like = ({ theme }: any) => {
+const Like = () => {
+  const { theme } = useContext<any | null>(Provider);
+
   return (
     <div className="w-[90%] sm:w-[80%] md:w-[570px] flex flex-col pt-4 pb-6 gap-4">
       <div
