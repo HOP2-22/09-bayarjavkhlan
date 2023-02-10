@@ -33,8 +33,8 @@ const Nav = () => {
   return (
     <div
       className={`${
-        !theme ? "bg-[#f4ede4]" : "bg-main"
-      } w-full flex justify-center transition fixed`}
+        !theme ? "bg-[#f4ede4]/80 " : "bg-main"
+      } w-full flex justify-center transition fixed z-50`}
     >
       <div className="w-full md:w-[768px] flex justify-between py-3">
         <div className="flex items-center gap-8">

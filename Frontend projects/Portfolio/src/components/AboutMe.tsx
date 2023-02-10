@@ -11,7 +11,7 @@ const AboutMe = () => {
     <div
       className={`${
         transition ? "translate-y-0" : "translate-y-7"
-      } transition-transform duration-500 delay-200 ease-out w-[90%] sm:w-[80%] md:w-[570px] flex flex-col gap-6`}
+      } transition-transform pt-[400px] duration-500 delay-200 ease-out w-[90%] sm:w-[80%] md:w-[570px] flex flex-col gap-6 `}
     >
       <div
         className={`w-full rounded flex overflow-hidden justify-center items-center ${

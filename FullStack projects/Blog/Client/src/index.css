@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  @screen sm {
+  }
+  @screen md {
+  }
+  @screen lg {
+  }
+  @screen xl {
+  }
+  @screen 2xl {
+  }
+}
+
+body {
+  @apply font-[mulish];
+}
