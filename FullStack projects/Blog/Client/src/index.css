@@ -3,18 +3,32 @@
 @tailwind utilities;
 
 @layer components {
-  @screen sm {
+  .navOffset {
+    @apply bg-[#ecf6ff] text-[#4da1fd] border-[#5377f8] hover:border-blue-500 hover:bg-[#4da1fd] hover:text-white;
   }
-  @screen md {
+
+  .homeText {
+    @apply md:font-medium md:text-[15px] md:leading-[23px] lg:font-semibold lg:text-[16px] lg:leading-[25px] 2xl:text-[18px] 2xl:leading-[29px];
   }
-  @screen lg {
+
+  .homeTitle {
+    @apply font-bold text-[30px] leading-[32px] sm:leading-[34px] md:leading-[38px] lg:text-[36px] lg:leading-[50px] xl:text-[40px] 2xl:leading-[55px];
   }
-  @screen xl {
-  }
-  @screen 2xl {
+
+  .homeButton {
+    @apply w-4 pb-5 stroke-[#4DA0FD] group-hover:text-cyan-600 group-hover:translate-x-2 transition-transform duration-200;
   }
 }
 
 body {
   @apply font-[mulish];
+}
+
+.scrollBarHide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollBarHide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
