@@ -4,7 +4,7 @@
 
 @layer components {
   .navOffset {
-    @apply bg-[#ecf6ff] text-[#4da1fd] border-[#5377f8] hover:border-blue-500 hover:bg-[#4da1fd] hover:text-white;
+    @apply bg-[#ecf6ff] text-[#4da1fd] border-[#5377f8] hover:border-[#4da1fd] hover:bg-[#4da1fd] hover:text-white;
   }
 
   .homeText {

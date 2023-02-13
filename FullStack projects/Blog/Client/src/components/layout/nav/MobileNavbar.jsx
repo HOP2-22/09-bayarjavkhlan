@@ -7,9 +7,9 @@ import MobileNavbarItem from "./MobileNavbarItem";
 const MobileNavbar = ({ hamburger, setHamburger }) => {
   return (
     <div
-      className={`${
-        hamburger ? "translate-y-0 block" : "-translate-y-96 hidden"
-      } z-10 md:hidden divide-y w-full bg-white shadow-xl`}
+      className={`absolute ${
+        hamburger ? "translate-y-[60px]" : "-translate-y-80"
+      } z-10 transition md:hidden divide-y w-full bg-white shadow-xl`}
     >
       {HeaderTitles.map((item, index) => {
         return (

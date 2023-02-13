@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import Service from "./pages/Service";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
+import ForgetPassword from "./pages/auth/ForgetPassword";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -23,6 +24,10 @@ root.render(
             <Route path="/services" element={<Service />} />
             <Route path="/register/login" element={<Login />} />
             <Route path="/register/signup" element={<Signup />} />
+            <Route
+              path="/register/forgetpassword"
+              element={<ForgetPassword />}
+            />
           </Routes>
         </Layout>
       </Provider>

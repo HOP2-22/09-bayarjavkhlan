@@ -8,6 +8,7 @@ const LoginLeft = () => {
     <div className="hidden md:flex w-full p-2 h-full">
       <img
         src={bgImage}
+        draggable={false}
         alt=""
         className="w-full h-full rounded-[10px] object-cover"
       />

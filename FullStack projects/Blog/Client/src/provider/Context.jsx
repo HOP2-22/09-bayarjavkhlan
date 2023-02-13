@@ -19,6 +19,7 @@ const Provider = ({ children }) => {
 
   useEffect(() => {
     setpath(location.pathname);
+    handleToTop();
   }, [location]);
 
   return (

@@ -1,29 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { AiOutlineCheck, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { Context } from "../../provider/Context";
 
-const ForgetPasswordForm = () => {
+const LoginForm = ({ email, password, setEmail, setPassword }) => {
+  const { setVerify, handleToTop } = useContext(Context);
+
   const [check, setCheck] = useState(false);
 
   const [passwordType, setPasswordType] = useState(true);
 
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
   return (
-    <div className="flex flex-col gap-[30px] lg:gap-10 xl:gap-12 2xl:gap-16">
-      <div className="flex gap-[10px] flex-col ">
-        <label className="text-white lg:text-[18px] xl:text-[20px]">Name</label>
-        <div className="grid gap-5 grid-cols-2">
-          <input
-            type="text"
-            placeholder="firstname"
-            className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-3 xl:pl-6 2xl:pl-8 4xl:pl-10"
-          />
-          <input
-            type="text"
-            placeholder="lastname"
-            className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-3 xl:pl-6 2xl:pl-8 4xl:pl-10"
-          />
-        </div>
-      </div>
+    <form className="flex flex-col gap-[30px] lg:gap-10 xl:gap-12 2xl:gap-16">
       <div className="flex gap-[10px] flex-col ">
         <label className="text-white lg:text-[18px] xl:text-[20px]">
           Email
@@ -32,19 +29,29 @@ const ForgetPasswordForm = () => {
           type="text"
           placeholder="Example00@exampleMail.com"
           className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
+          onChange={handleEmail}
+          value={email}
         />
       </div>
       <div className="flex flex-col gap-[10px]">
-        <label className="text-white lg:text-[18px] xl:text-[20px]">
-          password
+        <label className="w-full flex items-center justify-between">
+          <p className="text-white lg:text-[18px] xl:text-[20px]">password</p>
+          <Link
+            to={"/register/forgetpassword"}
+            className="lg:text-[18px] xl:text-[20px] text-[#FC728B] hover:text-[#df4863] transition-colors cursor-pointer"
+          >
+            Forget Password
+          </Link>
         </label>
         <div className="relative">
           <input
             type={passwordType ? "password" : "text"}
             placeholder="••••••••••••••••••••••"
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
+            onChange={handlePassword}
+            value={password}
           />
-          <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center right-0 top-1">
+          <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center right-0 top-2">
             <AiFillEye
               className={`${
                 passwordType ? "block" : "hidden"
@@ -75,15 +82,19 @@ const ForgetPasswordForm = () => {
         >
           <AiOutlineCheck className="text-[#33394F]" />
         </div>
-        <p className="text-white font-semibold">
-          Agree with terms and conditions
-        </p>
+        <p className="text-white font-semibold">Remember me</p>
       </div>
-      <button className="w-full lg:text-[18px] xl:text-[20px] text-center py-4 rounded-[10px] bg-[#FC728B] hover:bg-[#df4863] transition-colors cursor-pointer ">
-        Register
-      </button>
-    </div>
+      <div
+        className="w-full lg:text-[18px] xl:text-[20px] text-center py-4 rounded-[10px] bg-[#FC728B] hover:bg-[#df4863] transition-colors cursor-pointer "
+        onClick={() => {
+          setVerify(true);
+          handleToTop();
+        }}
+      >
+        Login
+      </div>
+    </form>
   );
 };
 
-export default ForgetPasswordForm;
+export default LoginForm;

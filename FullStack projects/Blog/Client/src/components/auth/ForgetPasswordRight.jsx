@@ -17,10 +17,12 @@ const ForgetPasswordRight = () => {
         <p className="w-full text-center pt-12 text-white/60">
           Have an account?
           <span className="pl-3 lg:pl-5 text-[#FC728B] hover:text-[#df4863] transition-colors cursor-pointer">
-            <Link to={"/register/login"}>Login!</Link>
+            <Link to={"/register/login"} className="cursor-pointer">
+              Login!
+            </Link>
           </span>
         </p>
-        <div className="absolute w-full h-full bg-red-400/50"></div>
+        <div className="absolute w-full h-full "></div>
       </div>
     </div>
   );

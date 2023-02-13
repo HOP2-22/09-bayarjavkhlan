@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 
 import { AiOutlineCheck, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { Context } from "../../provider/Context";
 
 const LoginForm = ({ email, password, setEmail, setPassword }) => {
@@ -35,9 +36,12 @@ const LoginForm = ({ email, password, setEmail, setPassword }) => {
       <div className="flex flex-col gap-[10px]">
         <label className="w-full flex items-center justify-between">
           <p className="text-white lg:text-[18px] xl:text-[20px]">password</p>
-          <p className="lg:text-[18px] xl:text-[20px] text-[#FC728B] hover:text-[#df4863] transition-colors cursor-pointer">
+          <Link
+            to={"/register/forgetpassword"}
+            className="lg:text-[18px] xl:text-[20px] text-[#FC728B] hover:text-[#df4863] transition-colors cursor-pointer"
+          >
             Forget Password
-          </p>
+          </Link>
         </label>
         <div className="relative">
           <input
