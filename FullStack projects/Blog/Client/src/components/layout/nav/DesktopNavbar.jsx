@@ -14,7 +14,7 @@ const DesktopNavbar = ({ path, offset, hamburger, setHamburger }) => {
           : offset >= 100 || hamburger === true
           ? "bg-white"
           : "bg-transparent"
-      } transition-colors duration-400`}
+      }`}
     >
       <div className="w-full flex items-center justify-between px-5 md:px-8 lg:px-20 xl:px-32 4xl:px-48 5xl:px-72 7xl:px-88">
         <Link
