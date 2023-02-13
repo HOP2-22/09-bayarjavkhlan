@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import SignupForm from "./SignupForm";
 import Verify from "./Verify";
+import { Context } from "../../provider/Context";
 
 const SignupRight = () => {
-  const [verify, setVerify] = useState(false);
-  const [verifyValue, setVerifyValue] = useState("");
+  const { verify } = useContext(Context);
 
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
@@ -14,8 +14,12 @@ const SignupRight = () => {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="relative w-full flex justify-center">
-      <div className="relative w-full py-16 flex flex-col justify-center px-10 md:px-0 md:w-5/6 lg:w-4/5 xl:w-3/4 2xl:w-2/3 3xl:w-[63%] 4xl:w-[59%] 5xl:w-[55%]">
+    <div className="w-full flex justify-center">
+      <div
+        className={`${
+          verify ? "hidden" : "flex"
+        } w-full py-16  flex-col justify-center px-10 md:px-0 md:w-5/6 lg:w-4/5 xl:w-3/4 2xl:w-2/3 3xl:w-[63%] 4xl:w-[59%] 5xl:w-[55%]`}
+      >
         <p className="text-Black text-[32px] lg:text-[36px] xl:text-[40px] font-semibold text-white/90 leading-[38px] pb-[10px] lg:pb-6">
           Register
         </p>
@@ -23,7 +27,6 @@ const SignupRight = () => {
           Enter your user details below.
         </p>
         <SignupForm
-          setVerify={setVerify}
           first={first}
           setFirst={setFirst}
           last={last}
@@ -40,12 +43,7 @@ const SignupRight = () => {
           </span>
         </p>
       </div>
-      <Verify
-        setVerifyValue={setVerifyValue}
-        verifyValue={verifyValue}
-        verify={verify}
-        email={email}
-      />
+      <Verify email={email} />
     </div>
   );
 };

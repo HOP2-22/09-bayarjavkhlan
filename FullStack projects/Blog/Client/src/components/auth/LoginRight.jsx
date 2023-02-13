@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { FcGoogle } from "react-icons/fc";
 import LoginForm from "./LoginForm";
+import Verify from "./Verify";
+import { Context } from "../../provider/Context";
 
 const LoginRight = () => {
+  const { verify } = useContext(Context);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full py-16 flex flex-col justify-center px-10 md:px-0 md:w-5/6 lg:w-4/5 xl:w-3/4 2xl:w-2/3 3xl:w-[63%] 4xl:w-[59%] 5xl:w-[55%]">
+      <div
+        className={`${
+          verify ? "hidden" : "flex"
+        } w-full py-16 flex-col justify-center px-10 md:px-0 md:w-5/6 lg:w-4/5 xl:w-3/4 2xl:w-2/3 3xl:w-[63%] 4xl:w-[59%] 5xl:w-[55%]`}
+      >
         <div className="flex flex-col gap-[30px]">
           <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-[#f7f5f5]/[95%] shadow text-[#363A47] font-serif text-[22px]">
             A
@@ -45,6 +53,7 @@ const LoginRight = () => {
           </span>
         </p>
       </div>
+      <Verify email={email} />
     </div>
   );
 };

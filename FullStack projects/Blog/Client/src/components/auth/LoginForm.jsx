@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+
 import { AiOutlineCheck, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { Context } from "../../provider/Context";
 
 const LoginForm = ({ email, password, setEmail, setPassword }) => {
+  const { setVerify, handleToTop } = useContext(Context);
+
   const [check, setCheck] = useState(false);
 
   const [passwordType, setPasswordType] = useState(true);
@@ -43,7 +47,7 @@ const LoginForm = ({ email, password, setEmail, setPassword }) => {
             onChange={handlePassword}
             value={password}
           />
-          <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center right-0 top-1">
+          <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center right-0 top-2">
             <AiFillEye
               className={`${
                 passwordType ? "block" : "hidden"
@@ -76,9 +80,15 @@ const LoginForm = ({ email, password, setEmail, setPassword }) => {
         </div>
         <p className="text-white font-semibold">Remember me</p>
       </div>
-      <button className="w-full lg:text-[18px] xl:text-[20px] text-center py-4 rounded-[10px] bg-[#FC728B] hover:bg-[#df4863] transition-colors cursor-pointer ">
+      <div
+        className="w-full lg:text-[18px] xl:text-[20px] text-center py-4 rounded-[10px] bg-[#FC728B] hover:bg-[#df4863] transition-colors cursor-pointer "
+        onClick={() => {
+          setVerify(true);
+          handleToTop();
+        }}
+      >
         Login
-      </button>
+      </div>
     </form>
   );
 };

@@ -10,6 +10,13 @@ const Provider = ({ children }) => {
   const location = useLocation();
   const [path, setpath] = useState(window.location.pathname);
 
+  const [verify, setVerify] = useState(false);
+  const [verifyValue, setVerifyValue] = useState("");
+
+  const handleToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   useEffect(() => {
     setpath(location.pathname);
   }, [location]);
@@ -20,6 +27,11 @@ const Provider = ({ children }) => {
         path,
         loading,
         SetLoading,
+        verify,
+        setVerify,
+        verifyValue,
+        setVerifyValue,
+        handleToTop,
       }}
     >
       {children}

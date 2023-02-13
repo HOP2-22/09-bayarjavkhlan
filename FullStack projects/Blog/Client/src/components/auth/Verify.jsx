@@ -1,6 +1,12 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 
-const Verify = ({ verifyValue, setVerifyValue, verify, email }) => {
+import { IoIosArrowBack } from "react-icons/io";
+import { Context } from "../../provider/Context";
+
+const Verify = ({ email }) => {
+  const { verify, setVerify, verifyValue, setVerifyValue } =
+    useContext(Context);
+
   const inputRef = useRef();
 
   const handleChange = (event) => {
@@ -15,11 +21,21 @@ const Verify = ({ verifyValue, setVerifyValue, verify, email }) => {
     <>
       <div
         className={`${
-          verify ? "z-10" : "-z-10"
-        } absolute h-full w-full flex flex-col items-center justify-center bg-[#202433]`}
+          verify ? "flex" : "hidden"
+        } h-full w-full flex-col items-center justify-center bg-[#202433]`}
       >
         <div className="w-4/5 xs:w-3/4 sm:w-3/5 md:w-4/5 lg:w-[400px] flex flex-col items-center gap-2">
-          <div className="flex flex-col gap-4 py-10 items-center">
+          <div className="w-full pt-10 pb-5">
+            <div
+              className="w-8 h-8 rounded-full border-2 border-white text-white text-[20px] font-bold flex items-center justify-center leading-3"
+              onClick={() => {
+                setVerify(false);
+              }}
+            >
+              <IoIosArrowBack className="text-[20px] -translate-x-[1px] font-bold" />
+            </div>
+          </div>
+          <div className="flex flex-col gap-4 pb-10 items-center">
             <p className="text-[30px] font-bold text-center text-white/80">
               Verify your email address
             </p>
