@@ -1,8 +1,8 @@
 import React from "react";
 
-const ServiceItem = ({ item, index }) => {
+const ServiceItem = ({ item }) => {
   return (
-    <div key={index} className="w-full flex flex-col gap-5 items-center">
+    <div className="w-full flex flex-col gap-5 items-center">
       <div className="w-16 h-16 rounded-full flex items-center justify-center bg-[#5FC3CA]">
         {item.icon}
       </div>

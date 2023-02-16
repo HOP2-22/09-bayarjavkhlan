@@ -1,49 +1,34 @@
-//Хуудаслалт
-const paginate = require("../utils/paginate");
-
+const asyncHandler = require("../middleWare/asyncHandler");
 const Contact = require("../models/contact");
 
-exports.ExampleCode = async (req, res, next) => {
-  const Example = {};
-  try {
-    const example = await Example.find({});
+exports.getContacts = asyncHandler(async (req, res, next) => {
+  const contacts = await Contact.find({});
 
-    res.status(200).json({
-      success: true,
-      data: example,
-      message: "жишээ api function иймэрхүү маягаар code oo бичнэ",
-    });
-  } catch (error) {
-    //Хэрэв алдаа гарвал error middle ware ажилна
-    //Хаана байгаа ../middleware/error.js
-    next(error);
-  }
-};
+  res.status(200).json({
+    success: true,
+    data: contacts,
+    message: "Get all contacts",
+  });
+});
 
-exports.getContacts = async (req, res, next) => {
-  try {
-    const contacts = await Contact.find({});
+exports.createContact = asyncHandler(async (req, res, next) => {
+  const contact = await Contact.create(req.body);
 
-    res.status(200).json({
-      success: true,
-      data: contacts,
-      message: "амжилттай холбогдох хаягуудийн мэдээлэлийг авлаа",
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  res.status(200).json({
+    success: true,
+    data: contact,
+    message: "Send your contact",
+  });
+});
 
-exports.createContact = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
+exports.deleteContact = asyncHandler(async (req, res, next) => {
+  const { id } = req.body;
 
-exports.deleteContact = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
+  const contact = await Contact.findByIdAndDelete(id);
+
+  res.status(200).json({
+    success: true,
+    data: contact,
+    message: "Contact deleted",
+  });
+});

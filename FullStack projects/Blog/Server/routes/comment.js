@@ -1,19 +1,10 @@
 const express = require("express");
 
 const {
-  //bvh commentiig avdag
   getComments,
-
-  //post bolgonii commentiig avdag
   getCommentsByPost,
-
-  //comment bichdeg
   createComment,
-
-  //commentoo update hiideg
   updateComment,
-
-  //commentoo ustagdag
   deleteComment,
 } = require("../controller/comment");
 

@@ -7,6 +7,7 @@ const Comment = require("./models/comment");
 const Contact = require("./models/contact");
 const Post = require("./models/post");
 const User = require("./models/user");
+const Subscribe = require("./models/subscribe");
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -15,23 +16,27 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 
-const comment = JSON.parse(
-  fs.readFileSync(__dirname + "/data/comment.json", "utf-8")
-);
-const contact = JSON.parse(
-  fs.readFileSync(__dirname + "/data/contact.json", "utf-8")
-);
-const post = JSON.parse(
-  fs.readFileSync(__dirname + "/data/post.json", "utf-8")
-);
-const user = JSON.parse(
-  fs.readFileSync(__dirname + "/data/user.json", "utf-8")
-);
+// const comment = JSON.parse(
+//   fs.readFileSync(__dirname + "/data/comment.json", "utf-8")
+// );
+// const contact = JSON.parse(
+//   fs.readFileSync(__dirname + "/data/contact.json", "utf-8")
+// );
+// const subscribe = JSON.parse(
+//   fs.readFileSync(__dirname + "/data/subscribe.json", "utf-8")
+// );
+// const post = JSON.parse(
+//   fs.readFileSync(__dirname + "/data/post.json", "utf-8")
+// );
+// const user = JSON.parse(
+//   fs.readFileSync(__dirname + "/data/user.json", "utf-8")
+// );
 
 const importData = async () => {
   try {
     await Comment.create(comment);
     await Contact.create(contact);
+    await Subscribe.create(subscribe);
     await Post.create(post);
     await User.create(user);
     console.log("ogogdliig importloloo".green.inverse);
@@ -44,6 +49,7 @@ const deleteData = async () => {
   try {
     await Comment.deleteMany();
     await Contact.deleteMany();
+    await Subscribe.deleteMany();
     await Post.deleteMany();
     await User.deleteMany();
     console.log("ogogdliig bvgdiig ustaglaa".green.inverse);

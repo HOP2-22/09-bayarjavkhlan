@@ -1,13 +1,8 @@
 const express = require("express");
 
 const {
-  //bvh contact avdag
   getContacts,
-
-  //contact bichdeg
   createContact,
-
-  //contactiig ustagdag
   deleteContact,
 } = require("../controller/contact");
 

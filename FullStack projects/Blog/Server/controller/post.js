@@ -1,77 +1,32 @@
-//Хуудаслалт
 const paginate = require("../utils/paginate");
-
+const asyncHandler = require("../middleWare/asyncHandler");
+const MyError = require("../utils/myError");
 const Post = require("../models/post");
 
-exports.ExampleCode = async (req, res, next) => {
-  const Example = {};
-  try {
-    const example = await Example.find({});
+exports.getPosts = asyncHandler(async (req, res, next) => {
+  const posts = await Post.find({});
 
-    res.status(200).json({
-      success: true,
-      data: example,
-      message: "жишээ api function иймэрхүү маягаар code oo бичнэ",
-    });
-  } catch (error) {
-    //Хэрэв алдаа гарвал error middle ware ажилна
-    //Хаана байгаа ../middleware/error.js
-    next(error);
-  }
-};
+  res.status(200).json({
+    success: true,
+    data: posts,
+    message: "Get all posts",
+  });
+});
 
-exports.getPosts = async (req, res, next) => {
-  try {
-    const posts = await Post.find({});
+exports.getPost = asyncHandler(async (req, res, next) => {
+  const post = await Post.find({});
 
-    res.status(200).json({
-      success: true,
-      data: posts,
-      message: "амжилттай постуудийн мэдээлэлийг авлаа",
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  res.status(200).json({
+    success: true,
+    data: post,
+    message: "Get post information",
+  });
+});
 
-exports.getPost = async (req, res, next) => {
-  try {
-    const post = await Post.find({});
+exports.getPostsByUser = asyncHandler(async (req, res, next) => {});
 
-    res.status(200).json({
-      success: true,
-      data: post,
-      message: "амжилттай постийн мэдээлэлийг авлаа",
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+exports.createPost = asyncHandler(async (req, res, next) => {});
 
-exports.getPostsByUser = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
+exports.updatePost = asyncHandler(async (req, res, next) => {});
 
-exports.createPost = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.updatePost = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.deletePost = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
+exports.deletePost = asyncHandler(async (req, res, next) => {});

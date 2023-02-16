@@ -1,63 +1,22 @@
-//Хуудаслалт
 const paginate = require("../utils/paginate");
-
+const asyncHandler = require("../middleWare/asyncHandler");
+const MyError = require("../utils/myError");
 const Comment = require("../models/comment");
 
-exports.ExampleCode = async (req, res, next) => {
-  const Example = {};
-  try {
-    const example = await Example.find({});
+exports.getComments = asyncHandler(async (req, res, next) => {
+  const comments = await Comment.find({});
 
-    res.status(200).json({
-      success: true,
-      data: example,
-      message: "жишээ api function иймэрхүү маягаар code oo бичнэ",
-    });
-  } catch (error) {
-    //Хэрэв алдаа гарвал error middle ware ажилна
-    //Хаана байгаа ../middleware/error.js
-    next(error);
-  }
-};
+  res.status(200).json({
+    success: true,
+    data: comments,
+    message: "Get all comments",
+  });
+});
 
-exports.getComments = async (req, res, next) => {
-  try {
-    const comments = await Comment.find({});
+exports.getCommentsByPost = asyncHandler(async (req, res, next) => {});
 
-    res.status(200).json({
-      success: true,
-      data: comments,
-      message: "амжилттай комэнтүүдийн мэдээлэлийг авлаа",
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+exports.createComment = asyncHandler(async (req, res, next) => {});
 
-exports.getCommentsByPost = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
+exports.updateComment = asyncHandler(async (req, res, next) => {});
 
-exports.createComment = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.updateComment = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.deleteComment = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
+exports.deleteComment = asyncHandler(async (req, res, next) => {});

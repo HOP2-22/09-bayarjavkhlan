@@ -17,8 +17,12 @@ const Provider = ({ children }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const [resetToken, setResetToken] = useState("");
+
   useEffect(() => {
+    handleToTop();
     setpath(location.pathname);
+    setVerify(false);
   }, [location]);
 
   return (
@@ -32,6 +36,10 @@ const Provider = ({ children }) => {
         verifyValue,
         setVerifyValue,
         handleToTop,
+
+        //TOKEN
+        resetToken,
+        setResetToken,
       }}
     >
       {children}

@@ -3,11 +3,17 @@ import React, { useContext, useRef } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { Context } from "../../provider/Context";
 
-const Verify = ({ email }) => {
+const Verify = ({ email, register, handleEmpty }) => {
   const { verify, setVerify, verifyValue, setVerifyValue } =
     useContext(Context);
 
   const inputRef = useRef();
+
+  const handleBack = () => {
+    handleEmpty();
+    setVerifyValue("");
+    setVerify(false);
+  };
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -27,10 +33,8 @@ const Verify = ({ email }) => {
         <div className="w-4/5 xs:w-3/4 sm:w-3/5 md:w-4/5 lg:w-[400px] flex flex-col items-center gap-2">
           <div className="w-full pt-10 pb-5">
             <div
-              className="w-8 h-8 rounded-full border-2 border-white text-white text-[20px] font-bold flex items-center justify-center leading-3"
-              onClick={() => {
-                setVerify(false);
-              }}
+              className="w-8 h-8 rounded-full border-2 border-white hover:bg-white hover:text-[#202433] text-white transition-colors cursor-pointer text-[20px] font-bold flex items-center justify-center leading-3"
+              onClick={handleBack}
             >
               <IoIosArrowBack className="text-[20px] -translate-x-[1px] font-bold" />
             </div>
@@ -51,17 +55,23 @@ const Verify = ({ email }) => {
             }}
           >
             {new Array(5).fill(0).map((_, index) => (
-              <div className="flex w-14 h-20 border-b-4 bg-[#171d31] rounded-[5px] justify-center items-center text-5xl text-gray-100/80">
+              <div
+                className="flex w-14 h-20 border-b-4 bg-[#171d31] rounded-[5px] justify-center items-center text-5xl text-gray-100/80"
+                key={index}
+              >
                 {verifyValue[index]}
               </div>
             ))}
           </div>
           <div className="w-full grid grid-cols-3 items-start my-6">
-            <div className="col-span-1 w-full text-start text-white">
+            <div className="col-span-1 w-full text-start text-white cursor-pointer hover:text-gray-200 transition">
               Re-send
             </div>
             <div className="col-span-1 w-full flex justify-center">
-              <div className="text-center px-6 py-2 rounded-[10px] bg-[#FC728B] hover:bg-[#df4863] transition-colors cursor-pointer">
+              <div
+                className="text-center px-6 py-2 rounded-[10px] bg-[#FC728B] hover:bg-[#df4863] transition-colors cursor-pointer"
+                onClick={register}
+              >
                 Verify
               </div>
             </div>

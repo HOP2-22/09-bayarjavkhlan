@@ -15,13 +15,9 @@ const Layout = ({ children }) => {
             : ""
         }`}
       >
-        <div className="flex flex-col">
-          <Navbar />
-          <main>{children}</main>
-        </div>
-        <footer>
-          <Footer />
-        </footer>
+        <Navbar />
+        {children}
+        <Footer />
       </div>
     </>
   );
