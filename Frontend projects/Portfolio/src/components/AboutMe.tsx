@@ -18,7 +18,7 @@ const AboutMe = () => {
           !theme ? "bg-[#f6f0e8] " : "bg-[#313134] "
         } `}
       >
-        <p className=" py-[10px]">
+        <p className="text-center py-[10px]">
           Hello, I'm study at software engineer in Mongolia
         </p>
       </div>

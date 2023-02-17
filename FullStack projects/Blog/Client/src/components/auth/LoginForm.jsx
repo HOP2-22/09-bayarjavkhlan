@@ -1,15 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 
 import { AiOutlineCheck, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
 import { Context } from "../../provider/Context";
 
 const LoginForm = ({ email, password, setEmail, setPassword }) => {
   const { setVerify, handleToTop } = useContext(Context);
+=======
+>>>>>>> 3b846f953743c0d98c5fd2eaed6306e08c61532d
 
+const LoginForm = ({ email, password, setEmail, setPassword, login }) => {
   const [check, setCheck] = useState(false);
-
   const [passwordType, setPasswordType] = useState(true);
+
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   const handleEmail = (event) => {
     setEmail(event.target.value);
@@ -17,6 +24,22 @@ const LoginForm = ({ email, password, setEmail, setPassword }) => {
 
   const handlePassword = (event) => {
     setPassword(event.target.value);
+  };
+
+  const handleLogin = () => {
+    if (email.length === 0) {
+      emailRef.current.focus();
+    } else if (password.length === 0) {
+      passwordRef.current.focus();
+    } else {
+      login();
+    }
+  };
+
+  const handleOnKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleLogin();
+    }
   };
 
   return (
@@ -30,7 +53,9 @@ const LoginForm = ({ email, password, setEmail, setPassword }) => {
           placeholder="Example00@exampleMail.com"
           className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
           onChange={handleEmail}
+          ref={emailRef}
           value={email}
+          onKeyDown={handleOnKeyDown}
         />
       </div>
       <div className="flex flex-col gap-[10px]">
@@ -49,9 +74,11 @@ const LoginForm = ({ email, password, setEmail, setPassword }) => {
             placeholder="••••••••••••••••••••••"
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
             onChange={handlePassword}
+            ref={passwordRef}
             value={password}
+            onKeyDown={handleOnKeyDown}
           />
-          <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center right-0 top-2">
+          <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center cursor-pointer right-0 top-2">
             <AiFillEye
               className={`${
                 passwordType ? "block" : "hidden"
@@ -85,11 +112,8 @@ const LoginForm = ({ email, password, setEmail, setPassword }) => {
         <p className="text-white font-semibold">Remember me</p>
       </div>
       <div
+        onClick={handleLogin}
         className="w-full lg:text-[18px] xl:text-[20px] text-center py-4 rounded-[10px] bg-[#FC728B] hover:bg-[#df4863] transition-colors cursor-pointer "
-        onClick={() => {
-          setVerify(true);
-          handleToTop();
-        }}
       >
         Login
       </div>

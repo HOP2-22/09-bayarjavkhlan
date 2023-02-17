@@ -1,14 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { AiOutlineCheck, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Context } from "../../provider/Context";
 
 const SignupForm = (props) => {
-  const { setVerify, handleToTop } = useContext(Context);
-
   const [check, setCheck] = useState(false);
 
   const [passwordType, setPasswordType] = useState(true);
+
+  const firstRef = useRef();
+  const lastRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   const handleFirst = (event) => {
     props.setFirst(event.target.value);
@@ -26,6 +28,24 @@ const SignupForm = (props) => {
     props.setPassword(event.target.value);
   };
 
+  const handleOnKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleRegister();
+    }
+  };
+
+  const handleRegister = () => {
+    props.first.length === 0
+      ? firstRef.current.focus()
+      : props.last.length === 0
+      ? lastRef.current.focus()
+      : props.email.length === 0
+      ? emailRef.current.focus()
+      : props.password.length === 0
+      ? passwordRef.current.focus()
+      : props.sendVerifyCode();
+  };
+
   return (
     <div className="flex flex-col gap-[30px] lg:gap-10 xl:gap-12 2xl:gap-16">
       <div className="flex gap-[10px] flex-col ">
@@ -37,6 +57,7 @@ const SignupForm = (props) => {
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-3 xl:pl-6 2xl:pl-8 4xl:pl-10"
             onChange={handleFirst}
             value={props.first}
+            onKeyDown={handleOnKeyDown}
           />
           <input
             type="text"
@@ -44,6 +65,7 @@ const SignupForm = (props) => {
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-3 xl:pl-6 2xl:pl-8 4xl:pl-10"
             onChange={handleLast}
             value={props.last}
+            onKeyDown={handleOnKeyDown}
           />
         </div>
       </div>
@@ -57,6 +79,7 @@ const SignupForm = (props) => {
           className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
           onChange={handleEmail}
           value={props.email}
+          onKeyDown={handleOnKeyDown}
         />
       </div>
       <div className="flex flex-col gap-[10px]">
@@ -70,8 +93,9 @@ const SignupForm = (props) => {
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
             onChange={handlePassword}
             value={props.password}
+            onKeyDown={handleOnKeyDown}
           />
-          <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center right-0 top-2">
+          <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center cursor-pointer right-0 top-2">
             <AiFillEye
               className={`${
                 passwordType ? "block" : "hidden"
@@ -108,10 +132,7 @@ const SignupForm = (props) => {
       </div>
       <div
         className="w-full lg:text-[18px] xl:text-[20px] text-center py-4 rounded-[10px] bg-[#FC728B] hover:bg-[#df4863] transition-colors cursor-pointer"
-        onClick={() => {
-          setVerify(true);
-          handleToTop();
-        }}
+        onClick={handleRegister}
       >
         Register
       </div>

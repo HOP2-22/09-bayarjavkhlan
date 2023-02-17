@@ -1,17 +1,65 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import SignupForm from "./SignupForm";
 import Verify from "./Verify";
 import { Context } from "../../provider/Context";
 
 const SignupRight = () => {
-  const { verify } = useContext(Context);
+  const navigate = useNavigate();
+
+  const { setVerify, handleToTop, verify } = useContext(Context);
 
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const sendVerifyCode = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/user/auth/verify",
+        {
+          email,
+        }
+      );
+
+      setVerify(true);
+      handleToTop();
+
+      alert(response.data.message);
+    } catch (error) {
+      alert(error.response.data.error.message);
+    }
+  };
+
+  const register = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/user/auth/signup",
+        {
+          firstName: first,
+          lastName: last,
+          email,
+          password,
+        }
+      );
+
+      alert(response.data.message);
+
+      navigate("/register/login");
+    } catch (error) {
+      alert(error.response.data.error.message);
+    }
+  };
+
+  const handleEmpty = () => {
+    setFirst("");
+    setLast("");
+    setEmail("");
+    setPassword("");
+  };
 
   return (
     <div className="w-full flex justify-center">
@@ -35,6 +83,7 @@ const SignupRight = () => {
           setEmail={setEmail}
           password={password}
           setPassword={setPassword}
+          sendVerifyCode={sendVerifyCode}
         />
         <p className="w-full text-center pt-12 text-white/60">
           Have an account?
@@ -43,7 +92,7 @@ const SignupRight = () => {
           </span>
         </p>
       </div>
-      <Verify email={email} />
+      <Verify register={register} handleEmpty={handleEmpty} email={email} />
     </div>
   );
 };

@@ -17,7 +17,7 @@ const Service = () => {
       </div>
       <div className="grid gap-y-10 sm:gap-y-[70px] md::gap-y-28 gap-x-10 md:gap-x-20 lg:gap-x-14 sm:grid-cols-2 lg:grid-cols-3">
         {serviceItems.map((item, index) => {
-          return <ServiceItem index={index} item={item} />;
+          return <ServiceItem key={index} item={item} />;
         })}
       </div>
       <Link to={"/products"} className="w-full flex justify-center py-10">

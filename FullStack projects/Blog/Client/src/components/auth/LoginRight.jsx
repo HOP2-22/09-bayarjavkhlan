@@ -1,16 +1,36 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import { FcGoogle } from "react-icons/fc";
 import LoginForm from "./LoginForm";
-import Verify from "./Verify";
 import { Context } from "../../provider/Context";
 
 const LoginRight = () => {
-  const { verify } = useContext(Context);
+  const navigate = useNavigate();
+
+  const { verify, handleToTop } = useContext(Context);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const login = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/user/auth/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      handleToTop();
+      navigate("/products");
+      alert(response.data.message);
+    } catch (error) {
+      alert(error.response.data.error.message);
+    }
+  };
 
   return (
     <div className="w-full flex justify-center">
@@ -45,6 +65,7 @@ const LoginRight = () => {
           password={password}
           setEmail={setEmail}
           setPassword={setPassword}
+          login={login}
         />
         <p className="w-full text-center pt-12 text-white/60">
           Don’t have an account?
@@ -53,7 +74,6 @@ const LoginRight = () => {
           </span>
         </p>
       </div>
-      <Verify email={email} />
     </div>
   );
 };
