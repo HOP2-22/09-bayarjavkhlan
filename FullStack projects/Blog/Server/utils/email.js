@@ -47,7 +47,7 @@ const sendEmail = async (options) => {
           To: [
             {
               Email: options.id,
-              // Name: options.id.split("@")[0],
+              Name: options.id.split("@")[0],
               Name: "Bayrjavkhlan",
             },
           ],

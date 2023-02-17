@@ -29,7 +29,7 @@ const LoginForm = ({ email, password, setEmail, setPassword, login }) => {
   };
 
   const handleOnKeyDown = (event) => {
-    if (event.keyCode === "Enter") {
+    if (event.key === "Enter") {
       handleLogin();
     }
   };

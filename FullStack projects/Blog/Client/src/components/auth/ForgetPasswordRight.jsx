@@ -29,6 +29,12 @@ const ForgetPasswordRight = () => {
     }
   };
 
+  const handleOnKeyDown = (event) => {
+    if (event.key === "Enter") {
+      sentEmail();
+    }
+  };
+
   return (
     <div className="w-full h-2/3 flex justify-center items-center">
       <div className="w-full py-16  flex-col justify-center px-10 md:px-0 md:w-5/6 lg:w-4/5 xl:w-3/4 2xl:w-2/3 3xl:w-[63%] 4xl:w-[59%] 5xl:w-[55%]">
@@ -48,6 +54,7 @@ const ForgetPasswordRight = () => {
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
             onChange={handleEmail}
             value={emailValue}
+            onKeyDown={handleOnKeyDown}
           />
         </div>
         <div className="w-full flex justify-center">

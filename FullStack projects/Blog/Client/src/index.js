@@ -11,6 +11,7 @@ import Service from "./pages/Service";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import ForgetPassword from "./pages/auth/Forgetpassword";
+import ChangePassword from "./pages/auth/ChangePassword";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -26,6 +27,10 @@ root.render(
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
               <Route path="forgetpassword" element={<ForgetPassword />} />
+              <Route
+                path="/changepassword/:resetToken"
+                element={<ChangePassword />}
+              />
             </Route>
             <Route path="products">
               {/* <Route path="" element={<Products />} /> */}

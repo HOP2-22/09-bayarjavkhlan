@@ -50,7 +50,6 @@ const SignupRight = () => {
 
       navigate("/register/login");
     } catch (error) {
-      console.log(error);
       alert(error.response.data.error.message);
     }
   };
