@@ -31,7 +31,11 @@ const ForgetPasswordRight = () => {
 
   const handleOnKeyDown = (event) => {
     if (event.key === "Enter") {
-      sentEmail();
+      if (emailValue.length === 0) {
+        emailRef.current.focus();
+      } else {
+        sentEmail();
+      }
     }
   };
 
@@ -54,6 +58,7 @@ const ForgetPasswordRight = () => {
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
             onChange={handleEmail}
             value={emailValue}
+            ref={emailRef}
             onKeyDown={handleOnKeyDown}
           />
         </div>
@@ -73,10 +78,6 @@ const ForgetPasswordRight = () => {
             </Link>
           </span>
         </p>
-<<<<<<< HEAD
-        <div className="absolute w-full h-full "></div>
-=======
->>>>>>> 3b846f953743c0d98c5fd2eaed6306e08c61532d
       </div>
     </div>
   );

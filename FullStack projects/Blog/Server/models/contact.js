@@ -8,13 +8,14 @@ const contactSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "Write your email address"],
+    unique: false,
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       "Your email is not email address",
     ],
   },
   text: {
-    type: String,
+    type: Array,
     required: [true, "Write description"],
     maxLength: [300, "Maximum length of description is 300"],
     minLength: [20, "Minimum length of description is 20"],

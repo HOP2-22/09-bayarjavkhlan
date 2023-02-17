@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 
 import { AiOutlineCheck, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
-const SignupForm = (props) => {
+const SignupForm = ({ info, setInfo, sendVerifyCode }) => {
   const [check, setCheck] = useState(false);
 
   const [passwordType, setPasswordType] = useState(true);
@@ -13,19 +13,19 @@ const SignupForm = (props) => {
   const passwordRef = useRef();
 
   const handleFirst = (event) => {
-    props.setFirst(event.target.value);
+    setInfo({ ...info, first: event.target.value });
   };
 
   const handleLast = (event) => {
-    props.setLast(event.target.value);
+    setInfo({ ...info, last: event.target.value });
   };
 
   const handleEmail = (event) => {
-    props.setEmail(event.target.value);
+    setInfo({ ...info, email: event.target.value });
   };
 
   const handlePassword = (event) => {
-    props.setPassword(event.target.value);
+    setInfo({ ...info, password: event.target.value });
   };
 
   const handleOnKeyDown = (event) => {
@@ -35,15 +35,15 @@ const SignupForm = (props) => {
   };
 
   const handleRegister = () => {
-    props.first.length === 0
+    info.first.length === 0
       ? firstRef.current.focus()
-      : props.last.length === 0
+      : info.last.length === 0
       ? lastRef.current.focus()
-      : props.email.length === 0
+      : info.email.length === 0
       ? emailRef.current.focus()
-      : props.password.length === 0
+      : info.password.length === 0
       ? passwordRef.current.focus()
-      : props.sendVerifyCode();
+      : sendVerifyCode();
   };
 
   return (
@@ -56,7 +56,8 @@ const SignupForm = (props) => {
             placeholder="firstname"
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-3 xl:pl-6 2xl:pl-8 4xl:pl-10"
             onChange={handleFirst}
-            value={props.first}
+            ref={firstRef}
+            value={info.first}
             onKeyDown={handleOnKeyDown}
           />
           <input
@@ -64,7 +65,8 @@ const SignupForm = (props) => {
             placeholder="lastname"
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-3 xl:pl-6 2xl:pl-8 4xl:pl-10"
             onChange={handleLast}
-            value={props.last}
+            ref={lastRef}
+            value={info.last}
             onKeyDown={handleOnKeyDown}
           />
         </div>
@@ -78,7 +80,8 @@ const SignupForm = (props) => {
           placeholder="Example00@exampleMail.com"
           className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
           onChange={handleEmail}
-          value={props.email}
+          ref={emailRef}
+          value={info.email}
           onKeyDown={handleOnKeyDown}
         />
       </div>
@@ -92,7 +95,8 @@ const SignupForm = (props) => {
             placeholder="••••••••••••••••••••••"
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
             onChange={handlePassword}
-            value={props.password}
+            value={info.password}
+            ref={passwordRef}
             onKeyDown={handleOnKeyDown}
           />
           <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center cursor-pointer right-0 top-2">

@@ -12,11 +12,19 @@ exports.getContacts = asyncHandler(async (req, res, next) => {
 });
 
 exports.createContact = asyncHandler(async (req, res, next) => {
-  const contact = await Contact.create(req.body);
+  const user = await Contact.findOne({ email: req.body.email });
+
+  if (user) {
+    user.text.push(req.body.text);
+    user.name = req.body.name;
+    user.save();
+  } else {
+    await Contact.create(req.body);
+  }
 
   res.status(200).json({
     success: true,
-    data: contact,
+    data: user,
     message: "Send your contact",
   });
 });

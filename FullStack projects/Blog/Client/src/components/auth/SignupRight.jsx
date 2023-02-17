@@ -11,20 +11,21 @@ const SignupRight = () => {
 
   const { setVerify, handleToTop, verify } = useContext(Context);
 
-  const [first, setFirst] = useState("");
-  const [last, setLast] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [info, setInfo] = useState({
+    first: "",
+    last: "",
+    email: "",
+    password: "",
+  });
 
   const sendVerifyCode = async () => {
     try {
       const response = await axios.post(
         "http://localhost:8000/user/auth/verify",
         {
-          email,
+          email: info.email,
         }
       );
-
       setVerify(true);
       handleToTop();
 
@@ -39,10 +40,10 @@ const SignupRight = () => {
       const response = await axios.post(
         "http://localhost:8000/user/auth/signup",
         {
-          firstName: first,
-          lastName: last,
-          email,
-          password,
+          firstName: info.first,
+          lastName: info.last,
+          email: info.email,
+          password: info.password,
         }
       );
 
@@ -55,10 +56,12 @@ const SignupRight = () => {
   };
 
   const handleEmpty = () => {
-    setFirst("");
-    setLast("");
-    setEmail("");
-    setPassword("");
+    setInfo({
+      first: "",
+      last: "",
+      email: "",
+      password: "",
+    });
   };
 
   return (
@@ -75,14 +78,8 @@ const SignupRight = () => {
           Enter your user details below.
         </p>
         <SignupForm
-          first={first}
-          setFirst={setFirst}
-          last={last}
-          setLast={setLast}
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
+          info={info}
+          setInfo={setInfo}
           sendVerifyCode={sendVerifyCode}
         />
         <p className="w-full text-center pt-12 text-white/60">
@@ -92,7 +89,11 @@ const SignupRight = () => {
           </span>
         </p>
       </div>
-      <Verify register={register} handleEmpty={handleEmpty} email={email} />
+      <Verify
+        register={register}
+        handleEmpty={handleEmpty}
+        email={info.email}
+      />
     </div>
   );
 };

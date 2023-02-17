@@ -2,16 +2,8 @@ import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { AiOutlineCheck, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-<<<<<<< HEAD
-import { Link } from "react-router-dom";
-import { Context } from "../../provider/Context";
 
-const LoginForm = ({ email, password, setEmail, setPassword }) => {
-  const { setVerify, handleToTop } = useContext(Context);
-=======
->>>>>>> 3b846f953743c0d98c5fd2eaed6306e08c61532d
-
-const LoginForm = ({ email, password, setEmail, setPassword, login }) => {
+const LoginForm = ({ info, setInfo, login }) => {
   const [check, setCheck] = useState(false);
   const [passwordType, setPasswordType] = useState(true);
 
@@ -19,17 +11,17 @@ const LoginForm = ({ email, password, setEmail, setPassword, login }) => {
   const passwordRef = useRef();
 
   const handleEmail = (event) => {
-    setEmail(event.target.value);
+    setInfo({ ...info, email: event.target.value });
   };
 
   const handlePassword = (event) => {
-    setPassword(event.target.value);
+    setInfo({ ...info, password: event.target.value });
   };
 
   const handleLogin = () => {
-    if (email.length === 0) {
+    if (info.email.length === 0) {
       emailRef.current.focus();
-    } else if (password.length === 0) {
+    } else if (info.password.length === 0) {
       passwordRef.current.focus();
     } else {
       login();
@@ -54,7 +46,7 @@ const LoginForm = ({ email, password, setEmail, setPassword, login }) => {
           className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
           onChange={handleEmail}
           ref={emailRef}
-          value={email}
+          value={info.email}
           onKeyDown={handleOnKeyDown}
         />
       </div>
@@ -75,7 +67,7 @@ const LoginForm = ({ email, password, setEmail, setPassword, login }) => {
             className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
             onChange={handlePassword}
             ref={passwordRef}
-            value={password}
+            value={info.password}
             onKeyDown={handleOnKeyDown}
           />
           <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center cursor-pointer right-0 top-2">

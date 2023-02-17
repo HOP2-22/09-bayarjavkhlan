@@ -9,20 +9,24 @@ import { Context } from "../../provider/Context";
 const LoginRight = () => {
   const navigate = useNavigate();
 
-  const { verify, handleToTop } = useContext(Context);
+  const { verify, handleToTop, setUser } = useContext(Context);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [info, setInfo] = useState({
+    email: "",
+    password: "",
+  });
 
   const login = async () => {
     try {
       const response = await axios.post(
         "http://localhost:8000/user/auth/login",
         {
-          email,
-          password,
+          email: info.email,
+          password: info.password,
         }
       );
+      console.log(response.data.data);
+      setUser(response.data.data);
 
       handleToTop();
       navigate("/products");
@@ -60,13 +64,7 @@ const LoginRight = () => {
           <p className="px-3 text-white">or</p>
           <div className="h-[2px] bg-[#33394F] rounded-xl grow"></div>
         </div>
-        <LoginForm
-          email={email}
-          password={password}
-          setEmail={setEmail}
-          setPassword={setPassword}
-          login={login}
-        />
+        <LoginForm info={info} setInfo={setInfo} login={login} />
         <p className="w-full text-center pt-12 text-white/60">
           Don’t have an account?
           <span className="pl-3 lg:pl-5 text-[#FC728B] hover:text-[#df4863] transition-colors cursor-pointer">

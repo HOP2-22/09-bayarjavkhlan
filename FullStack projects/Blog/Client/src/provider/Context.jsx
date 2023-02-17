@@ -8,6 +8,8 @@ const Provider = ({ children }) => {
   const [loading, SetLoading] = useState(false);
 
   const location = useLocation();
+  const [user, setUser] = useState(window.location.pathname);
+
   const [path, setpath] = useState(window.location.pathname);
 
   const [verify, setVerify] = useState(false);
@@ -22,11 +24,7 @@ const Provider = ({ children }) => {
   useEffect(() => {
     handleToTop();
     setpath(location.pathname);
-<<<<<<< HEAD
-    handleToTop();
-=======
     setVerify(false);
->>>>>>> 3b846f953743c0d98c5fd2eaed6306e08c61532d
   }, [location]);
 
   return (
@@ -40,6 +38,8 @@ const Provider = ({ children }) => {
         verifyValue,
         setVerifyValue,
         handleToTop,
+        user,
+        setUser,
 
         //TOKEN
         resetToken,

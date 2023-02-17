@@ -71,8 +71,6 @@ exports.verifyUser = asyncHandler(async (req, res, next) => {
     message: `verify code "${stringId}"`,
   });
 
-  console.log(stringId);
-
   res.status(200).json({
     success: true,
     data: {
@@ -113,6 +111,8 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   const token = user.getJWT();
 
+  user.password = "";
+
   res.status(200).json({
     success: true,
     data: { token, user },
@@ -125,8 +125,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     throw new MyError(`You must provide an email address`, 404);
   }
 
-  console.log(req.body);
-  const user = await User.findOne({ email: req.body.email });
+  const user = await User.findOne({ email: req.body.email }).exec();
 
   if (!user) {
     throw new MyError(`Any user found like that ${req.body.email} email`, 404);
@@ -144,8 +143,6 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     message: `click on it to change your password.<br><br><a href="${link}">${link}</a>`,
   });
 
-  console.log(resetToken);
-
   res.status(200).json({
     success: true,
     data: { resetToken },
@@ -155,7 +152,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
 exports.updatePass = asyncHandler(async (req, res, next) => {
   if (!req.body.resetToken || !req.body.password) {
-    throw new MyError(`Send teken and password`, 404);
+    throw new MyError(`You have to write token and password`, 404);
   }
 
   const encrypt = crypto
