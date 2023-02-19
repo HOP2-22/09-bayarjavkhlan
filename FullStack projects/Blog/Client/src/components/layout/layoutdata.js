@@ -105,8 +105,8 @@ export const line3 = {
 
 export const HeaderTitles = [
   {
-    name: "Products",
-    link: "/products",
+    name: "Blog",
+    link: "/blog",
   },
   {
     name: "Services",

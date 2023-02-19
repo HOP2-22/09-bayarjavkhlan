@@ -26,4 +26,9 @@ router.route("/auth/updatePassword").post(updatePass);
 router.route("/auth/verify").post(verifyUser);
 router.route("/auth/forgotPassword").post(forgotPassword);
 
+router.post("/upload", (req, res) => {
+  console.log(req.body);
+  res.send({ message: "photo uploaded", photo: req.body.profilePhoto });
+});
+
 module.exports = router;

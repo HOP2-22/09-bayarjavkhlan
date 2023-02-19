@@ -10,8 +10,9 @@ import Contact from "./pages/Contact";
 import Service from "./pages/Service";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
-import ForgetPassword from "./pages/auth/Forgetpassword";
+import ForgetPassword from "./pages/auth/ForgetPassword";
 import ChangePassword from "./pages/auth/ChangePassword";
+import Blog from "./pages/Blog";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -32,8 +33,8 @@ root.render(
               path="/register/changePassword/:resetToken"
               element={<ChangePassword />}
             />
-            <Route path="products">
-              {/* <Route path="" element={<Products />} /> */}
+            <Route path="blog">
+              <Route path="" element={<Blog />} />
               {/* <Route path=":id" element={<UserPosts />} /> */}
               {/* <Route path="post" element={<Post />} /> */}
             </Route>

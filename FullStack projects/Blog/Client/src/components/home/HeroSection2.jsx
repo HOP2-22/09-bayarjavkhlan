@@ -34,10 +34,7 @@ const HeroSection2 = ({ title, text, button }) => {
             {text}
           </div>
           <div className="w-[120px]">
-            <Link
-              to={"/products"}
-              className="w-[120px] flex group cursor-pointer"
-            >
+            <Link to={"/blog"} className="w-[120px] flex group cursor-pointer">
               <div className="text-[#4DA0FD]  text-[16px] font-semibold cursor-pointer group-hover:text-cyan-600">
                 {button}
               </div>

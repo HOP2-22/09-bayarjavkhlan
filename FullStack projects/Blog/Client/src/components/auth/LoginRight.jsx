@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../axios";
+import Cookie from "js-cookie";
 
 import { FcGoogle } from "react-icons/fc";
 import LoginForm from "./LoginForm";
@@ -18,18 +19,15 @@ const LoginRight = () => {
 
   const login = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/user/auth/login",
-        {
-          email: info.email,
-          password: info.password,
-        }
-      );
-      console.log(response.data.data);
-      setUser(response.data.data);
+      const response = await axios.post("/user/auth/login", {
+        email: info.email,
+        password: info.password,
+      });
+      setUser(response.data.data.user);
+      // Cookie.set("token", response.data.data.token);
 
       handleToTop();
-      navigate("/products");
+      navigate("/blog");
       alert(response.data.message);
     } catch (error) {
       alert(error.response.data.error.message);

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../axios";
 
 const ForgetPasswordRight = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const ForgetPasswordRight = () => {
 
   const sentEmail = async () => {
     try {
-      await axios.post("http://localhost:8000/user/auth/forgotPassword", {
+      await axios.post("/user/auth/forgotPassword", {
         email: emailValue,
       });
 

@@ -31,7 +31,21 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
 
 //User
 
-exports.getUser = asyncHandler(async (req, res, next) => {});
+exports.getUser = asyncHandler(async (req, res, next) => {
+  const token = req.headers.authorization;
+  console.log("haha");
+  if (!token) {
+    throw new MyError("invalid token");
+  }
+
+  const data = await jwt.decode(token, process.env.ACCESS_TOKEN_SECRET);
+
+  res.status(200).json({
+    success: true,
+    data: data,
+    message: "user data",
+  });
+});
 
 exports.updateUser = asyncHandler(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -83,9 +97,11 @@ exports.verifyUser = asyncHandler(async (req, res, next) => {
 exports.register = asyncHandler(async (req, res, next) => {
   const user = await User.create(req.body);
 
+  const token = user.getJWT();
+
   res.status(200).json({
     success: true,
-    data: user,
+    data: { token, user },
     message: "registered successfully",
   });
 });
@@ -145,7 +161,6 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: { resetToken },
     message: { message: "sent link to your email" },
   });
 });
@@ -174,11 +189,8 @@ exports.updatePass = asyncHandler(async (req, res, next) => {
   user.resetPasswordExpire = undefined;
   await user.save();
 
-  const token = user.getJWT();
-
   res.status(200).json({
     isDone: true,
-    token,
     user: user,
     message: "Password changed successfully",
   });

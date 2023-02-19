@@ -18,6 +18,9 @@
   .homeButton {
     @apply w-4 pb-5 stroke-[#4DA0FD] group-hover:text-cyan-600 group-hover:translate-x-2 transition-transform duration-200;
   }
+  .changePasswordElementFatherDiv {
+    @apply w-11/12 sm:w-1/2 lg:w-2/5 xl:w-[450px] flex flex-col gap-[10px];
+  }
 }
 
 body {

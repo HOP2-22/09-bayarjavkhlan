@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useState, createContext } from "react";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+import Cookie from "js-cookie";
 
 export const Context = createContext();
 
@@ -8,7 +10,7 @@ const Provider = ({ children }) => {
   const [loading, SetLoading] = useState(false);
 
   const location = useLocation();
-  const [user, setUser] = useState(window.location.pathname);
+  const [user, setUser] = useState({});
 
   const [path, setpath] = useState(window.location.pathname);
 
@@ -26,6 +28,24 @@ const Provider = ({ children }) => {
     setpath(location.pathname);
     setVerify(false);
   }, [location]);
+
+  // const instance = axios.create();
+
+  // instance.interceptors.request.use((req) => {
+  //   const token = Cookie.get("token");
+  //   if (token) {
+  //     return req.headers.set("token", token);
+  //   }
+  // });
+
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const response = await axios.get("http://localhost:8000/user/");
+
+  //     setUser(response.user);
+  //   };
+  //   getUser();
+  // }, []);
 
   return (
     <Context.Provider

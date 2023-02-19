@@ -5,7 +5,7 @@ import SignupRight from "../../components/auth/SignupRight";
 
 const Signup = () => {
   return (
-    <div className="bg-[#202433] pt-[60px] grid grid-cols-1 md:grid-cols-2 md:min-h-[65vh] lg:min-h-[75vh] xl:min-h-[72vh] 2xl:min-h-[80vh] 7xl:min-h-[85vh]">
+    <div className="pt-[60px] w-full grow h-full bg-[#202433] pt-[60px] grid grid-cols-1 md:grid-cols-2">
       <AuthLeft />
       <SignupRight />
     </div>

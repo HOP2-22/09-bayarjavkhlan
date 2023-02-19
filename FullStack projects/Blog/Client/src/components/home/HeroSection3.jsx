@@ -19,10 +19,7 @@ const HeroSection3 = ({ title, text, button }) => {
           <div className="homeText pb-[20px] text-[#182D40] text-right md:text-start w-5/6 sm:w-3/4 md:w-4/5 lg:w-3/4">
             {text}
           </div>
-          <Link
-            to={"/products"}
-            className="w-[120px] flex group cursor-pointer"
-          >
+          <Link to={"/blog"} className="w-[120px] flex group cursor-pointer">
             <div className=" text-[#4DA0FD]  text-[16px] font-semibold cursor-pointer group-hover:text-cyan-600">
               {button}
             </div>
