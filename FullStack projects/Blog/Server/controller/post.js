@@ -115,11 +115,13 @@ exports.updatePost = asyncHandler(async (req, res, next) => {
 });
 
 exports.deletePost = asyncHandler(async (req, res, next) => {
-  const post = await Post.findByIdAndDelete(req.params.id);
+  const post = await Post.findById(req.params.id);
 
   if (!post) {
     throw new MyError("No post found");
   }
+
+  post.remove();
 
   res.status(200).json({
     success: true,
