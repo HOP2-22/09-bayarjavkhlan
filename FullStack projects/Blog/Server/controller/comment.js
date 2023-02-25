@@ -13,10 +13,55 @@ exports.getComments = asyncHandler(async (req, res, next) => {
   });
 });
 
-exports.getCommentsByPost = asyncHandler(async (req, res, next) => {});
+exports.getCommentsByPost = asyncHandler(async (req, res, next) => {
+  const comments = await Comment.find({ post: req.params.id }).populate(
+    "writer"
+  );
 
-exports.createComment = asyncHandler(async (req, res, next) => {});
+  res.status(200).json({
+    success: true,
+    data: comments,
+    message: "Get post comments",
+  });
+});
 
-exports.updateComment = asyncHandler(async (req, res, next) => {});
+exports.createComment = asyncHandler(async (req, res, next) => {
+  const comment = await Comment.create(req.body);
 
-exports.deleteComment = asyncHandler(async (req, res, next) => {});
+  res.status(200).json({
+    success: true,
+    data: comment,
+    message: "comment created",
+  });
+});
+
+exports.updateComment = asyncHandler(async (req, res, next) => {
+  const comment = await Comment.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!comment) {
+    throw new MyError("No Comment found");
+  }
+
+  res.status(200).json({
+    success: true,
+    data: comment,
+    message: "comment updated successfully",
+  });
+});
+
+exports.deleteComment = asyncHandler(async (req, res, next) => {
+  const comment = await Comment.findByIdAndDelete(req.params.id);
+
+  if (!comment) {
+    throw new MyError("No Comment found");
+  }
+
+  res.status(200).json({
+    success: true,
+    data: comment,
+    message: "comment deleted successfully",
+  });
+});

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../axios";
+import axios from "axios";
 
 import SignupForm from "./SignupForm";
 import Verify from "./Verify";
@@ -16,13 +16,17 @@ const SignupRight = () => {
     last: "",
     email: "",
     password: "",
+    gender: "",
   });
 
   const sendVerifyCode = async () => {
     try {
-      const response = await axios.post("/user/auth/verify", {
-        email: info.email,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/user/auth/verify",
+        {
+          email: info.email,
+        }
+      );
       setVerify(true);
       handleToTop();
 
@@ -34,12 +38,18 @@ const SignupRight = () => {
 
   const register = async () => {
     try {
-      const response = await axios.post("/user/auth/signup", {
-        firstName: info.first,
-        lastName: info.last,
-        email: info.email,
-        password: info.password,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/user/auth/signup",
+        {
+          firstName: info.first,
+          lastName: info.last,
+          email: info.email,
+          password: info.password,
+          gender: info.gender,
+        }
+      );
+
+      console.log(response.data.data);
 
       alert(response.data.message);
 
@@ -87,6 +97,7 @@ const SignupRight = () => {
         register={register}
         handleEmpty={handleEmpty}
         email={info.email}
+        sendVerifyCode={sendVerifyCode}
       />
     </div>
   );

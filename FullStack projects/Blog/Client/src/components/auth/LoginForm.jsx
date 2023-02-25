@@ -1,7 +1,10 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
-import { AiOutlineCheck, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import AuthButton from "./AuthButton";
+import AuthChecker from "./AuthChecker";
+import AuthPassword from "./AuthPassword";
+import FormInput from "./FormInput";
 
 const LoginForm = ({ info, setInfo, login }) => {
   const [check, setCheck] = useState(false);
@@ -19,13 +22,11 @@ const LoginForm = ({ info, setInfo, login }) => {
   };
 
   const handleLogin = () => {
-    if (info.email.length === 0) {
-      emailRef.current.focus();
-    } else if (info.password.length === 0) {
-      passwordRef.current.focus();
-    } else {
-      login();
-    }
+    info.email.length === 0
+      ? emailRef.current.focus()
+      : info.password.length === 0
+      ? passwordRef.current.focus()
+      : login();
   };
 
   const handleOnKeyDown = (event) => {
@@ -40,14 +41,16 @@ const LoginForm = ({ info, setInfo, login }) => {
         <label className="text-white lg:text-[18px] xl:text-[20px]">
           Email
         </label>
-        <input
-          type="text"
-          placeholder="Example00@exampleMail.com"
-          className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
-          onChange={handleEmail}
-          ref={emailRef}
+        <FormInput
+          type={"text"}
+          placeholder={"Example00@exampleMail.com"}
+          Style={
+            "text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
+          }
+          stateChanger={handleEmail}
+          FormRef={emailRef}
           value={info.email}
-          onKeyDown={handleOnKeyDown}
+          keyDown={handleOnKeyDown}
         />
       </div>
       <div className="flex flex-col gap-[10px]">
@@ -60,55 +63,20 @@ const LoginForm = ({ info, setInfo, login }) => {
             Forget Password
           </Link>
         </label>
-        <div className="relative">
-          <input
-            type={passwordType ? "password" : "text"}
-            placeholder="••••••••••••••••••••••"
-            className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
-            onChange={handlePassword}
-            ref={passwordRef}
-            value={info.password}
-            onKeyDown={handleOnKeyDown}
-          />
-          <div className="absolute mr-2 lg:mr-5 w-10 h-10 flex items-center justify-center cursor-pointer right-0 top-2">
-            <AiFillEye
-              className={`${
-                passwordType ? "block" : "hidden"
-              } text-[30px] text-white`}
-              onClick={() => {
-                setPasswordType(false);
-              }}
-            />
-            <AiFillEyeInvisible
-              className={`${
-                passwordType ? "hidden" : "block"
-              } text-[30px] text-white`}
-              onClick={() => {
-                setPasswordType(true);
-              }}
-            />
-          </div>
-        </div>
+        <AuthPassword
+          type={passwordType}
+          handle={handlePassword}
+          Style={
+            "text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
+          }
+          value={info.password}
+          PasswordRef={passwordRef}
+          keyDown={handleOnKeyDown}
+          setState={setPasswordType}
+        />
       </div>
-      <div className="flex items-center gap-[15px]">
-        <div
-          className={`w-[18px] h-[18px] rounded flex items-center justify-center cursor-pointer ${
-            check ? "bg-white/80" : "bg-[#33394F]"
-          }`}
-          onClick={() => {
-            setCheck(!check);
-          }}
-        >
-          <AiOutlineCheck className="text-[#33394F]" />
-        </div>
-        <p className="text-white font-semibold">Remember me</p>
-      </div>
-      <div
-        onClick={handleLogin}
-        className="w-full lg:text-[18px] xl:text-[20px] text-center py-4 rounded-[10px] bg-[#FC728B] hover:bg-[#df4863] transition-colors cursor-pointer "
-      >
-        Login
-      </div>
+      <AuthChecker check={check} setCheck={setCheck} title={"Remember me"} />
+      <AuthButton stateChanger={handleLogin} title={"Login"} />
     </form>
   );
 };

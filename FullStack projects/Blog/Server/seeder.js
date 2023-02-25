@@ -47,11 +47,11 @@ const importData = async () => {
 
 const deleteData = async () => {
   try {
-    await Comment.deleteMany();
-    await Contact.deleteMany();
-    await Subscribe.deleteMany();
+    // await Comment.deleteMany();
+    // await Contact.deleteMany();
+    // await Subscribe.deleteMany();
     await Post.deleteMany();
-    await User.deleteMany();
+    // await User.deleteMany();
     console.log("ogogdliig bvgdiig ustaglaa".green.inverse);
   } catch (err) {
     console.log(err);

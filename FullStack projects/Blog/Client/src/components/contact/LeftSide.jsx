@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import ContactButton from "./ContactButton";
 import ContactInput from "./ContactInput";
@@ -29,7 +29,7 @@ const LeftSide = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("/contact", {
+      const response = await axios.post("http://localhost:8000/contact", {
         name: values.name,
         email: values.email,
         text: values.text,
@@ -55,7 +55,7 @@ const LeftSide = () => {
 
   const handleRegister = () => {
     values.name.length === 0
-      ? console.log("Register")
+      ? nameRef.current.focus()
       : values.email.length === 0
       ? emailRef.current.focus()
       : values.text.length === 0

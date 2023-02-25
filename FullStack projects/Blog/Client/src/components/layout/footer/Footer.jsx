@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "../../axios";
+import axios from "axios";
 
 import { ArrowLongRightIcon } from "@heroicons/react/24/solid";
 
@@ -15,13 +15,14 @@ const Footer = () => {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
+      console.log("La");
       handleSubmit();
     }
   };
 
   const handleSubmit = async () => {
     try {
-      const allSubcribe = await axios.get("/subscribe");
+      const allSubcribe = await axios.get("http://localhost:8000/subscribe");
 
       const check = allSubcribe.data.data.filter(
         (item) => item.email === subscribedEmailValue
@@ -31,7 +32,7 @@ const Footer = () => {
         return alert("Subscribe хийсэн и-мэйл хаяг байна");
       }
 
-      const response = await axios.post("/subscribe", {
+      const response = await axios.post("http://localhost:8000/subscribe", {
         email: subscribedEmailValue,
       });
       alert(response.data.message);

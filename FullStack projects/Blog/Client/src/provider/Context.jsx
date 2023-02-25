@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useState, createContext } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
-import Cookie from "js-cookie";
+// import axios from "axios";
+// import Cookie from "js-cookie";
 
 export const Context = createContext();
 
@@ -10,7 +10,7 @@ const Provider = ({ children }) => {
   const [loading, SetLoading] = useState(false);
 
   const location = useLocation();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   const [path, setpath] = useState(window.location.pathname);
 

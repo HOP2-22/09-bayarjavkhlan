@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../axios";
+import axios from "axios";
+import FormInput from "./FormInput";
 
 const ForgetPasswordRight = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const ForgetPasswordRight = () => {
 
   const sentEmail = async () => {
     try {
-      await axios.post("/user/auth/forgotPassword", {
+      await axios.post("http://localhost:8000/user/auth/forgotPassword", {
         email: emailValue,
       });
 
@@ -30,13 +31,15 @@ const ForgetPasswordRight = () => {
   };
 
   const handleOnKeyDown = (event) => {
-    if (event.key === "Enter") {
-      if (emailValue.length === 0) {
-        emailRef.current.focus();
-      } else {
-        sentEmail();
-      }
-    }
+    event.key === "Enter" ? (
+      emailValue.length === 0 ? (
+        emailRef.current.focus()
+      ) : (
+        sentEmail()
+      )
+    ) : (
+      <></>
+    );
   };
 
   return (
@@ -52,14 +55,16 @@ const ForgetPasswordRight = () => {
           <label className="text-white lg:text-[18px] xl:text-[20px]">
             Email
           </label>
-          <input
-            type="text"
-            placeholder="Example00@exampleMail.com"
-            className="text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
-            onChange={handleEmail}
+          <FormInput
+            type={"text"}
+            placeholder={"Example00@exampleMail.com"}
+            Style={
+              "text-white w-full py-4 rounded-[10px] bg-[#33394F] focus:outline-none pl-5 md:pl-7 lg:pl-10"
+            }
+            stateChanger={handleEmail}
             value={emailValue}
-            ref={emailRef}
-            onKeyDown={handleOnKeyDown}
+            FormRef={emailRef}
+            keyDown={handleOnKeyDown}
           />
         </div>
         <div className="w-full flex justify-center">

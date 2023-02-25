@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,9 @@ const ChangePassword = () => {
     confirm: "",
   });
 
+  const newRef = useRef();
+  const confirmRef = useRef();
+
   const handleNew = (event) => {
     event.preventDefault();
     setPasswordValue({ ...passwordValue, new: event.target.value });
@@ -24,19 +27,20 @@ const ChangePassword = () => {
     setPasswordValue({ ...passwordValue, confirm: event.target.value });
   };
 
+  const handleChange = () => {
+    passwordValue.new.length === 0
+      ? newRef.current.focus()
+      : passwordValue.confirm.length === 0
+      ? confirmRef.current.focus()
+      : change();
+  };
+
   const handleOnKeyDown = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      if (passwordValue.new === passwordValue.confirm) {
-        change();
-      }
-    }
+    event.key === "Enter" && handleChange();
   };
 
   const change = async () => {
     try {
-      console.log(passwordValue.new);
-      console.log(resetToken);
       const response = await axios.post(
         "http://localhost:8000/user/auth/updatePassword",
         {
@@ -48,7 +52,6 @@ const ChangePassword = () => {
       alert(response.data.message);
       navigate("/register/login");
     } catch (error) {
-      console.log(error);
       alert(error.response.data.error.message);
     }
   };
@@ -60,6 +63,8 @@ const ChangePassword = () => {
         handleConfirm={handleConfirm}
         handleOnKeyDown={handleOnKeyDown}
         passwordValue={passwordValue}
+        newRef={newRef}
+        confirmRef={confirmRef}
       />
       <div className="w-full flex justify-center">
         <div

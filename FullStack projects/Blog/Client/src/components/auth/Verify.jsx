@@ -1,9 +1,9 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { IoIosArrowBack } from "react-icons/io";
 import { Context } from "../../provider/Context";
 
-const Verify = ({ email, register, handleEmpty }) => {
+const Verify = ({ email, register, handleEmpty, sendVerifyCode }) => {
   const { verify, setVerify, verifyValue, setVerifyValue } =
     useContext(Context);
 
@@ -13,7 +13,34 @@ const Verify = ({ email, register, handleEmpty }) => {
     handleEmpty();
     setVerifyValue("");
     setVerify(false);
+    setTimer(false);
+    setText(false);
+    setSecond(60);
   };
+
+  const [timer, setTimer] = useState(false);
+  const [text, setText] = useState(false);
+  const [second, setSecond] = useState(60);
+
+  // const [timer, setTimer] = useState({
+  //   second: 60,
+  //   boolean: false,
+  // });
+
+  useEffect(() => {
+    if (second === 0) {
+      setTimer(false);
+      setText(false);
+    }
+    let interval = null;
+    if (timer) {
+      interval = setInterval(() => {
+        setSecond((prev) => prev - 1);
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [timer, second]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -47,6 +74,9 @@ const Verify = ({ email, register, handleEmpty }) => {
               Please enter the verification code we sent to your email address
               <span className="px-2">{email}</span>
             </p>
+            <p className="text-red-500 font-medium text-[18px] text-center">
+              {text && `please wait ${second} to resent verify code`}
+            </p>
           </div>
           <div
             className="w-full justify-between flex gap-3"
@@ -64,8 +94,18 @@ const Verify = ({ email, register, handleEmpty }) => {
             ))}
           </div>
           <div className="w-full grid grid-cols-3 items-start my-6">
-            <div className="col-span-1 w-full text-start text-white cursor-pointer hover:text-gray-200 transition">
-              Re-send
+            <div
+              className="col-span-1 w-full text-start text-white cursor-pointer hover:text-gray-200 transition"
+              onClick={() => {
+                if (timer) {
+                  setText(true);
+                } else {
+                  sendVerifyCode();
+                }
+                setTimer(true);
+              }}
+            >
+              Re-send {timer ? second : ""}
             </div>
             <div className="col-span-1 w-full flex justify-center">
               <div

@@ -5,10 +5,14 @@ const User = require("../models/user");
 const sendEmail = require("../utils/email");
 const crypto = require("crypto");
 
-//Admin
-
 exports.getUsers = asyncHandler(async (req, res, next) => {
-  const users = await User.find({});
+  const { limit, sort } = req.query;
+  delete req.query.limit;
+
+  const users = await User.find({})
+    .populate("userPost")
+    .limit(limit)
+    .sort(sort);
 
   res.status(200).json({
     success: true,
@@ -29,20 +33,15 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
   });
 });
 
-//User
-
 exports.getUser = asyncHandler(async (req, res, next) => {
-  const token = req.headers.authorization;
-  console.log("haha");
-  if (!token) {
-    throw new MyError("invalid token");
-  }
+  const { select } = req.query;
+  ["select"].map((el) => delete req.query[el]);
 
-  const data = await jwt.decode(token, process.env.ACCESS_TOKEN_SECRET);
+  const user = await User.findById(req.params.id, select).populate("userPost");
 
   res.status(200).json({
     success: true,
-    data: data,
+    data: user,
     message: "user data",
   });
 });
@@ -63,8 +62,6 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
     message: "user updated",
   });
 });
-
-//Auth
 
 exports.verifyUser = asyncHandler(async (req, res, next) => {
   if (!req.body.email) {
@@ -98,6 +95,9 @@ exports.register = asyncHandler(async (req, res, next) => {
   const user = await User.create(req.body);
 
   const token = user.getJWT();
+  user.profileImageGenerator(req.body.gender);
+
+  await user.save();
 
   res.status(200).json({
     success: true,

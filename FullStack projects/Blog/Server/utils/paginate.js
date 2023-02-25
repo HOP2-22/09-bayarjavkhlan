@@ -6,8 +6,8 @@ module.exports = async (model, page, limit) => {
   if (total < end) end = total;
   if (total < start) start = 0;
 
-  let nextPage = page < pageCount ? page + 1 : "төгсгөлийн хуудас";
-  let prevPage = page > 1 ? page - 1 : "байхгүй";
+  let nextPage = page < pageCount ? page + 1 : "last page";
+  let prevPage = page > 1 ? page - 1 : "open page";
 
   const pagination = {
     total,

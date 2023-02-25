@@ -13,6 +13,8 @@ import Signup from "./pages/auth/Signup";
 import ForgetPassword from "./pages/auth/ForgetPassword";
 import ChangePassword from "./pages/auth/ChangePassword";
 import Blog from "./pages/Blog";
+import UserPosts from "./pages/UserPosts";
+import Post from "./pages/Post";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -35,8 +37,8 @@ root.render(
             />
             <Route path="blog">
               <Route path="" element={<Blog />} />
-              {/* <Route path=":id" element={<UserPosts />} /> */}
-              {/* <Route path="post" element={<Post />} /> */}
+              <Route path="post/:id/user" element={<UserPosts />} />
+              <Route path="post/:id" element={<Post />} />
             </Route>
             <Route path="admin">
               {/* <Route path="" element={<AdminHome />} /> */}
